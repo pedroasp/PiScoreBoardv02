@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">PiScoreBoard</string>
+
+    <string name="title_section1">Ecrã Principal</string>
+    <string name="title_section2">Iniciar Jogo</string>
+    <string name="title_section3">Publicidade</string>
+    <string name="title_section4">Definições</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- Custom ListView -->
+    <string name="contentListDescription">list image</string>
+    <!-- QuickToast -->
+
+    <string name="contentDescription">toast image</string>
+
+    <string name="iniciarJogoButtonText">Iniciar jogo</string>
+
+    <string name="definicoesGeral">Geral</string>
+
+    <!--                             IniciarJogoFragment                          -->
+    <string name="sectionModalidade">Modalidade</string>
+    <string name="itemModalidade">Modalidade</string>
+    <string name="summaryItemModalidade">Selecione a modalidade pretendida</string>
+
+    <string name="sectionEquipas">Equipas</string>
+    <string name="itemEquipaVisitada">Equipa visitada</string>
+    <string name="summaryitemEquipaVisitada">Selecione a equipa visitada</string>
+    <string name="itemEquipaVisitante">Equipa visitante</string>
+    <string name="summaryitemEquipaVisitante">Selecione a equipa visitante</string>
+
+    <!--                             DefinicoesFragment                          -->
+    <string name="sectionComunicacao">Comunicação</string>
+    <string name="itemIPAdress">Endereço IP</string>
+    <string name="summaryitemIPAdress">Selecione o endereço IP pretendido</string>
+
+    <string name="itemPorto">Porto</string>
+    <string name="summaryItemPorto">Selecione o porto pretendido</string>
+
+    <string name="sectionControloRemoto">Controlo remoto</string>
+
+    <string name="labelLigar">Ligar</string>
+    <string name="labelDesligar">Desligar</string>
+
+    <string name="labelReiniciar">Reiniciar</string>
+
+    <string name="sectionTemporizacao">Temporização</string>
+    <string name="itemTemporizacao">Temporização</string>
+    <string name="summaryItemTemporizacao">Selecione um método de temporização</string>
+
+    <!--                             PublicidadeFragment                          -->
+    <string name="sectionPublicidade">Publicidade</string>
+    <string name="itemPublicidade">Publicidade</string>
+    <string name="itemPeriodoPublicidade">Periodo de publicidade</string>
+    <string name="summaryItemPeriodoPublicidade">Insira o período de exibição de cada publicidade</string>
+
+
+
+    <string name="Faults">FALTAS</string>
+    <string name="sLocalGoals">0</string>
+    <string name="sVisitGoals">0</string>
+    <string name="sLocalFaults">0</string>
+    <string name="sVisitFaults">0</string>
+    <string name="sTime">23:53</string>
+    <string name="edit_message">HELP</string>
+
+</resources>
