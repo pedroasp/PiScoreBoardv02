@@ -14,9 +14,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.UnknownHostException;
+import java.net.Socket;
+
 import estg.mee.piscoreboard.R;
+import estg.mee.piscoreboard.utils.ClientSendThread;
 
 
 public class MainActivity extends ActionBarActivity
@@ -33,6 +42,8 @@ public class MainActivity extends ActionBarActivity
     private CharSequence mTitle;
     FragmentManager fragmentManager = getSupportFragmentManager();
     Fragment objFragment = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,6 +182,29 @@ public class MainActivity extends ActionBarActivity
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
+    }
+
+    public void sendCommand(String message){
+
+        //EditText sMessage = (EditText) findViewById(R.id.message);
+        //String message = sMessage.getEditableText().toString();
+
+        //String message = new String("Pub@on@");
+        Thread sendThread = new Thread(new ClientSendThread(message,this));
+        sendThread.start();
+
+
+//        ClientReceiveThread received = new ClientReceiveThread();
+//        new Thread(received).start();
+//
+//        String response  =   received.getMessage();
+//        TextView responseTV = (TextView) findViewById(R.id.editText);
+//        responseTV.setText(response);
+
+
+
+
+//        Log.d("Received", received.getMessage());
     }
 
 }

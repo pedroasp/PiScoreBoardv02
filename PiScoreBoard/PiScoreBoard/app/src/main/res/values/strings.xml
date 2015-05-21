@@ -69,4 +69,15 @@
     <string name="sTime">23:53</string>
     <string name="edit_message">HELP</string>
 
+    <!--                           Commands                                    -->
+    <string name="upVisitGoals">ggolosvisit@++@</string>
+    <string name="downVisitGoals">ggolosvisit@--@</string>
+    <string name="upLocalGoals">ggoloslocal@++@</string>
+    <string name="downLocalGoals">ggoloslocal@--@</string>
+    <string name="upVisitFaults">gfaltasvisit@++@</string>
+    <string name="downVisitFaults">gfaltasvisit@--@</string>
+    <string name="upLocalFaults">gfaltaslocal@++@</string>
+    <string name="downLocalFaults">gfaltaslocal@--@</string>
+
+
 </resources>
