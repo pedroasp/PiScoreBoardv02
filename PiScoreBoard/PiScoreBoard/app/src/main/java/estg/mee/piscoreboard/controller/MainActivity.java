@@ -107,7 +107,7 @@ public class MainActivity extends ActionBarActivity
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
+            getMenuInflater().inflate(R.menu.global, menu);
             restoreActionBar();
             return true;
         }
@@ -125,9 +125,8 @@ public class MainActivity extends ActionBarActivity
 
                 Toast.makeText(this, "Go hard or go home!", Toast.LENGTH_SHORT).show();
                 objFragment = new HomeScreenFragment();
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 fragmentManager.beginTransaction() .replace(R.id.container, objFragment).commit();
-
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 return true;
         }
 

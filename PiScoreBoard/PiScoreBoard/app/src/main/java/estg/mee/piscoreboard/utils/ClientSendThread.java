@@ -1,5 +1,6 @@
 package estg.mee.piscoreboard.utils;
 
+import android.app.Fragment;
 import android.util.Log;
 
 import java.io.BufferedWriter;
