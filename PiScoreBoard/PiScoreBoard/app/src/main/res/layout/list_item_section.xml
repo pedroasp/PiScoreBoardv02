@@ -7,7 +7,8 @@
  
 	<include 
 	    android:id="@+id/list_item_section_text"
-	    layout="@android:layout/preference_category" >
+        android:paddingLeft= "4dip"
+	    layout="@android:layout/preference_category">
 	</include>
 
 </LinearLayout>

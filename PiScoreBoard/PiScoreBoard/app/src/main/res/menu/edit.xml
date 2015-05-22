@@ -7,9 +7,9 @@
         android:orderInCategory="10"
         app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/action_search"
-        android:title="Search"
-        android:icon="@drawable/android_search"
-        android:orderInCategory="10"
-        app:showAsAction="ifRoom" />
+    <!--<item android:id="@+id/action_search"-->
+        <!--android:title="Search"-->
+        <!--android:icon="@drawable/android_search"-->
+        <!--android:orderInCategory="10"-->
+        <!--app:showAsAction="ifRoom" />-->
 </menu>

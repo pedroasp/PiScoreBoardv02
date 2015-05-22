@@ -2,7 +2,6 @@ package estg.mee.piscoreboard.controller;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -14,15 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.EditText;
 import android.widget.Toast;
-
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.UnknownHostException;
-import java.net.Socket;
+//import android.app.ListFragment;
 
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.utils.ClientSendThread;
@@ -73,9 +65,12 @@ public class MainActivity extends ActionBarActivity
                 objFragment = new StartGameFragment();
                 break;
             case 2:
-                objFragment = new PublicityFragment();
+                objFragment = new TeamsManagmentFragment();
                 break;
             case 3:
+                objFragment = new PublicityManagmentFragment();
+                break;
+            case 4:
                 objFragment = new SettingsFragment();
                 break;
             default:
@@ -100,6 +95,9 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 4:
                 mTitle = getString(R.string.title_section4);
+                break;
+            case 5:
+                mTitle = getString(R.string.title_section5);
                 break;
         }
     }

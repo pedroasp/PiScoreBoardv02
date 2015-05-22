@@ -4,6 +4,7 @@ package estg.mee.piscoreboard.customlistview;
 public class EntryItem implements Item {
 	public final String title;
 	public final String subtitle;
+    public final String actualValue;
 	public final int imageRId;
 	
 	/**
@@ -12,9 +13,10 @@ public class EntryItem implements Item {
 	 * @param subtitle
 	 * @param imageRId
 	 */
-	public EntryItem(String title, String subtitle, int imageRId) {
+	public EntryItem(String title, String subtitle,String actualValue, int imageRId) {
 		this.title = title;
 		this.subtitle = subtitle;
+        this.actualValue = actualValue;
 		this.imageRId = imageRId;
 	}
 

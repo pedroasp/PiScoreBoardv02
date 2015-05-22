@@ -3,8 +3,9 @@
 
     <string name="title_section1">Ecrã Principal</string>
     <string name="title_section2">Iniciar Jogo</string>
-    <string name="title_section3">Publicidade</string>
-    <string name="title_section4">Definições</string>
+    <string name="title_section3">Equipas</string>
+    <string name="title_section4">Publicidade</string>
+    <string name="title_section5">Definições</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -78,6 +79,17 @@
     <string name="downVisitFaults">gfaltasvisit@--@</string>
     <string name="upLocalFaults">gfaltaslocal@++@</string>
     <string name="downLocalFaults">gfaltaslocal@--@</string>
+
+    <!--                           Swipe library                                    -->
+
+    <string name="basic_action_1">Action_1</string>
+    <string name="basic_action_2">Action_2</string>
+    <string name="basic_del">Delete</string>
+    <string name="str_orange">#fe7b27</string>
+    <string name="str_green">#3cac69</string>
+    <string name="str_red">#FF4444</string>
+    <string name="str_yellow">#FFBB33</string>
+    <string name="str_sky_blue">#33B5E5</string>
 
 
 </resources>

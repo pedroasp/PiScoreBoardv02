@@ -3,6 +3,7 @@ package estg.mee.piscoreboard.controller;
 //import android.app.Fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
@@ -13,8 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 
 import java.util.ArrayList;
 
@@ -50,16 +53,16 @@ public class SettingsFragment extends Fragment {
         ListView settingsList = (ListView)this.rootView.findViewById(R.id.settings_lv);
         ArrayList<Item> items = new ArrayList<Item>();
 
-        items.add(new SectionItem(getResources().getString(R.string.sectionComunicacao)));
-        items.add(new EntryItem(getResources().getString(R.string.itemIPAdress), getResources().getString(R.string.summaryitemIPAdress), 0));
-        items.add(new EntryItem(getResources().getString(R.string.itemPorto), getResources().getString(R.string.summaryItemPorto), 0));
+//        items.add(new SectionItem(getResources().getString(R.string.sectionComunicacao)));
+//        items.add(new EntryItem(getResources().getString(R.string.itemIPAdress), getResources().getString(R.string.summaryitemIPAdress),"", 0));
+//        items.add(new EntryItem(getResources().getString(R.string.itemPorto), getResources().getString(R.string.summaryItemPorto),"", 0));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionTemporizacao)));
-        items.add(new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao), 0));
+        items.add(new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),"", 0));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionPublicidade)));
         items.add(new EntryItemSwitch(1, getResources().getString(R.string.itemPublicidade),"" , true));
-        items.add(new EntryItem(getResources().getString(R.string.itemPeriodoPublicidade), getResources().getString(R.string.summaryItemPeriodoPublicidade), 0));
+        items.add(new EntryItem(getResources().getString(R.string.itemPeriodoPublicidade), getResources().getString(R.string.summaryItemPeriodoPublicidade),"", 0));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionControloRemoto)));
         items.add(new EntryItemTwoButtons(1,getResources().getString(R.string.labelDesligar),2, getResources().getString(R.string.labelReiniciar) ));
@@ -78,16 +81,14 @@ public class SettingsFragment extends Fragment {
                 String[] temporizacao = {"Relógio", "Cronómetro"};
                 switch (position){
 
+
                     case 1:
-                        onCreateInputDialog("Ip:");
-                    break;
-                    case 2:
-                        onCreateInputDialog("Porto");
-                    break;
-                    case 4:
                         Dialog dialogTemporizacao = onCreateDialogSingleChoice(temporizacao, "Método de temporização");
                         dialogTemporizacao.show();
                     break;
+                    case 4:
+                        OnCreateNumberPicker(getActivity(),"Temporização");
+                        break;
                 }
             }
         });
@@ -160,6 +161,37 @@ public class SettingsFragment extends Fragment {
 
         builder.show();
         return m_Text;
+
+    }
+    public void OnCreateNumberPicker(Context c, String title)
+    {
+
+        final Dialog d = new Dialog(c);
+        d.setTitle(title);
+        d.setContentView(R.layout.layout_numberpicker);
+        Button b1 = (Button) d.findViewById(R.id.button1);
+        Button b2 = (Button) d.findViewById(R.id.button2);
+        final NumberPicker np = (NumberPicker) d.findViewById(R.id.numberPicker1);
+        np.setMaxValue(100);
+        np.setMinValue(0);
+        np.setWrapSelectorWheel(false);
+        b1.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                //tv.setText(String.valueOf(np.getValue()));
+                d.dismiss();
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                d.dismiss();
+            }
+        });
+
+        d.show();
 
     }
 }

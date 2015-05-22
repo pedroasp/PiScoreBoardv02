@@ -148,6 +148,7 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 				v = vi.inflate(R.layout.list_item_entry, null);
 				final TextView title = (TextView)v.findViewById(R.id.list_item_entry_title);
 				final TextView subtitle = (TextView)v.findViewById(R.id.list_item_entry_summary);
+                final TextView actualValue = (TextView)v.findViewById(R.id.list_item_entry_title2);
 				final ImageView image = (ImageView)v.findViewById(R.id.list_item_entry_drawable);
 				
 				if (title != null)
@@ -158,9 +159,18 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 						subtitle.setText(ei.subtitle);
 					else
 						subtitle.setHeight(0);
+
+                if (actualValue != null)
+                    actualValue.setText(ei.actualValue);
 				
-				if (image != null)
-					image.setImageResource(ei.imageRId);
+				if (ei.imageRId != 0) {
+                    image.requestLayout();
+                    final float scale = getContext().getResources().getDisplayMetrics().density;
+                    int pixels = (int) (40 * scale + 0.5f);
+                    image.getLayoutParams().height = pixels;
+                    image.getLayoutParams().width = pixels;
+                    image.setImageResource(ei.imageRId);
+                }
 			}
 		}
 		return v;

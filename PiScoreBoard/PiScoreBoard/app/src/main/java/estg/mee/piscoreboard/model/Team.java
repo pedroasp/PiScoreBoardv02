@@ -1,4 +1,4 @@
-package android.vogella.de.androidclient;
+package estg.mee.piscoreboard.model;
 
 /**
  * Created by Rúben Rodrigues on 01-05-2015.

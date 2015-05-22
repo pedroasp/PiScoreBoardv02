@@ -48,11 +48,11 @@ public class StartGameFragment extends Fragment {
         ArrayList<Item> items = new ArrayList<Item>();
 
         items.add(new SectionItem(getResources().getString(R.string.sectionModalidade)));
-        items.add(new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade), 0));
+        items.add(new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade),"Futsal", R.drawable.basketball_ball));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionEquipas)));
-        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada), 0));
-        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante), 0));
+        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada),null, R.drawable.benfica));
+        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante),null, R.drawable.porto));
 
         //items.add(new SectionItem(getResources().getString(R.string.sectionDefinicoesAvancadas)));
         items.add(new EntryItemButton(10,getResources().getString(R.string.iniciarJogoButtonText)));
@@ -73,12 +73,12 @@ public class StartGameFragment extends Fragment {
 
                         break;
                     case 3:
-                        Dialog dialogEquipaVisitada = onCreateDialogSingleChoice(equipas, "Escolha a equipa visitada:");
+                        Dialog dialogEquipaVisitada = onCreateDialogSingleChoice(equipas, "Escolha a equipa local:");
                         dialogEquipaVisitada.show();
 
                         break;
                     case 4:
-                        Dialog dialogEquipaVisitante= onCreateDialogSingleChoice(equipas, "Escolha a equipa visitada:");
+                        Dialog dialogEquipaVisitante= onCreateDialogSingleChoice(equipas, "Escolha a equipa visitante:");
                         dialogEquipaVisitante.show();
 
                         break;

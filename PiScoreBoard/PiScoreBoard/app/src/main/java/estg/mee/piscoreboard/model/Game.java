@@ -1,4 +1,4 @@
-package android.vogella.de.androidclient;
+package estg.mee.piscoreboard.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

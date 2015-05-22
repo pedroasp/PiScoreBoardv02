@@ -1,11 +1,11 @@
 package estg.mee.piscoreboard.utils;
 
-<<<<<<< HEAD
+import java.io.PrintWriter;
+
 import android.app.Fragment;
-=======
+
 import android.app.Activity;
 import android.content.Context;
->>>>>>> origin/Socket_Working!
 import android.util.Log;
 import android.widget.Toast;
 
