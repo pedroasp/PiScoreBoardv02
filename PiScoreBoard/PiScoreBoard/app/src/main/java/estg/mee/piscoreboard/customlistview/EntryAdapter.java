@@ -129,7 +129,7 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                 v = vi.inflate(R.layout.list_item_entry_button, null);
                 final Button button = (Button)v.findViewById(R.id.list_item_entry_button);
 
-                if (button != null)
+                    if (button != null)
                     button.setText(eib.text);
 
             } else if (i.isSettings()== 4) {

@@ -54,6 +54,10 @@
     <string name="itemTemporizacao">Temporização</string>
     <string name="summaryItemTemporizacao">Selecione um método de temporização</string>
 
+    <string name="sectionColors">Cores</string>
+    <string name="itemBackgroundColor">Cor de fundo</string>
+    <string name="summaryItemBackgroundColor">Mude a cor de fundo</string>
+
     <!--                             PublicidadeFragment                          -->
     <string name="sectionPublicidade">Publicidade</string>
     <string name="itemPublicidade">Publicidade</string>
@@ -93,6 +97,8 @@
     <string name="title_activity_main_activity2">MainActivity2Activity</string>
 
     <string name="hello_world">Hello world!</string>
+
+    <string name="button_label">OK</string>
 
 
 </resources>
