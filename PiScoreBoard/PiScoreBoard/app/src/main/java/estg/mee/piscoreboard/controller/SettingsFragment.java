@@ -60,13 +60,14 @@ public class SettingsFragment extends Fragment {
 //        items.add(new EntryItem(getResources().getString(R.string.itemIPAdress), getResources().getString(R.string.summaryitemIPAdress),"", 0));
 //        items.add(new EntryItem(getResources().getString(R.string.itemPorto), getResources().getString(R.string.summaryItemPorto),"", 0));
 
+//        items.add(new SectionItem(getResources().getString(R.string.sectionTemporizacao)));
+//        items.add(new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),"", null,0));
+//
+//        items.add(new SectionItem(getResources().getString(R.string.sectionPublicidade)));
+//        items.add(new EntryItemSwitch(1, getResources().getString(R.string.itemPublicidade),"" , true));
+//        items.add(new EntryItem(getResources().getString(R.string.itemPeriodoPublicidade), getResources().getString(R.string.summaryItemPeriodoPublicidade),"", null,0));
+
         items.add(new SectionItem(getResources().getString(R.string.sectionTemporizacao)));
-        items.add(new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),"", null,0));
-
-        items.add(new SectionItem(getResources().getString(R.string.sectionPublicidade)));
-        items.add(new EntryItemSwitch(1, getResources().getString(R.string.itemPublicidade),"" , true));
-        items.add(new EntryItem(getResources().getString(R.string.itemPeriodoPublicidade), getResources().getString(R.string.summaryItemPeriodoPublicidade),"", null,0));
-
         items.add(new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),null, null, 0));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionPublicidade)));
@@ -102,7 +103,7 @@ public class SettingsFragment extends Fragment {
                         OnCreateNumberPicker(getActivity(),"Temporização");
                         break;
 
-                    case 12:
+                    case 8:
                         ColorPickerDialog colorPickerDialog = new ColorPickerDialog(getActivity(), initialColor, new OnColorSelectedListener() {
                             @Override
                             public void onColorSelected(int color) {
