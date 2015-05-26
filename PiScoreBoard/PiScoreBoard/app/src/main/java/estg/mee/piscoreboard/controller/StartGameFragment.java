@@ -3,10 +3,12 @@ package estg.mee.piscoreboard.controller;
 import android.app.AlertDialog;
 import android.app.Dialog;
 //import android.app.Fragment;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import estg.mee.piscoreboard.customlistview.EntryItem;
 import estg.mee.piscoreboard.customlistview.EntryItemButton;
 import estg.mee.piscoreboard.customlistview.Item;
 import estg.mee.piscoreboard.customlistview.SectionItem;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 /**
  * Created by Pedro on 13/05/2015.
@@ -29,6 +32,9 @@ public class StartGameFragment extends Fragment {
 
 
     private View rootView = null;
+
+   private ArrayList<String> mSelectPath;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,11 +54,12 @@ public class StartGameFragment extends Fragment {
         ArrayList<Item> items = new ArrayList<Item>();
 
         items.add(new SectionItem(getResources().getString(R.string.sectionModalidade)));
-        items.add(new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade),"Futsal", R.drawable.basketball_ball));
+        items.add(new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade),"Futsal", null,0));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionEquipas)));
-        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada),null, R.drawable.benfica));
-        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante),null, R.drawable.porto));
+        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada),null,null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante),null, null,0));
+        items.add(new EntryItem("File picker", null,null, null,0));
 
         //items.add(new SectionItem(getResources().getString(R.string.sectionDefinicoesAvancadas)));
         items.add(new EntryItemButton(10,getResources().getString(R.string.iniciarJogoButtonText)));
@@ -82,6 +89,28 @@ public class StartGameFragment extends Fragment {
                         dialogEquipaVisitante.show();
 
                         break;
+                    case 5: {
+
+                        int selectedMode = MultiImageSelectorActivity.MODE_MULTI;
+
+                        boolean showCamera = true;
+
+                        int maxNum = 9;
+
+                        Intent intent = new Intent(getActivity(), MultiImageSelectorActivity.class);
+
+                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, showCamera);
+
+                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, maxNum);
+
+                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
+
+                        if (mSelectPath != null && mSelectPath.size() > 0) {
+                            intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
+                        }
+                        startActivityForResult(intent, MainActivity.getRequestImage());
+
+                    }break;
                 }
             }
         });

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">multi-image-selector</string>
+    <string name="folder_all">Todas as imagens</string>
+    <string name="preview">Preview</string>
+    <string name="msg_no_camera">Câmara não encontrada!</string>
+    <string name="msg_amount_limit">Limite de imagens selecionadas.</string>
+</resources>

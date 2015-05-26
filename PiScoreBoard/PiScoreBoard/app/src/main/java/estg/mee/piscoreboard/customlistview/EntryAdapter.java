@@ -1,7 +1,10 @@
 package estg.mee.piscoreboard.customlistview;
+import java.io.File;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.preference.ListPreference;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -149,7 +152,25 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 				final TextView title = (TextView)v.findViewById(R.id.list_item_entry_title);
 				final TextView subtitle = (TextView)v.findViewById(R.id.list_item_entry_summary);
                 final TextView actualValue = (TextView)v.findViewById(R.id.list_item_entry_title2);
-				final ImageView image = (ImageView)v.findViewById(R.id.list_item_entry_drawable);
+                ImageView image = (ImageView)v.findViewById(R.id.list_item_entry_drawable);
+                File imgFile = new File(ei.imagePath);
+
+                if(imgFile.exists()){
+
+                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+                    image.requestLayout();
+                    final float scale = getContext().getResources().getDisplayMetrics().density;
+//
+                    int pixels = (int) (40 * scale + 0.5f);
+                    image.getLayoutParams().height = pixels;
+                    image.getLayoutParams().width = pixels;
+
+                    image.setImageBitmap(myBitmap);
+
+                }
+
+				//final ImageView image = (ImageView)v.findViewById(R.id.list_item_entry_drawable);
 				
 				if (title != null)
 					title.setText(ei.title);
@@ -163,14 +184,14 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                 if (actualValue != null)
                     actualValue.setText(ei.actualValue);
 				
-				if (ei.imageRId != 0) {
-                    image.requestLayout();
-                    final float scale = getContext().getResources().getDisplayMetrics().density;
-                    int pixels = (int) (40 * scale + 0.5f);
-                    image.getLayoutParams().height = pixels;
-                    image.getLayoutParams().width = pixels;
-                    image.setImageResource(ei.imageRId);
-                }
+//				if (ei.imageRId != 0) {
+//                    image.requestLayout();
+//                    final float scale = getContext().getResources().getDisplayMetrics().density;
+//                    int pixels = (int) (40 * scale + 0.5f);
+//                    image.getLayoutParams().height = pixels;
+//                    image.getLayoutParams().width = pixels;
+//                    image.setImageResource(ei.imageRId);
+//                }
 			}
 		}
 		return v;

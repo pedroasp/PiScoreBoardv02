@@ -90,6 +90,9 @@
     <string name="str_red">#FF4444</string>
     <string name="str_yellow">#FFBB33</string>
     <string name="str_sky_blue">#33B5E5</string>
+    <string name="title_activity_main_activity2">MainActivity2Activity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 
 </resources>

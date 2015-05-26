@@ -53,42 +53,9 @@ public class TeamsManagmentFragment extends Fragment{
 
         setHasOptionsMenu(true);
 
-        items.add(new EntryItem("FC Porto",null ,null, 0));
-        items.add(new EntryItem("Leos de Porto Salvo",null ,null, 0));
-        items.add(new EntryItem("Benfica",null ,null, 0));
-        items.add(new EntryItem("FC Porto",null ,null, 0));
-        items.add(new EntryItem("Leos de Porto Salvo",null ,null, 0));
-        items.add(new EntryItem("Benfica",null ,null, 0));
-        items.add(new EntryItem("FC Porto",null ,null, 0));
-        items.add(new EntryItem("Leos de Porto Salvo",null ,null, 0));
-        items.add(new EntryItem("Benfica",null ,null, 0));
-        items.add(new EntryItem("FC Porto",null ,null, 0));
-        items.add(new EntryItem("Leos de Porto Salvo",null ,null, 0));
-        items.add(new EntryItem("Benfica",null ,null, 0));
-        items.add(new EntryItem("FC Porto",null ,null, 0));
-        items.add(new EntryItem("Leos de Porto Salvo",null ,null, 0));
-        items.add(new EntryItem("Benfica",null ,null, 0));
-        items.add(new EntryItem("FC Porto",null ,null, 0));
-        items.add(new EntryItem("Leos de Porto Salvo",null ,null, 0));
-        items.add(new EntryItem("Benfica",null ,null, 0));
-        items.add(new EntryItem("FC Porto",null ,null, 0));
-        items.add(new EntryItem("Leos de Porto Salvo",null ,null, 0));
-        items.add(new EntryItem("Benfica",null ,null, 0));
-        items.add(new EntryItem("FC Porto",null ,null, 0));
-        items.add(new EntryItem("Leos de Porto Salvo",null ,null, 0));
-        items.add(new EntryItem("Benfica",null ,null, 0));
-        items.add(new EntryItem("FC Porto",null ,null, 0));
-        items.add(new EntryItem("Leos de Porto Salvo",null ,null, 0));
-        items.add(new EntryItem("Benfica",null ,null, 0));
-        items.add(new EntryItem("FC Porto",null ,null, 0));
-        items.add(new EntryItem("Leos de Porto Salvo",null ,null, 0));
-        items.add(new EntryItem("Benfica",null ,null, 0));
-        items.add(new EntryItem("FC Porto",null ,null, 0));
-        items.add(new EntryItem("Leos de Porto Salvo",null ,null, 0));
-        items.add(new EntryItem("Benfica",null ,null, 0));
-        items.add(new EntryItem("FC Porto",null ,null, 0));
-        items.add(new EntryItem("Leos de Porto Salvo",null ,null, 0));
-        items.add(new EntryItem("Benfica",null ,null, 0));
+        items.add(new EntryItem("FC Porto",null ,null, null,0));
+        items.add(new EntryItem("Leos de Porto Salvo",null ,null, null,0));
+        items.add(new EntryItem("Benfica",null ,null, null,0));
 
 
 

@@ -1,6 +1,7 @@
 package estg.mee.piscoreboard.controller;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -16,8 +17,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 //import android.app.ListFragment;
 
+import java.util.ArrayList;
+
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.utils.ClientSendThread;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 
 public class MainActivity extends ActionBarActivity
@@ -35,6 +39,13 @@ public class MainActivity extends ActionBarActivity
     FragmentManager fragmentManager = getSupportFragmentManager();
     Fragment objFragment = null;
 
+    private static final int REQUEST_IMAGE = 2;
+
+    private ArrayList<String> mSelectPath;
+
+    public static int getRequestImage() {
+        return REQUEST_IMAGE;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +148,30 @@ public class MainActivity extends ActionBarActivity
                 fragmentManager.beginTransaction() .replace(R.id.container, objFragment).commit();
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 return true;
+            case R.id.action_add: {
+
+                int selectedMode = MultiImageSelectorActivity.MODE_MULTI;
+
+                boolean showCamera = true;
+
+                int maxNum = 9;
+
+                Intent intent = new Intent(this, MultiImageSelectorActivity.class);
+
+                intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, showCamera);
+
+                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, maxNum);
+
+                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
+
+                if (mSelectPath != null && mSelectPath.size() > 0) {
+                    intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
+                }
+                startActivityForResult(intent, MainActivity.getRequestImage());
+
+            }return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -203,6 +237,22 @@ public class MainActivity extends ActionBarActivity
 
 
 //        Log.d("Received", received.getMessage());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_IMAGE){
+            if(resultCode == RESULT_OK){
+                mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                StringBuilder sb = new StringBuilder();
+                for(String p: mSelectPath){
+                    sb.append(p);
+                    sb.append("\n");
+                }
+                Toast.makeText(this, sb.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 }

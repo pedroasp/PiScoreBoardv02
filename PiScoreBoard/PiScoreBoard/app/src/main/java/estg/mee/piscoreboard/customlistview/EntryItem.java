@@ -5,19 +5,22 @@ public class EntryItem implements Item {
 	public final String title;
 	public final String subtitle;
     public final String actualValue;
-	public final int imageRId;
+	public final String imagePath;
+    public final int imageRId;
 	
 	/**
 	 * Construtor
 	 * @param title
 	 * @param subtitle
-	 * @param imageRId
+	 * @param imagePath
+     * @param imageRId
 	 */
-	public EntryItem(String title, String subtitle,String actualValue, int imageRId) {
+	public EntryItem(String title, String subtitle,String actualValue, String imagePath, int imageRId) {
 		this.title = title;
 		this.subtitle = subtitle;
         this.actualValue = actualValue;
-		this.imageRId = imageRId;
+		this.imagePath = imagePath;
+        this.imageRId = imageRId;
 	}
 
 	@Override
