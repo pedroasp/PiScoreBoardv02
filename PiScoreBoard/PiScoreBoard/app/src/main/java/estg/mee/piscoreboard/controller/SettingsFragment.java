@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.Toast;
+import android.content.Context;
 
 import java.util.ArrayList;
 
@@ -26,12 +29,14 @@ import estg.mee.piscoreboard.customlistview.EntryAdapter;
 import estg.mee.piscoreboard.customlistview.EntryItem;
 import estg.mee.piscoreboard.customlistview.EntryItemSwitch;
 import estg.mee.piscoreboard.customlistview.EntryItemTwoButtons;
+import estg.mee.piscoreboard.customlistview.EntryItemButton;
 import estg.mee.piscoreboard.customlistview.Item;
 import estg.mee.piscoreboard.customlistview.SectionItem;
+import estg.mee.piscoreboard.utils.ColorPickerDialog;
+import estg.mee.piscoreboard.utils.ColorPickerDialog.OnColorSelectedListener;
 
-/**
- * Created by Pedro on 07/05/2015.
- */
+
+
 public class SettingsFragment extends Fragment {
 
 
@@ -41,9 +46,7 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
         this.rootView = rootView;
-
         this.initSettingsFields();
-
         return rootView;
     }
 
@@ -58,15 +61,25 @@ public class SettingsFragment extends Fragment {
 //        items.add(new EntryItem(getResources().getString(R.string.itemPorto), getResources().getString(R.string.summaryItemPorto),"", 0));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionTemporizacao)));
+<<<<<<< HEAD
         items.add(new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),"", null,0));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionPublicidade)));
         items.add(new EntryItemSwitch(1, getResources().getString(R.string.itemPublicidade),"" , true));
         items.add(new EntryItem(getResources().getString(R.string.itemPeriodoPublicidade), getResources().getString(R.string.summaryItemPeriodoPublicidade),"", null,0));
+=======
+        items.add(new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),null, 0));
+
+        items.add(new SectionItem(getResources().getString(R.string.sectionPublicidade)));
+        items.add(new EntryItemSwitch(1, getResources().getString(R.string.itemPublicidade),null , true));
+        items.add(new EntryItem(getResources().getString(R.string.itemPeriodoPublicidade), getResources().getString(R.string.summaryItemPeriodoPublicidade),null, 0));
+>>>>>>> origin/Quase-nos-50%
 
         items.add(new SectionItem(getResources().getString(R.string.sectionControloRemoto)));
         items.add(new EntryItemTwoButtons(1,getResources().getString(R.string.labelDesligar),2, getResources().getString(R.string.labelReiniciar) ));
 
+        items.add(new SectionItem(getResources().getString(R.string.sectionColors)));
+        items.add(new EntryItem(getResources().getString(R.string.itemBackgroundColor), getResources().getString(R.string.summaryItemBackgroundColor),null, 0));
 
         EntryAdapter adapter = new EntryAdapter(getActivity(), items);
         settingsList.setAdapter(adapter);
@@ -77,6 +90,7 @@ public class SettingsFragment extends Fragment {
         settingsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int initialColor = Color.WHITE;
                // Object listItem = settingsList.getItemAtPosition(position);
                 String[] temporizacao = {"Relógio", "Cronómetro"};
                 switch (position){
@@ -89,6 +103,17 @@ public class SettingsFragment extends Fragment {
                     case 4:
                         OnCreateNumberPicker(getActivity(),"Temporização");
                         break;
+
+                    case 8:
+                        ColorPickerDialog colorPickerDialog = new ColorPickerDialog(this, initialColor, new OnColorSelectedListener() {
+                            @Override
+                            public void onColorSelected(int color) {
+
+                            }
+                        });
+                        colorPickerDialog.show();
+                        break;
+
                 }
             }
         });
@@ -194,4 +219,5 @@ public class SettingsFragment extends Fragment {
         d.show();
 
     }
+
 }
