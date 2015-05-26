@@ -61,25 +61,23 @@ public class SettingsFragment extends Fragment {
 //        items.add(new EntryItem(getResources().getString(R.string.itemPorto), getResources().getString(R.string.summaryItemPorto),"", 0));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionTemporizacao)));
-<<<<<<< HEAD
         items.add(new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),"", null,0));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionPublicidade)));
         items.add(new EntryItemSwitch(1, getResources().getString(R.string.itemPublicidade),"" , true));
         items.add(new EntryItem(getResources().getString(R.string.itemPeriodoPublicidade), getResources().getString(R.string.summaryItemPeriodoPublicidade),"", null,0));
-=======
-        items.add(new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),null, 0));
+
+        items.add(new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),null, null, 0));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionPublicidade)));
         items.add(new EntryItemSwitch(1, getResources().getString(R.string.itemPublicidade),null , true));
-        items.add(new EntryItem(getResources().getString(R.string.itemPeriodoPublicidade), getResources().getString(R.string.summaryItemPeriodoPublicidade),null, 0));
->>>>>>> origin/Quase-nos-50%
+        items.add(new EntryItem(getResources().getString(R.string.itemPeriodoPublicidade), getResources().getString(R.string.summaryItemPeriodoPublicidade),null,null, 0));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionControloRemoto)));
         items.add(new EntryItemTwoButtons(1,getResources().getString(R.string.labelDesligar),2, getResources().getString(R.string.labelReiniciar) ));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionColors)));
-        items.add(new EntryItem(getResources().getString(R.string.itemBackgroundColor), getResources().getString(R.string.summaryItemBackgroundColor),null, 0));
+        items.add(new EntryItem(getResources().getString(R.string.itemBackgroundColor), getResources().getString(R.string.summaryItemBackgroundColor),null,null, 0));
 
         EntryAdapter adapter = new EntryAdapter(getActivity(), items);
         settingsList.setAdapter(adapter);
@@ -104,8 +102,8 @@ public class SettingsFragment extends Fragment {
                         OnCreateNumberPicker(getActivity(),"Temporização");
                         break;
 
-                    case 8:
-                        ColorPickerDialog colorPickerDialog = new ColorPickerDialog(this, initialColor, new OnColorSelectedListener() {
+                    case 12:
+                        ColorPickerDialog colorPickerDialog = new ColorPickerDialog(getActivity(), initialColor, new OnColorSelectedListener() {
                             @Override
                             public void onColorSelected(int color) {
 

@@ -67,8 +67,7 @@ public class PublicityManagmentFragment extends Fragment {
 
         items.add(new EntryItem("Café",null ,null, "/storage/sdcard0/DCIM/Camera/football_ball.png",0));
         items.add(new EntryItem("Padaria",null ,null, "/storage/sdcard0/DCIM/Camera/football_ball.png",0));
-//        items.add(new EntryItem("Man do stand",null ,null, null));
-//        items.add(new EntryItem("Pao da Sao",null ,null, null));
+
 
         lv = (ListView) this.rootView.findViewById(R.id.list_viewaa);
         inputSearch = (EditText) this.rootView.findViewById(R.id.inputSearch);

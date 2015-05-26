@@ -153,21 +153,24 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 				final TextView subtitle = (TextView)v.findViewById(R.id.list_item_entry_summary);
                 final TextView actualValue = (TextView)v.findViewById(R.id.list_item_entry_title2);
                 ImageView image = (ImageView)v.findViewById(R.id.list_item_entry_drawable);
-                File imgFile = new File(ei.imagePath);
 
-                if(imgFile.exists()){
+                if(ei.imagePath!=null) {
+                    File imgFile = new File(ei.imagePath);
 
-                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    if (imgFile.exists()) {
 
-                    image.requestLayout();
-                    final float scale = getContext().getResources().getDisplayMetrics().density;
-//
-                    int pixels = (int) (40 * scale + 0.5f);
-                    image.getLayoutParams().height = pixels;
-                    image.getLayoutParams().width = pixels;
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
-                    image.setImageBitmap(myBitmap);
+                        image.requestLayout();
+                        final float scale = getContext().getResources().getDisplayMetrics().density;
 
+                        int pixels = (int) (40 * scale + 0.5f);
+                        image.getLayoutParams().height = pixels;
+                        image.getLayoutParams().width = pixels;
+
+                        image.setImageBitmap(myBitmap);
+
+                    }
                 }
 
 				//final ImageView image = (ImageView)v.findViewById(R.id.list_item_entry_drawable);
