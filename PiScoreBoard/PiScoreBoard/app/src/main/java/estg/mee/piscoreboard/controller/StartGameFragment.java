@@ -23,7 +23,7 @@ import estg.mee.piscoreboard.customlistview.Item;
 import estg.mee.piscoreboard.customlistview.SectionItem;
 
 /**
- * Created by Pedro on 13/05/2015.
+ * Created by Rúben on 13/05/2015.
  */
 public class StartGameFragment extends Fragment {
 

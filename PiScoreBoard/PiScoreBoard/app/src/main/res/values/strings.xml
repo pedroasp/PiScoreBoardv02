@@ -54,6 +54,10 @@
     <string name="itemTemporizacao">Temporização</string>
     <string name="summaryItemTemporizacao">Selecione um método de temporização</string>
 
+    <string name="sectionColors">Cores</string>
+    <string name="itemBackgroundColor">Cor de fundo</string>
+    <string name="summaryItemBackgroundColor">Mude a cor de fundo</string>
+
     <!--                             PublicidadeFragment                          -->
     <string name="sectionPublicidade">Publicidade</string>
     <string name="itemPublicidade">Publicidade</string>
@@ -90,6 +94,8 @@
     <string name="str_red">#FF4444</string>
     <string name="str_yellow">#FFBB33</string>
     <string name="str_sky_blue">#33B5E5</string>
+
+    <string name="button_label">OK</string>
 
 
 </resources>
