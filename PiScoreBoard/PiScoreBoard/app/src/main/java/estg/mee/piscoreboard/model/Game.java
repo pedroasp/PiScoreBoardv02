@@ -1,6 +1,7 @@
 package estg.mee.piscoreboard.model;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -18,6 +19,9 @@ public class Game {
     private Date date = new Date();
     private Modality modality = new Modality();
     private Part[] part = new Part[2];
+
+    ArrayList PublictyList = new ArrayList();
+
 
     public Game() {
 

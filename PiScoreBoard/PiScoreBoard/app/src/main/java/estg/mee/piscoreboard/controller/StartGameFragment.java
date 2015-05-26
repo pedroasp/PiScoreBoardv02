@@ -108,7 +108,7 @@ public class StartGameFragment extends Fragment {
                         if (mSelectPath != null && mSelectPath.size() > 0) {
                             intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
                         }
-                        startActivityForResult(intent, MainActivity.getRequestImage());
+                        getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
 
                     }break;
                 }

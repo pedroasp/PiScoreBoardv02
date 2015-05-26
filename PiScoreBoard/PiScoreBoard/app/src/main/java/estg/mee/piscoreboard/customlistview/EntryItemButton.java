@@ -17,7 +17,11 @@ public class EntryItemButton implements Item{
         this.id = id;
         this.text = text;
     }
+    @Override
+    public String getTitle() {
+        return "";
 
+    }
     @Override
     public boolean isSection() {
         return false;

@@ -21,7 +21,11 @@ public class EntryItemTwoButtons implements Item {
         this.id2 = id2;
         this.text2 = text2;
     }
+    @Override
+    public String getTitle() {
+        return "";
 
+    }
     @Override
     public boolean isSection() {
         return false;

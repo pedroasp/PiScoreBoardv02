@@ -19,7 +19,11 @@ public class EntryItemSwitch implements Item {
 		this.subtitle = subtitle;
 		this.switchState = state;
 	}
+    @Override
+    public String getTitle() {
+        return "";
 
+    }
     public boolean isSwitch() {
         return true;
     }

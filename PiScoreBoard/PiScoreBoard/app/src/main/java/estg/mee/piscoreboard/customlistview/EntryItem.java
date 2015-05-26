@@ -23,7 +23,12 @@ public class EntryItem implements Item {
         this.imageRId = imageRId;
 	}
 
-	@Override
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
 	public boolean isSection() {
 		return false;
 	}

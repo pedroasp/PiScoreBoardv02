@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.customlistview.EntryAdapter;
@@ -66,10 +67,11 @@ public class PublicityManagmentFragment extends Fragment {
         setHasOptionsMenu(true);
 
         items.add(new EntryItem("Café",null ,null, "/storage/sdcard0/DCIM/Camera/football_ball.png",0));
-        items.add(new EntryItem("Padaria",null ,null, "/storage/sdcard0/DCIM/Camera/football_ball.png",0));
+        items.add(new EntryItem("Padaria",null ,null, "/storage/sdcard1/DCIM/Camera/IMG_20150526_155949.jpg",0));
 
 
         lv = (ListView) this.rootView.findViewById(R.id.list_viewaa);
+        lv.setTextFilterEnabled(true);
         inputSearch = (EditText) this.rootView.findViewById(R.id.inputSearch);
 
 
@@ -85,11 +87,11 @@ public class PublicityManagmentFragment extends Fragment {
          * Enabling Search Filter
          * */
         inputSearch.addTextChangedListener(new TextWatcher() {
-
+            ArrayList<String> searchArray = new ArrayList<String>();
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
                 // When user changed the Text
-                adapter.getFilter().filter(cs);
+                //adapter.getFilter().filter(cs);
                 // adapter.getFilter().convertResultToString(cs);
             }
 

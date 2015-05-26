@@ -19,7 +19,11 @@ public class EntryItemCheckbox implements Item {
         this.subtitle = subtitle;
         this.checkboxState = state;
     }
+    @Override
+    public String getTitle() {
+        return "";
 
+    }
     @Override
     public boolean isSection() {
     return false;
