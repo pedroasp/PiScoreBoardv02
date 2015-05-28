@@ -27,6 +27,13 @@ public class Game {
 
     }
 
+    public ArrayList getPublictyList() {
+        return PublictyList;
+    }
+
+    public void setPublictyList(ArrayList publictyList) {
+        PublictyList = publictyList;
+    }
 
     public int getId() {
         return id;

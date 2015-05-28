@@ -18,8 +18,11 @@ import android.widget.Toast;
 //import android.app.ListFragment;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import estg.mee.piscoreboard.R;
+import estg.mee.piscoreboard.customlistview.EntryItem;
+import estg.mee.piscoreboard.model.Game;
 import estg.mee.piscoreboard.utils.ClientSendThread;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
@@ -41,7 +44,19 @@ public class MainActivity extends ActionBarActivity
 
     private static final int REQUEST_IMAGE = 2;
 
-    private ArrayList<String> mSelectPath;
+    private static ArrayList<String> mSelectPath = null;
+
+    public Game jogo;
+
+
+
+    public static ArrayList<String> getmSelectPath() {
+        return mSelectPath;
+    }
+
+    public void setmSelectPath(ArrayList<String> mSelectPath) {
+        this.mSelectPath = mSelectPath;
+    }
 
     public static int getRequestImage() {
         return REQUEST_IMAGE;
@@ -55,6 +70,8 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
+
+        jogo = new Game();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -79,7 +96,7 @@ public class MainActivity extends ActionBarActivity
                 objFragment = new TeamsManagmentFragment();
                 break;
             case 3:
-                objFragment = new PublicityManagmentFragment();
+                objFragment = new PublicityManagmentFragment(jogo);
                 break;
             case 4:
                 objFragment = new SettingsFragment();
@@ -145,34 +162,11 @@ public class MainActivity extends ActionBarActivity
 
                 Toast.makeText(this, "Go hard or go home!", Toast.LENGTH_SHORT).show();
                 objFragment = new HomeScreenFragment();
-                fragmentManager.beginTransaction() .replace(R.id.container, objFragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, objFragment).commit();
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 return true;
-            case R.id.action_add: {
 
-                int selectedMode = MultiImageSelectorActivity.MODE_MULTI;
-
-                boolean showCamera = true;
-
-                int maxNum = 9;
-
-                Intent intent = new Intent(this, MultiImageSelectorActivity.class);
-
-                intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, showCamera);
-
-                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, maxNum);
-
-                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
-
-                if (mSelectPath != null && mSelectPath.size() > 0) {
-                    intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
-                }
-                startActivityForResult(intent, MainActivity.getRequestImage());
-
-            }return true;
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -242,15 +236,27 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if(requestCode == REQUEST_IMAGE){
             if(resultCode == RESULT_OK){
-                mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                StringBuilder sb = new StringBuilder();
-                for(String p: mSelectPath){
-                    sb.append(p);
-                    sb.append("\n");
+                int id = data.getIntExtra(MultiImageSelectorActivity.EXTRA_FRAGMENT_ID, 0);
+
+                switch (id){
+                    case 3:
+                        jogo.setPublictyList(data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT));
+
+                    break;
+                    case 4:
+                        mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                        StringBuilder sb = new StringBuilder();
+                        for(String p: mSelectPath){
+                            sb.append(p);
+                            sb.append("\n");
+                        }
+                        Toast.makeText(this, sb.toString(), Toast.LENGTH_SHORT).show();
+                        break;
                 }
-                Toast.makeText(this, sb.toString(), Toast.LENGTH_SHORT).show();
+
             }
         }
     }

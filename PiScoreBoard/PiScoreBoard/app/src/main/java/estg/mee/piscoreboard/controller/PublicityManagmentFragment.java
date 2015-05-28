@@ -5,6 +5,7 @@ import android.app.Dialog;
 //import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -37,8 +39,10 @@ import estg.mee.piscoreboard.customlistview.EntryItem;
 import estg.mee.piscoreboard.customlistview.EntryItemSwitch;
 import estg.mee.piscoreboard.customlistview.Item;
 import estg.mee.piscoreboard.customlistview.SectionItem;
+import estg.mee.piscoreboard.model.Game;
 import estg.mee.piscoreboard.utils.DialogManager;
 import estg.mee.piscoreboard.utils.ListViewSwipeGesture;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 /**
  * Created by Pedro on 13/05/2015.
@@ -47,16 +51,24 @@ public class PublicityManagmentFragment extends Fragment {
 
     private View rootView = null;
 
+    private static final int puBID = 3;
     EntryAdapter adapter;
     // List view
     private ListView lv;
 
+    private Game jogo;
+
     // Search EditText
     EditText inputSearch;
 
-
+    //ArrayList<String> pubs = new ArrayList<String>();
+    //String pubs;
     // ArrayList for Listview
     ArrayList<Item> items = new ArrayList<Item>();
+
+    public PublicityManagmentFragment(Game jogo) {
+        this.jogo = jogo;
+    }
 
     @Nullable
     @Override
@@ -66,17 +78,14 @@ public class PublicityManagmentFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        items.add(new EntryItem("Café",null ,null, "/storage/sdcard0/DCIM/Camera/football_ball.png",0));
-        items.add(new EntryItem("Padaria",null ,null, "/storage/sdcard1/DCIM/Camera/IMG_20150526_155949.jpg",0));
+
+//        items.add(new EntryItem("Café",null ,null, "/storage/sdcard0/DCIM/Camera/football_ball.png",0));
+//        items.add(new EntryItem("Padaria",null ,null, "/storage/sdcard1/DCIM/Camera/IMG_20150526_155949.jpg",0));
 
 
         lv = (ListView) this.rootView.findViewById(R.id.list_viewaa);
         lv.setTextFilterEnabled(true);
         inputSearch = (EditText) this.rootView.findViewById(R.id.inputSearch);
-
-
-        adapter = new EntryAdapter(getActivity(), items);
-        lv.setAdapter(adapter);
 
         final ListViewSwipeGesture touchListener = new ListViewSwipeGesture( lv, swipeListener, getActivity());
         touchListener.SwipeType	=	ListViewSwipeGesture.Double;    //Set two options at background of list item
@@ -112,6 +121,32 @@ public class PublicityManagmentFragment extends Fragment {
 
         return rootView;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.refreshPubList();
+    }
+
+    private void refreshPubList(){
+
+        for(Iterator<String> i = jogo.getPublictyList().iterator(); i.hasNext(); ) {
+            String item = i.next();
+            items.add(new EntryItem(getImageName(item), null, null, item, 0));
+        }
+        adapter = new EntryAdapter(getActivity(), items);
+        lv.setAdapter(adapter);
+    }
+
+    private String getImageName(String imagePath){
+
+        int index = imagePath.lastIndexOf('/');
+
+        String name = imagePath.substring(index+1,imagePath.lastIndexOf("."));
+
+        return name;
+    }
+
     ListViewSwipeGesture.TouchCallbacks swipeListener = new ListViewSwipeGesture.TouchCallbacks() {
 
         @Override
@@ -155,7 +190,40 @@ public class PublicityManagmentFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.edit, menu);
-        menu.findItem(R.id.action_add).setVisible(true);
+        menu.findItem(R.id.action_addPub).setVisible(true);
+        menu.findItem(R.id.action_addTeams).setVisible(false);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case R.id.action_addPub:{
+
+                int selectedMode = MultiImageSelectorActivity.MODE_MULTI;
+
+                boolean showCamera = true;
+
+                int maxNum = 9;
+
+                Intent intent = new Intent(getActivity(), MultiImageSelectorActivity.class);
+
+                intent.putExtra(MultiImageSelectorActivity.EXTRA_FRAGMENT_ID, puBID);
+
+                intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, showCamera);
+
+                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, maxNum);
+
+                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
+
+                if (MainActivity.getmSelectPath() != null && MainActivity.getmSelectPath().size() > 0) {
+                    intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, MainActivity.getmSelectPath());
+                }
+                getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
+
+            } break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

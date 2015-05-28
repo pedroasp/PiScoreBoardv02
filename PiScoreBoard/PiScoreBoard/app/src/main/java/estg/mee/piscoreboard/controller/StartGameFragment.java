@@ -33,7 +33,7 @@ public class StartGameFragment extends Fragment {
 
     private View rootView = null;
 
-   private ArrayList<String> mSelectPath;
+   //private ArrayList<String> mSelectPath;
 
     @Nullable
     @Override
@@ -105,8 +105,8 @@ public class StartGameFragment extends Fragment {
 
                         intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
 
-                        if (mSelectPath != null && mSelectPath.size() > 0) {
-                            intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
+                        if (MainActivity.getmSelectPath() != null && MainActivity.getmSelectPath().size() > 0) {
+                            intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, MainActivity.getmSelectPath());
                         }
                         getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
 

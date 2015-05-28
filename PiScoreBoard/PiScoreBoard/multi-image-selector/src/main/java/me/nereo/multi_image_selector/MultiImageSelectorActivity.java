@@ -16,6 +16,7 @@ import java.util.ArrayList;
  */
 public class MultiImageSelectorActivity extends FragmentActivity implements MultiImageSelectorFragment.Callback{
 
+    public static final String EXTRA_FRAGMENT_ID = "fragment_id";
     /** 最大图片选择次数，int类型，默认9 */
     public static final String EXTRA_SELECT_COUNT = "max_select_count";
     /** 图片选择模式，默认多选 */
@@ -35,13 +36,18 @@ public class MultiImageSelectorActivity extends FragmentActivity implements Mult
     private ArrayList<String> resultList = new ArrayList<>();
     private Button mSubmitButton;
     private int mDefaultCount;
-
+    private int fragmentID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_default);
 
         Intent intent = getIntent();
+
+      //  intent.putExtra(EXTRA_FRAGMENT_ID,intent.getIntExtra(EXTRA_FRAGMENT_ID, 0));
+
+        fragmentID = intent.getIntExtra(EXTRA_FRAGMENT_ID, 0);
+
         mDefaultCount = intent.getIntExtra(EXTRA_SELECT_COUNT, 9);
         int mode = intent.getIntExtra(EXTRA_SELECT_MODE, MODE_MULTI);
         boolean isShow = intent.getBooleanExtra(EXTRA_SHOW_CAMERA, true);
@@ -84,6 +90,7 @@ public class MultiImageSelectorActivity extends FragmentActivity implements Mult
                     // 返回已选择的图片数据
                     Intent data = new Intent();
                     data.putStringArrayListExtra(EXTRA_RESULT, resultList);
+                    data.putExtra(EXTRA_FRAGMENT_ID, fragmentID);
                     setResult(RESULT_OK, data);
                     finish();
                 }
@@ -96,6 +103,7 @@ public class MultiImageSelectorActivity extends FragmentActivity implements Mult
         Intent data = new Intent();
         resultList.add(path);
         data.putStringArrayListExtra(EXTRA_RESULT, resultList);
+        data.putExtra(EXTRA_FRAGMENT_ID, fragmentID);
         setResult(RESULT_OK, data);
         finish();
     }

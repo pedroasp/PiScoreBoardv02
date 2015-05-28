@@ -8,9 +8,10 @@
         android:orderInCategory="9999"
         app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/action_add"
-        android:title="Add"
-        android:icon="@drawable/android_add"
-        android:orderInCategory="10"
-        app:showAsAction="ifRoom" />
+
+    <!--<item android:id="@+id/action_add"-->
+        <!--android:title="Add"-->
+        <!--android:icon="@drawable/android_add"-->
+        <!--android:orderInCategory="10"-->
+        <!--app:showAsAction="ifRoom" />-->
 </menu>
