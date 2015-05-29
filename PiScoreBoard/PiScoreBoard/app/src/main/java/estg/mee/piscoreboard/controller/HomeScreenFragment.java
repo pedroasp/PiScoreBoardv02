@@ -5,14 +5,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import estg.mee.piscoreboard.R;
+import me.nereo.multi_image_selector.bean.Image;
 
 /**
  * Created by Rúben Rodrigues on 07-05-2015.
@@ -28,15 +33,44 @@ public class HomeScreenFragment extends Fragment {
     float finalX, finalY;
     TextView  sLocalGoals, sVisitGoals, sTime, sLocalFaults, sVisitFaults;
     private String message;
+    ImageView sLocalLogo, sVisitLogo;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         rootview = inflater.inflate(R.layout.fragment_home_screen,container,false);
+        //RelativeLayout myFragment = (RelativeLayout) rootview.findViewById(R.id.teste);
 
+
+        //DisplayMetrics metrics = new DisplayMetrics();
+        //getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        // int aa = metrics.widthPixels;
+
+        int height = this.getResources().getDisplayMetrics().heightPixels;
+        int width = this.getResources().getDisplayMetrics().widthPixels;
+
+
+        final int HCENTER = (int) (width * 0.5);   //Centro Horizontal
+        final int desfasamentoSimbolos = (int) (width * 0.25);
 
         sLocalGoals= (TextView) rootview.findViewById(R.id.sLocalGoals);
         sTime = (TextView) rootview.findViewById(R.id.sTime);
+
+        sLocalLogo = (ImageView) rootview.findViewById(R.id.sLocalLogo);
+        sVisitLogo = (ImageView) rootview.findViewById(R.id.sVisitLogo);
+
+
+          //setFrame()
+        sLocalLogo.setLeft(HCENTER - desfasamentoSimbolos-sLocalLogo.getMeasuredWidth());
+        sLocalLogo.setTop((int) (width * 0.15));
+        sLocalLogo.setMaxWidth((int) (width * 0.15));
+        sLocalLogo.setMaxHeight((int) (height * 0.15));
+
+
+        sVisitLogo.setLeft(200);
+        sVisitLogo.setTop(200);
+
 
         sLocalGoals.setOnTouchListener(new View.OnTouchListener() {
 
@@ -56,16 +90,14 @@ public class HomeScreenFragment extends Fragment {
 
                         if (finalY - initialY > 100 && nLocal != 0) {
                             nLocal--;
-                            message = getString(R.string.downLocalGoals);
-                            ((MainActivity)getActivity()).sendCommand(message);
                             if(nLocal<0) nLocal=0;
                         } else if (initialY - finalY > 100) {
                             nLocal++;
-                            message = getString(R.string.upLocalGoals);
-                            ((MainActivity)getActivity()).sendCommand(message);
                         }
-
+                        message = getString(R.string.LocalGoals).concat("@"+nLocal+"@");
+                        ((MainActivity)getActivity()).sendCommand(message);
                         sLocalGoals.setText("" + nLocal);
+
                         ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sLocalGoals.getLayoutParams();
                         if (nLocal>9){
                             llp.setMargins(15, 0, 0, 0);
@@ -103,14 +135,13 @@ public class HomeScreenFragment extends Fragment {
 
                         if (finalY - initialY > 100 && nVisit != 0) {
                             nVisit--;
-                            message = getString(R.string.downVisitGoals);
-                            ((MainActivity)getActivity()).sendCommand(message);
                             if(nVisit<0) nVisit=0;
                         } else if (initialY - finalY > 100) {
                             nVisit++;
-                            message = getString(R.string.upVisitGoals);
-                            ((MainActivity)getActivity()).sendCommand(message);
                         }
+                        message = getString(R.string.VisitGoals).concat("@"+nVisit+"@");
+                        ((MainActivity)getActivity()).sendCommand(message);
+
                         sVisitGoals.setText("" + nVisit);
 
 
@@ -152,14 +183,12 @@ public class HomeScreenFragment extends Fragment {
 
                         if (finalY - initialY > 20 && nLocalFaults != 0) {
                             nLocalFaults--;
-                            message = getString(R.string.downLocalFaults);
-                            ((MainActivity)getActivity()).sendCommand(message);
                             if(nLocalFaults<0) nLocalFaults=0;
                         } else if (initialY - finalY > 100) {
                             nLocalFaults++;
-                            message = getString(R.string.upLocalFaults);
-                            ((MainActivity)getActivity()).sendCommand(message);
                         }
+                        message = getString(R.string.LocalFaults).concat("@"+nLocalFaults+"@");
+                        ((MainActivity)getActivity()).sendCommand(message);
                         sLocalFaults.setText("" + nLocalFaults);
 
 //                        ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sLocalFaults.getLayoutParams();
@@ -199,14 +228,12 @@ public class HomeScreenFragment extends Fragment {
 
                         if (finalY - initialY > 20 && nVisitFaults != 0) {
                             nVisitFaults--;
-                            message = getString(R.string.downVisitFaults);
-                            ((MainActivity)getActivity()).sendCommand(message);
                             if(nVisitFaults<0) nVisitFaults=0;
                         } else if (initialY - finalY > 100) {
                             nVisitFaults++;
-                            message = getString(R.string.upVisitFaults);
-                            ((MainActivity)getActivity()).sendCommand(message);
                         }
+                        message = getString(R.string.VisitFaults).concat("@"+nVisitFaults+"@");
+                        ((MainActivity)getActivity()).sendCommand(message);
                         sVisitFaults.setText("" + nVisitFaults);
 
 //                        ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sLocalFaults.getLayoutParams();

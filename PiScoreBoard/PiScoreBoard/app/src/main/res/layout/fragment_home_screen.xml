@@ -3,7 +3,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    android:id="@+id/teste">
 
 
     <TextView
@@ -27,11 +28,9 @@
         android:src="@drawable/benfica"
         android:adjustViewBounds="true"
         android:clickable="true"
-        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="140dp"
         android:layout_alignParentStart="false"
         />
 
@@ -89,11 +88,7 @@
         android:src="@drawable/porto"
         android:adjustViewBounds="true"
         android:clickable="true"
-        android:layout_gravity="right|top"
-        android:layout_marginLeft="130dp"
-        android:layout_marginStart="39dp"
-        android:layout_toRightOf="@+id/sLocalLogo"
-        android:layout_alignTop="@+id/sLocalLogo" />
+        android:layout_gravity="right|top"/>
 
     <TextView
         android:layout_width="wrap_content"
