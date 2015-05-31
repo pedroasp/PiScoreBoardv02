@@ -10,6 +10,10 @@ public class Team {
     private boolean uploadstate;
 
     public Team() {
+        this.id = 0;
+        this.name = null;
+        this.logotipo = null;
+        this.uploadstate = false;
     }
 
     public int getId() {

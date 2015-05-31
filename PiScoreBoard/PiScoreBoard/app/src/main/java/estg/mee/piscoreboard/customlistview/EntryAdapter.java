@@ -163,7 +163,6 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 
                         image.requestLayout();
                         final float scale = getContext().getResources().getDisplayMetrics().density;
-
                         int pixels = (int) (40 * scale + 0.5f);
                         image.getLayoutParams().height = pixels;
                         image.getLayoutParams().width = pixels;

@@ -1,7 +1,9 @@
 package estg.mee.piscoreboard.controller;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -23,6 +25,7 @@ import java.util.Iterator;
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.customlistview.EntryItem;
 import estg.mee.piscoreboard.model.Game;
+import estg.mee.piscoreboard.model.Team;
 import estg.mee.piscoreboard.utils.ClientSendThread;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
@@ -44,19 +47,23 @@ public class MainActivity extends ActionBarActivity
 
     private static final int REQUEST_IMAGE = 2;
 
-    private static ArrayList<String> mSelectPath = null;
+//    private static ArrayList<String> mSelectPath = null;
 
     public Game jogo;
 
+    public static String newTeamPath;
 
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    public static SharedPreferences sharedpreferences;
+    public static SharedPreferences.Editor editor;
 
-    public static ArrayList<String> getmSelectPath() {
-        return mSelectPath;
-    }
+//    public static ArrayList<String> getmSelectPath() {
+//        return mSelectPath;
+//    }
 
-    public void setmSelectPath(ArrayList<String> mSelectPath) {
-        this.mSelectPath = mSelectPath;
-    }
+////    public void setmSelectPath(ArrayList<String> mSelectPath) {
+//        this.mSelectPath = mSelectPath;
+//    }
 
     public static int getRequestImage() {
         return REQUEST_IMAGE;
@@ -73,6 +80,9 @@ public class MainActivity extends ActionBarActivity
 
         jogo = new Game();
 
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
+       // preferences = this.getActivity().getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
@@ -246,15 +256,12 @@ public class MainActivity extends ActionBarActivity
                         jogo.setPublictyList(data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT));
 
                     break;
-                    case 4:
-                        mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                        StringBuilder sb = new StringBuilder();
-                        for(String p: mSelectPath){
-                            sb.append(p);
-                            sb.append("\n");
-                        }
-                        Toast.makeText(this, sb.toString(), Toast.LENGTH_SHORT).show();
-                        break;
+                    case 5: {
+                        String fullPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT).toString();
+                        int index = fullPath.indexOf("[");
+                        newTeamPath = fullPath.substring(index+1,fullPath.lastIndexOf("]"));
+
+                    }break;
                 }
 
             }

@@ -1,10 +1,10 @@
 package estg.mee.piscoreboard.controller;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -20,8 +20,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -30,22 +31,26 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.customlistview.EntryAdapter;
 import estg.mee.piscoreboard.customlistview.EntryItem;
 import estg.mee.piscoreboard.customlistview.Item;
+import estg.mee.piscoreboard.model.PiScoreBoard;
+import estg.mee.piscoreboard.model.Team;
 import estg.mee.piscoreboard.utils.ListViewSwipeGesture;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 /**
  * Created by Pedro on 22/05/2015.
  */
-public class TeamsManagmentFragment extends Fragment{
+public class TeamsManagmentFragment extends Fragment implements Filterable{
 
     private View rootView = null;
 
-    private static final int teamsID = 4;
 
     EntryAdapter adapter;
     // List view
@@ -54,9 +59,23 @@ public class TeamsManagmentFragment extends Fragment{
     // Search EditText
     EditText inputSearch;
 
+    private static final int teamsFragmentID = 4;
+    private static final int addTeamID = 5;
+
+    int selectedMode = MultiImageSelectorActivity.MODE_SINGLE;
+
+    boolean showCamera = true;
+
+    int maxNum = 9;
+
+    PiScoreBoard lists = PiScoreBoard.getInstance();
 
     // ArrayList for Listview
     ArrayList<Item> items = new ArrayList<Item>();
+
+    ArrayList<String> TeamsName = new ArrayList<String>();
+    ArrayList<String> TeamsLogo= new ArrayList<String>();
+    ArrayList<String> TeamsID= new ArrayList<String>();
 
     @Nullable
     @Override
@@ -65,10 +84,6 @@ public class TeamsManagmentFragment extends Fragment{
         this.rootView = rootView;
 
         setHasOptionsMenu(true);
-
-        items.add(new EntryItem("FC Porto",null ,null, null,0));
-        items.add(new EntryItem("Leos de Porto Salvo",null ,null, null,0));
-        items.add(new EntryItem("Benfica",null ,null, null,0));
 
         lv = (ListView) this.rootView.findViewById(R.id.list_viewaa);
         inputSearch = (EditText) this.rootView.findViewById(R.id.inputSearch);
@@ -82,6 +97,12 @@ public class TeamsManagmentFragment extends Fragment{
 
         lv.setOnTouchListener(touchListener);
 
+    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            ShowDetailsDialog(getActivity(), lists.getListOfTeams().get(position));
+        }
+    });
         /**
          * Enabling Search Filter
          * */
@@ -90,7 +111,7 @@ public class TeamsManagmentFragment extends Fragment{
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
                 // When user changed the Text
-                adapter.getFilter().filter(cs);
+                getFilter().filter(cs);
                 // adapter.getFilter().convertResultToString(cs);
             }
 
@@ -107,10 +128,63 @@ public class TeamsManagmentFragment extends Fragment{
             }
         });
 
-        //this.initSettingsFields();
+        Set<String> set = MainActivity.sharedpreferences.getStringSet("TeamNames", null);
+        TeamsName.addAll(set);
+        Set<String> set1 = MainActivity.sharedpreferences.getStringSet("TeamLogos", null);
+        TeamsLogo.addAll(set1);
+        Set<String> set2 = MainActivity.sharedpreferences.getStringSet("TeamIDs", null);
+        TeamsID.addAll(set2);
+
+        lists.getListOfTeams().clear();
+
+        for(int j = 0 ;  j< TeamsName.size(); j++){
+            Team equipa = new Team();
+            equipa.setName(TeamsName.get(j));
+            equipa.setLogotipo(TeamsLogo.get(j));
+            equipa.setId(Integer.parseInt(TeamsID.get(j)));
+
+            lists.getListOfTeams().add(j, equipa);
+        }
 
         return rootView;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        items.clear();
+
+        for(Iterator<Team> i = lists.getListOfTeams().iterator(); i.hasNext(); ) {
+            Team item = i.next();
+            items.add(new EntryItem(item.getName(), null, null, item.getLogotipo(), 0));
+        }
+        adapter = new EntryAdapter(getActivity(), items);
+        lv.setAdapter(adapter);
+        TeamsName.clear();
+        TeamsLogo.clear();
+        TeamsID.clear();
+
+        for(int j = 0 ;  j< lists.getListOfTeams().size(); j++){
+            TeamsName.add(j, lists.getListOfTeams().get(j).getName());
+            TeamsLogo.add(j, lists.getListOfTeams().get(j).getLogotipo());
+            TeamsID.add(j, String.valueOf(lists.getListOfTeams().get(j).getId()));
+        }
+
+        Set<String> set = new HashSet<String>();
+        Set<String> set1 = new HashSet<String>();
+        Set<String> set2 = new HashSet<String>();
+
+
+        set.addAll(TeamsName);
+        MainActivity.editor.putStringSet("TeamNames", set);
+        set1.addAll(TeamsLogo);
+        MainActivity.editor.putStringSet("TeamLogos", set1);
+        set2.addAll(TeamsID);
+        MainActivity.editor.putStringSet("TeamIDs", set2);
+
+        MainActivity.editor.commit();
+    }
+
     ListViewSwipeGesture.TouchCallbacks swipeListener = new ListViewSwipeGesture.TouchCallbacks() {
 
         @Override
@@ -144,8 +218,7 @@ public class TeamsManagmentFragment extends Fragment{
         @Override
         public void OnClickListView(int position) {
             // TODO Auto-generated method stub
-            //  startActivity(new Intent(getApplicationContext(),TestActivity.class));
-            onCreateInfoDialog(getActivity(), "Benfica");
+
         }
 
     };
@@ -158,6 +231,48 @@ public class TeamsManagmentFragment extends Fragment{
         menu.findItem(R.id.action_addPub).setVisible(false);
     }
 
+    public Filter getFilter(){
+        return new Filter(){
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                constraint = constraint.toString().toLowerCase();
+                FilterResults result = new FilterResults();
+
+                if (constraint != null && constraint.toString().length() > 0) {
+                    ArrayList<Team> founded = new ArrayList<Team>();
+
+                    for(Iterator<Team> i = lists.getListOfTeams().iterator(); i.hasNext(); ) {
+                        Team item = i.next();
+                        if(item.getName().toLowerCase().contains(constraint)){
+                            founded.add(item);
+                        }
+                    }
+                    result.values = founded;
+                    result.count = founded.size();
+                }else {
+                    result.values = lists.getListOfTeams();
+                    result.count = lists.getListOfTeams().size();
+                }
+                return result;
+
+
+            }
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+                items.clear();
+
+                for (Team item : (ArrayList<Team>) results.values) {
+                    items.add(new EntryItem(item.getName(), null, null, item.getLogotipo(), 0));
+                }
+                adapter = new EntryAdapter(getActivity(), items);
+                lv.setAdapter(adapter);
+
+            }
+
+        };
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -165,26 +280,7 @@ public class TeamsManagmentFragment extends Fragment{
 
             case R.id.action_addTeams:{
 
-                int selectedMode = MultiImageSelectorActivity.MODE_SINGLE;
-
-                boolean showCamera = true;
-
-                int maxNum = 9;
-
-                Intent intent = new Intent(getActivity(), MultiImageSelectorActivity.class);
-
-                intent.putExtra(MultiImageSelectorActivity.EXTRA_FRAGMENT_ID, teamsID);
-
-                intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, showCamera);
-
-                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, maxNum);
-
-                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
-
-                if (MainActivity.getmSelectPath() != null && MainActivity.getmSelectPath().size() > 0) {
-                    intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, MainActivity.getmSelectPath());
-                }
-                getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
+                  AddTeamDialog(getActivity());
 
             } break;
         }
@@ -192,19 +288,23 @@ public class TeamsManagmentFragment extends Fragment{
         return super.onOptionsItemSelected(item);
     }
 
-    public void onCreateInfoDialog(Context c, String title ) {
+    public void EditTeamDialog(Context c, String title ) {
 
         final ImageView img = new ImageView(c);
         File imgFile = new File("/storage/sdcard0/DCIM/Camera/football_ball.png");
         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
         img.setImageBitmap(myBitmap);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setTitle(title);
 
-      //  builder.setMessage("Editar imagem:");
-        //builder.setView(img);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
 
         final TextView editImage= new TextView(c);
         editImage.setText("Editar imagem:");
@@ -212,11 +312,9 @@ public class TeamsManagmentFragment extends Fragment{
         editNome.setText("Editar nome:");
         editNome.setHint("Benfica");
 
-        // Set up the input
         final EditText input = new EditText(c);
-        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+
         input.setInputType(InputType.TYPE_CLASS_TEXT );
-//        builder.setView(input);
 
         LinearLayout ll=new LinearLayout(c);
         ll.setOrientation(LinearLayout.VERTICAL);
@@ -234,6 +332,94 @@ public class TeamsManagmentFragment extends Fragment{
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.show();
+
+    }
+int actualID = 0;
+    public void AddTeamDialog(Context c ) {
+
+        Team novaEquipa = new Team();
+        final ImageView img = new ImageView(c);
+        img.setImageResource(R.drawable.question_icon);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setTitle("Adicionar equipa");
+
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), MultiImageSelectorActivity.class);
+
+                intent.putExtra(MultiImageSelectorActivity.EXTRA_FRAGMENT_ID, addTeamID);
+
+                intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, showCamera);
+
+                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, maxNum);
+
+                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
+
+                getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
+            }
+        });
+
+        final TextView editImage= new TextView(c);
+        editImage.setText("Definir imagem:");
+        final TextView editNome = new TextView(c);
+        editNome.setText("Definir nome:");
+
+        final EditText input = new EditText(c);
+
+        input.setInputType(InputType.TYPE_CLASS_TEXT );
+
+        LinearLayout ll=new LinearLayout(c);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        ll.addView(editImage);
+        ll.addView(img);
+        ll.addView(editNome);
+        ll.addView(input);
+        builder.setView(ll);
+
+        //Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Team newTeam = new Team();
+                newTeam.setName(input.getText().toString());
+                newTeam.setLogotipo(MainActivity.newTeamPath);
+                newTeam.setId(actualID++);
+                lists.getListOfTeams().add(newTeam);
+                MainActivity.newTeamPath = null;
+                onResume();
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.show();
+
+    }
+    public void ShowDetailsDialog(Context c , Team team) {
+
+        final ImageView img = new ImageView(c);
+        File imgFile = new File(team.getLogotipo());
+        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+        img.setImageBitmap(myBitmap);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setTitle(team.getName());
+
+        builder.setView(img);
+
+        //Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }

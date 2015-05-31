@@ -1,19 +1,18 @@
 package estg.mee.piscoreboard.controller;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 //import android.app.Fragment;
-import android.app.SearchManager;
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
-import android.os.Bundle;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v4.app.Fragment;
+        import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
+        import android.text.Editable;
+        import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,33 +20,32 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.NumberPicker;
-import android.widget.SearchView;
-import android.widget.Toast;
+        import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.customlistview.EntryAdapter;
 import estg.mee.piscoreboard.customlistview.EntryItem;
-import estg.mee.piscoreboard.customlistview.EntryItemSwitch;
-import estg.mee.piscoreboard.customlistview.Item;
-import estg.mee.piscoreboard.customlistview.SectionItem;
-import estg.mee.piscoreboard.model.Game;
-import estg.mee.piscoreboard.utils.DialogManager;
+        import estg.mee.piscoreboard.customlistview.Item;
+        import estg.mee.piscoreboard.model.Game;
+import estg.mee.piscoreboard.model.Team;
 import estg.mee.piscoreboard.utils.ListViewSwipeGesture;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 /**
  * Created by Pedro on 13/05/2015.
  */
-public class PublicityManagmentFragment extends Fragment {
+public class PublicityManagmentFragment extends Fragment implements Filterable{
 
     private View rootView = null;
 
@@ -61,8 +59,6 @@ public class PublicityManagmentFragment extends Fragment {
     // Search EditText
     EditText inputSearch;
 
-    //ArrayList<String> pubs = new ArrayList<String>();
-    //String pubs;
     // ArrayList for Listview
     ArrayList<Item> items = new ArrayList<Item>();
 
@@ -78,11 +74,6 @@ public class PublicityManagmentFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-
-//        items.add(new EntryItem("Café",null ,null, "/storage/sdcard0/DCIM/Camera/football_ball.png",0));
-//        items.add(new EntryItem("Padaria",null ,null, "/storage/sdcard1/DCIM/Camera/IMG_20150526_155949.jpg",0));
-
-
         lv = (ListView) this.rootView.findViewById(R.id.list_viewaa);
         lv.setTextFilterEnabled(true);
         inputSearch = (EditText) this.rootView.findViewById(R.id.inputSearch);
@@ -92,16 +83,27 @@ public class PublicityManagmentFragment extends Fragment {
 
         lv.setOnTouchListener(touchListener);
 
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ShowDetailsDialog(getActivity(), jogo.getPublictyList().get(position).toString());
+            }
+        });
+
+        //preferences = this.getActivity().getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+//        Set<String> set = preferences.getStringSet("Publist", null);
+        Set<String> set = MainActivity.sharedpreferences.getStringSet("Publist", null);
+        jogo.getPublictyList().clear();
+        jogo.getPublictyList().addAll(set);
+        //editor = MainActivity.sharedpreferences.edit();
         /**
          * Enabling Search Filter
          * */
         inputSearch.addTextChangedListener(new TextWatcher() {
-            ArrayList<String> searchArray = new ArrayList<String>();
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
                 // When user changed the Text
-                //adapter.getFilter().filter(cs);
-                // adapter.getFilter().convertResultToString(cs);
+                getFilter().filter(cs);
             }
 
             @Override
@@ -114,10 +116,9 @@ public class PublicityManagmentFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable arg0) {
                 // TODO Auto-generated method stub
+
             }
         });
-
-        //this.initSettingsFields();
 
         return rootView;
     }
@@ -125,6 +126,7 @@ public class PublicityManagmentFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        items.clear();
         this.refreshPubList();
     }
 
@@ -136,6 +138,11 @@ public class PublicityManagmentFragment extends Fragment {
         }
         adapter = new EntryAdapter(getActivity(), items);
         lv.setAdapter(adapter);
+
+        Set<String> set = new HashSet<String>();
+        set.addAll(jogo.getPublictyList());
+        MainActivity.editor.putStringSet("Publist", set);
+        MainActivity.editor.commit();
     }
 
     private String getImageName(String imagePath){
@@ -194,6 +201,49 @@ public class PublicityManagmentFragment extends Fragment {
         menu.findItem(R.id.action_addTeams).setVisible(false);
     }
 
+    public Filter getFilter(){
+        return new Filter(){
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                constraint = constraint.toString().toLowerCase();
+                FilterResults result = new FilterResults();
+
+                if (constraint != null && constraint.toString().length() > 0) {
+                    ArrayList<String> founded = new ArrayList<String>();
+
+                    for(Iterator<String> i = jogo.getPublictyList().iterator(); i.hasNext(); ) {
+                        String item = i.next();
+                        if(getImageName(item.toString()).toLowerCase().contains(constraint)){
+                            founded.add(item);
+                        }
+                    }
+
+                    result.values = founded;
+                    result.count = founded.size();
+                }else {
+                    result.values = jogo.getPublictyList();
+                    result.count = jogo.getPublictyList().size();
+                }
+                return result;
+
+
+            }
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+                items.clear();
+
+                for (String item : (ArrayList<String>) results.values) {
+                    items.add(new EntryItem(getImageName(item), null, null, item, 0));
+                }
+                adapter = new EntryAdapter(getActivity(), items);
+                lv.setAdapter(adapter);
+
+            }
+
+        };
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -217,13 +267,36 @@ public class PublicityManagmentFragment extends Fragment {
 
                 intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
 
-                if (MainActivity.getmSelectPath() != null && MainActivity.getmSelectPath().size() > 0) {
-                    intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, MainActivity.getmSelectPath());
+                if (jogo.getPublictyList() != null && jogo.getPublictyList().size() > 0) {
+                    intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, jogo.getPublictyList());
                 }
                 getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
 
             } break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void ShowDetailsDialog(Context c , String pubPath) {
+
+        final ImageView img = new ImageView(c);
+        File imgFile = new File(pubPath);
+        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+        img.setImageBitmap(myBitmap);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setTitle(getImageName(pubPath));
+
+        builder.setView(img);
+
+        //Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.show();
+
     }
 }
