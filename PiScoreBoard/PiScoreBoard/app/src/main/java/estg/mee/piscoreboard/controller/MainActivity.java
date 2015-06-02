@@ -20,6 +20,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import estg.mee.piscoreboard.R;
+import estg.mee.piscoreboard.model.Game;
 import estg.mee.piscoreboard.model.Graphics;
 import estg.mee.piscoreboard.utils.ClientSendThread;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
@@ -39,7 +40,7 @@ public class MainActivity extends ActionBarActivity
     private CharSequence mTitle;
     FragmentManager fragmentManager = getSupportFragmentManager();
     Fragment objFragment = null;
-    public Graphics graphics;
+    public static Graphics graphics;
 
     private static final int REQUEST_IMAGE = 2;
 

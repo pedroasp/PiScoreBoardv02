@@ -19,6 +19,8 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import estg.mee.piscoreboard.R;
+import estg.mee.piscoreboard.controller.MainActivity;
+import estg.mee.piscoreboard.model.Game;
 
 
 public class EntryAdapter extends ArrayAdapter<Item> {
@@ -124,14 +126,32 @@ public class EntryAdapter extends ArrayAdapter<Item> {
             } else if (i.isSettings()== 3) {
 
                 // Entry Item Button
-                EntryItemButton eib = (EntryItemButton)i;
+                final EntryItemButton eib = (EntryItemButton)i;
 
                 v = vi.inflate(R.layout.list_item_entry_button, null);
                 final Button button = (Button)v.findViewById(R.id.list_item_entry_button);
 
                     if (button != null)
                     button.setText(eib.text);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (eib.id){
+                            case 1:
 
+                                MainActivity.graphics.sendColorCommand(MainActivity.graphics.BackgroundCentralColor);
+                                MainActivity.graphics.sendColorCommand(MainActivity.graphics.BackgroundSideColor);
+                                MainActivity.graphics.sendColorCommand(MainActivity.graphics.FaultColor);
+                                MainActivity.graphics.sendColorCommand(MainActivity.graphics.NamesColor);
+                                MainActivity.graphics.sendColorCommand(MainActivity.graphics.PartColor);
+                                MainActivity.graphics.sendColorCommand(MainActivity.graphics.ResultColor);
+                                MainActivity.graphics.sendColorCommand(MainActivity.graphics.TimeColor);
+
+                                break;
+
+                        }
+                    }
+                });
             } else if (i.isSettings()== 4) {
 
                 // Entry Item Two Buttons

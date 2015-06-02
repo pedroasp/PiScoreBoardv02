@@ -87,8 +87,7 @@
         android:id="@+id/sVisitLogo"
         android:src="@drawable/porto"
         android:adjustViewBounds="true"
-        android:clickable="true"
-        android:layout_gravity="right|top"/>
+        android:clickable="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -98,23 +97,13 @@
         android:textSize="@dimen/abc_text_size_display_4_material"
         android:focusableInTouchMode="false"
         android:clickable="true"
-        android:layout_gravity="left|center_vertical"
         android:inputType="number"
         android:text="@string/sLocalGoals"
         android:layout_alignTop="@+id/sVisitGoals"
-        android:layout_marginLeft="70px"
-        android:layout_alignParentLeft="false"
-        android:gravity="left|center" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_below="@+id/sVisitGoals"
-        android:layout_centerHorizontal="true"
-        android:onClick="sendCommand" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="45dp"
+        android:layout_marginStart="45dp" />
 
 
 </RelativeLayout>

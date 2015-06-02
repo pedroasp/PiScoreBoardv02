@@ -1,17 +1,22 @@
 package estg.mee.piscoreboard.controller;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
@@ -40,19 +45,13 @@ public class HomeScreenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         rootview = inflater.inflate(R.layout.fragment_home_screen,container,false);
-        //RelativeLayout myFragment = (RelativeLayout) rootview.findViewById(R.id.teste);
-
-
-        //DisplayMetrics metrics = new DisplayMetrics();
-        //getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        // int aa = metrics.widthPixels;
 
         int height = this.getResources().getDisplayMetrics().heightPixels;
         int width = this.getResources().getDisplayMetrics().widthPixels;
 
 
         final int HCENTER = (int) (width * 0.5);   //Centro Horizontal
-        final int desfasamentoSimbolos = (int) (width * 0.25);
+        final int desfasamentoSimbolos = (int) (width * 0.15);
 
         sLocalGoals= (TextView) rootview.findViewById(R.id.sLocalGoals);
         sTime = (TextView) rootview.findViewById(R.id.sTime);
@@ -61,16 +60,50 @@ public class HomeScreenFragment extends Fragment {
         sVisitLogo = (ImageView) rootview.findViewById(R.id.sVisitLogo);
 
 
-          //setFrame()
-        sLocalLogo.setLeft(HCENTER - desfasamentoSimbolos-sLocalLogo.getMeasuredWidth());
-        sLocalLogo.setTop((int) (width * 0.15));
-        sLocalLogo.setMaxWidth((int) (width * 0.15));
-        sLocalLogo.setMaxHeight((int) (height * 0.15));
+        //Resize Logos
+        android.view.ViewGroup.LayoutParams sLocalLogoLayoutParams = sLocalLogo.getLayoutParams();
+        android.view.ViewGroup.LayoutParams sVisitLogoLayoutParams = sVisitLogo.getLayoutParams();
+        sLocalLogoLayoutParams.width = (int) (width * 0.20);
+        sLocalLogoLayoutParams.height = (int) (height * 0.20);
+        sVisitLogoLayoutParams.width = (int) (width * 0.20);
+        sVisitLogoLayoutParams.height = (int) (height * 0.20);
 
 
-        sVisitLogo.setLeft(200);
-        sVisitLogo.setTop(200);
+        sLocalLogo.setLayoutParams(sLocalLogoLayoutParams);
+        sVisitLogo.setLayoutParams(sVisitLogoLayoutParams);
 
+//    //Draw Point
+//        //...
+//        RelativeLayout root = (RelativeLayout) rootview.findViewById(R.id.teste);
+//        ImageView img = new ImageView(getActivity());
+//        img.setBackgroundColor(Color.RED);
+//        //..load something inside the ImageView, we just set the background color
+//
+//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(20, 200);
+//        params.leftMargin = 50;
+//        params.topMargin  = 205;
+//        root.addView(img, params);
+//        //...
+//    //
+
+        ViewGroup.MarginLayoutParams sLocalLogoMargins = (ViewGroup.MarginLayoutParams) sLocalLogo.getLayoutParams();
+        sLocalLogoMargins.setMargins(HCENTER - desfasamentoSimbolos - sLocalLogo.getLayoutParams().width,
+                (int) (width * 0.04), 0, 0);//all in pixels
+        sLocalLogo.setLayoutParams(sLocalLogoMargins);
+
+        ViewGroup.MarginLayoutParams sVisitLogoMargins = (ViewGroup.MarginLayoutParams) sVisitLogo.getLayoutParams();
+        sVisitLogoMargins.setMargins(HCENTER + desfasamentoSimbolos,
+                (int) (width * 0.04), 0, 0);//all in pixels
+        sVisitLogo.setLayoutParams(sVisitLogoMargins);
+
+
+        //sLocalGoals.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) (width/7));
+
+        //sLocalGoals = (TextView) rootview.findViewById(R.id.sLocalGoals);
+        //ViewGroup.MarginLayoutParams sLocalGoalsMargins = (ViewGroup.MarginLayoutParams) sLocalGoals.getLayoutParams();
+
+        //sLocalGoalsMargins.setMargins(0 ,-5, 0, 0);//all in pixels
+        //sLocalGoals.setLayoutParams(sLocalGoalsMargins);
 
         sLocalGoals.setOnTouchListener(new View.OnTouchListener() {
 

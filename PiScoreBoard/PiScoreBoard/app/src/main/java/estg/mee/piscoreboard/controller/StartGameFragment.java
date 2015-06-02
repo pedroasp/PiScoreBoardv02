@@ -62,7 +62,7 @@ public class StartGameFragment extends Fragment {
         items.add(new EntryItem("File picker", null,null, null,0));
 
         //items.add(new SectionItem(getResources().getString(R.string.sectionDefinicoesAvancadas)));
-        items.add(new EntryItemButton(10,getResources().getString(R.string.iniciarJogoButtonText)));
+        items.add(new EntryItemButton(1,getResources().getString(R.string.iniciarJogoButtonText)));
 
         EntryAdapter adapter = new EntryAdapter(getActivity(), items);
         settingsList.setAdapter(adapter);
@@ -111,11 +111,14 @@ public class StartGameFragment extends Fragment {
                         getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
 
                     }break;
+
                 }
             }
         });
 
     }
+
+
     public Dialog onCreateDialogSingleChoice(String[] array, String title ) {
 
 //Initialize the Alert Dialog
