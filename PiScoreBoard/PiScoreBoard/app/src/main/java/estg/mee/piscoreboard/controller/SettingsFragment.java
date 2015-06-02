@@ -32,21 +32,28 @@ import estg.mee.piscoreboard.customlistview.EntryItemTwoButtons;
 import estg.mee.piscoreboard.customlistview.EntryItemButton;
 import estg.mee.piscoreboard.customlistview.Item;
 import estg.mee.piscoreboard.customlistview.SectionItem;
+import estg.mee.piscoreboard.model.Graphics;
 import estg.mee.piscoreboard.utils.ColorPickerDialog;
 import estg.mee.piscoreboard.utils.ColorPickerDialog.OnColorSelectedListener;
 
+import static android.text.TextUtils.concat;
 
 
 public class SettingsFragment extends Fragment {
 
 
     private View rootView = null;
+    ColorPickerDialog colorPickerDialog;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
         this.rootView = rootView;
         this.initSettingsFields();
+
+
         return rootView;
     }
 
@@ -78,7 +85,14 @@ public class SettingsFragment extends Fragment {
         items.add(new EntryItemTwoButtons(1,getResources().getString(R.string.labelDesligar),2, getResources().getString(R.string.labelReiniciar) ));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionColors)));
-        items.add(new EntryItem(getResources().getString(R.string.itemBackgroundColor), getResources().getString(R.string.summaryItemBackgroundColor),null,null, 0));
+        items.add(new EntryItem(getResources().getString(R.string.itemBackgroundCentralColor), getResources().getString(R.string.summaryItemBackgroundCentralColor),null,null, 0));
+        items.add(new EntryItem(getResources().getString(R.string.itemBackgroundSideColor), getResources().getString(R.string.summaryItemBackgroundSideColor),null,null, 0));
+        items.add(new EntryItem(getResources().getString(R.string.itemResultColor), getResources().getString(R.string.summaryItemResultColor),null,null, 0));
+        items.add(new EntryItem(getResources().getString(R.string.itemFaultColor), getResources().getString(R.string.summaryItemFaultColor),null,null, 0));
+        items.add(new EntryItem(getResources().getString(R.string.itemNameColor), getResources().getString(R.string.summaryItemNameColor),null,null, 0));
+        items.add(new EntryItem(getResources().getString(R.string.itemPartColor), getResources().getString(R.string.summaryItemPartColor),null,null, 0));
+        items.add(new EntryItem(getResources().getString(R.string.itemTimeColor), getResources().getString(R.string.summaryItemTimeColor),null,null, 0));
+
 
         EntryAdapter adapter = new EntryAdapter(getActivity(), items);
         settingsList.setAdapter(adapter);
@@ -89,7 +103,7 @@ public class SettingsFragment extends Fragment {
         settingsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int initialColor = Color.WHITE;
+               final int initialColor = Color.BLACK;
                // Object listItem = settingsList.getItemAtPosition(position);
                 String[] temporizacao = {"Relógio", "Cronómetro"};
                 switch (position){
@@ -104,10 +118,72 @@ public class SettingsFragment extends Fragment {
                         break;
 
                     case 8:
-                        ColorPickerDialog colorPickerDialog = new ColorPickerDialog(getActivity(), initialColor, new OnColorSelectedListener() {
+                        colorPickerDialog = new ColorPickerDialog(getActivity(), ((MainActivity)getActivity()).graphics.getBackgroundCentralColor(), new OnColorSelectedListener() {
                             @Override
                             public void onColorSelected(int color) {
+                                ((MainActivity)getActivity()).graphics.setBackgroundCentralColor(color);
+                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.BackgroundCentralColor);
+                            }
+                        });
+                        colorPickerDialog.show();
+                        break;
+                    case 9:
+                        colorPickerDialog = new ColorPickerDialog(getActivity(), ((MainActivity)getActivity()).graphics.getBackgroundSideColor(), new OnColorSelectedListener() {
+                            @Override
+                            public void onColorSelected(int color) {
+                                ((MainActivity)getActivity()).graphics.setBackgroundSideColor(color);
+                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.BackgroundSideColor);
+                            }
+                        });
+                        colorPickerDialog.show();
+                        break;
+                    case 10:
+                        colorPickerDialog = new ColorPickerDialog(getActivity(), ((MainActivity)getActivity()).graphics.getResultColor(), new OnColorSelectedListener() {
+                            @Override
+                            public void onColorSelected(int color) {
+                                ((MainActivity)getActivity()).graphics.setResultColor(color);
+                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.ResultColor);
+                            }
+                        });
+                        colorPickerDialog.show();
+                        break;
+                    case 11:
+                        colorPickerDialog = new ColorPickerDialog(getActivity(), ((MainActivity)getActivity()).graphics.getFaultColor(), new OnColorSelectedListener() {
+                            @Override
+                            public void onColorSelected(int color) {
+                                ((MainActivity)getActivity()).graphics.setFaultColor(color);
+                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.FaultColor);
 
+                            }
+                        });
+                        colorPickerDialog.show();
+                        break;
+                    case 12:
+                        colorPickerDialog = new ColorPickerDialog(getActivity(), ((MainActivity)getActivity()).graphics.getNamesColor(), new OnColorSelectedListener() {
+                            @Override
+                            public void onColorSelected(int color) {
+                                ((MainActivity)getActivity()).graphics.setNamesColor(color);
+                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.NamesColor);
+                            }
+                        });
+                        colorPickerDialog.show();
+                        break;
+                    case 13:
+                        colorPickerDialog = new ColorPickerDialog(getActivity(), ((MainActivity)getActivity()).graphics.getPartColor(), new OnColorSelectedListener() {
+                            @Override
+                            public void onColorSelected(int color) {
+                                ((MainActivity)getActivity()).graphics.setPartColor(color);
+                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.PartColor);
+                            }
+                        });
+                        colorPickerDialog.show();
+                        break;
+                    case 14:
+                        colorPickerDialog = new ColorPickerDialog(getActivity(), ((MainActivity)getActivity()).graphics.getTimeColor(), new OnColorSelectedListener() {
+                            @Override
+                            public void onColorSelected(int color) {
+                                ((MainActivity)getActivity()).graphics.setTimeColor(color);
+                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.TimeColor);
                             }
                         });
                         colorPickerDialog.show();

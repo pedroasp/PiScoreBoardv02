@@ -55,8 +55,21 @@
     <string name="summaryItemTemporizacao">Selecione um método de temporização</string>
 
     <string name="sectionColors">Cores</string>
-    <string name="itemBackgroundColor">Cor de fundo</string>
-    <string name="summaryItemBackgroundColor">Mude a cor de fundo</string>
+    <string name="itemBackgroundCentralColor">Cor de fundo central</string>
+    <string name="summaryItemBackgroundCentralColor">Mude a cor de fundo central</string>
+    <string name="itemBackgroundSideColor">Cor de fundo</string>
+    <string name="summaryItemBackgroundSideColor">Mude a cor de fundo</string>
+    <string name="itemResultColor">Cor dos resultados</string>
+    <string name="summaryItemResultColor">Mude a cor dos resultados</string>
+    <string name="itemFaultColor">Cor das faltas</string>
+    <string name="summaryItemFaultColor">Mude a cor das faltas</string>
+    <string name="itemNameColor">Cor dos nomes</string>
+    <string name="summaryItemNameColor">Mude a cor dos nomes</string>
+    <string name="itemPartColor">Cor das partes</string>
+    <string name="summaryItemPartColor">Mude a cor das partes</string>
+    <string name="itemTimeColor">Cor do relógio</string>
+    <string name="summaryItemTimeColor">Mude a cor do relógio</string>
+
 
     <!--                             PublicidadeFragment                          -->
     <string name="sectionPublicidade">Publicidade</string>
@@ -75,14 +88,16 @@
     <string name="edit_message">HELP</string>
 
     <!--                           Commands                                    -->
-    <string name="upVisitGoals">ggolosvisit@++@</string>
-    <string name="downVisitGoals">ggolosvisit@--@</string>
-    <string name="upLocalGoals">ggoloslocal@++@</string>
-    <string name="downLocalGoals">ggoloslocal@--@</string>
-    <string name="upVisitFaults">gfaltasvisit@++@</string>
-    <string name="downVisitFaults">gfaltasvisit@--@</string>
-    <string name="upLocalFaults">gfaltaslocal@++@</string>
-    <string name="downLocalFaults">gfaltaslocal@--@</string>
+    <string name="VisitGoals">ggolosvisit</string>
+    <string name="LocalGoals">ggoloslocal</string>
+    <string name="VisitFaults">gfaltasvisit</string>
+    <string name="LocalFaults">gfaltaslocal</string>
+    <string name="BackgroundColor">gbgColor@</string>
+    <string name="ResultColor">grColor@</string>
+    <string name="FaultColor">gfColor@</string>
+    <string name="NamesColor">gnColor@</string>
+    <string name="PartColor">gPColor@</string>
+    <string name="TimeColor">gcColor@</string>
 
     <!--                           Swipe library                                    -->
 

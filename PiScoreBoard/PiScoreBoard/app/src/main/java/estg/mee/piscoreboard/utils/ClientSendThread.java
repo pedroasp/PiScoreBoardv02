@@ -6,6 +6,11 @@ import android.app.Fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.wifi.WifiManager;
+import android.os.Looper;
+import android.os.MessageQueue;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,6 +20,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import estg.mee.piscoreboard.controller.MainActivity;
 
 
 /**
@@ -22,15 +28,16 @@ import java.net.Socket;
  */
 public class ClientSendThread implements Runnable {
     private String message;
-    private final String IP = "192.168.132.45";
+    //private final String IP = "192.168.132.45";
+    private final String IP = "10.5.5.15";
     private final int PORT = 9999;
     private PrintWriter out;
     private Socket socket;
 
-    Context c;
+    Context context;
 
-    public ClientSendThread(String message,Context c) {
-        this.message=message; this.c = c;
+    public ClientSendThread(String message,Context context) {
+        this.message=message; this.context = context;
     }
 
 
@@ -51,23 +58,46 @@ public class ClientSendThread implements Runnable {
 
             } catch (Exception e) {
                 Log.e("ClientActivity", "C: Error", e);
-                Toast.makeText(c,"Erro de ligação", Toast.LENGTH_SHORT).show();
+
             }finally {
                 out.close();
             }
+
             //socket.close();                                 // Fecho do Socket...O socket é aberto e fechado todas as vezes que se efetua escrita ou leitura
         } catch (Exception e) {
             Log.e("ClientActivity", "C: Error", e);
-            Toast.makeText(c,"Erro de ligação", Toast.LENGTH_SHORT).show();
+            showToastInThread(context,"Erro de ligação");
+            Intent intent = new Intent(WifiManager.ACTION_PICK_WIFI_NETWORK);
+            context.startActivity(intent);
         } finally {
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(socket != null) {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
 
+    public void showToastInThread(final Context context,final String str){
+        Looper.prepare();
+        MessageQueue queue = Looper.myQueue();
+        queue.addIdleHandler(new MessageQueue.IdleHandler() {
+            int mReqCount = 0;
+
+            @Override
+            public boolean queueIdle() {
+                if (++mReqCount == 2) {
+                    Looper.myLooper().quit();
+                    return false;
+                } else
+                    return true;
+            }
+        });
+        Toast.makeText(context, str,Toast.LENGTH_SHORT).show();
+        Looper.loop();
+    }
 
 }
