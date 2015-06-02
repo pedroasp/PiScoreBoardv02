@@ -342,9 +342,22 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
 int actualID = 0;
     public void AddTeamDialog(Context c ) {
 
+        if(lists.getListOfTeams().size()!=0)
+            actualID = lists.getListOfTeams().get((lists.getListOfTeams().size())-1).getId();
+        else
+            actualID = 0;
+
+
         Team novaEquipa = new Team();
         final ImageView img = new ImageView(c);
-        img.setImageResource(R.drawable.question_icon);
+        if(MainActivity.newTeamPath == null) {
+            img.setImageResource(R.drawable.question_icon);
+        }else{
+            File imgFile = new File(MainActivity.newTeamPath);
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            img.setImageBitmap(myBitmap);
+        }
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setTitle("Adicionar equipa");
@@ -391,7 +404,7 @@ int actualID = 0;
                 Team newTeam = new Team();
                 newTeam.setName(input.getText().toString());
                 newTeam.setLogotipo(MainActivity.newTeamPath);
-                newTeam.setId(actualID++);
+                newTeam.setId(++actualID);
                 lists.getListOfTeams().add(newTeam);
                 MainActivity.newTeamPath = null;
                 onResume();
