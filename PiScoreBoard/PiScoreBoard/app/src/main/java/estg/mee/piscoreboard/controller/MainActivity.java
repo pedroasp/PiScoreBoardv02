@@ -19,6 +19,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 //import android.app.ListFragment;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -85,10 +89,13 @@ public class MainActivity extends ActionBarActivity
 
         jogo = new Game();
 
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        editor = sharedpreferences.edit();
-       // preferences = this.getActivity().getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        // Set up the drawer.
+//        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+//        editor = sharedpreferences.edit();
+//       // preferences = this.getActivity().getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+//        // Set up the drawer.
+
+
+
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));

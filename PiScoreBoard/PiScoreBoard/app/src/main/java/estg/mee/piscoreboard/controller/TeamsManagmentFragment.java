@@ -128,23 +128,23 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
             }
         });
 
-        Set<String> set = MainActivity.sharedpreferences.getStringSet("TeamNames", null);
-        TeamsName.addAll(set);
-        Set<String> set1 = MainActivity.sharedpreferences.getStringSet("TeamLogos", null);
-        TeamsLogo.addAll(set1);
-        Set<String> set2 = MainActivity.sharedpreferences.getStringSet("TeamIDs", null);
-        TeamsID.addAll(set2);
-
-        lists.getListOfTeams().clear();
-
-        for(int j = 0 ;  j< TeamsName.size(); j++){
-            Team equipa = new Team();
-            equipa.setName(TeamsName.get(j));
-            equipa.setLogotipo(TeamsLogo.get(j));
-            equipa.setId(Integer.parseInt(TeamsID.get(j)));
-
-            lists.getListOfTeams().add(j, equipa);
-        }
+//        Set<String> set = MainActivity.sharedpreferences.getStringSet("TeamNames", null);
+//        TeamsName.addAll(set);
+//        Set<String> set1 = MainActivity.sharedpreferences.getStringSet("TeamLogos", null);
+//        TeamsLogo.addAll(set1);
+//        Set<String> set2 = MainActivity.sharedpreferences.getStringSet("TeamIDs", null);
+//        TeamsID.addAll(set2);
+//
+//        lists.getListOfTeams().clear();
+//
+//        for(int j = 0 ;  j< TeamsName.size(); j++){
+//            Team equipa = new Team();
+//            equipa.setName(TeamsName.get(j));
+//            equipa.setLogotipo(TeamsLogo.get(j));
+//            equipa.setId(Integer.parseInt(TeamsID.get(j)));
+//
+//            lists.getListOfTeams().add(j, equipa);
+//        }
 
         return rootView;
     }
@@ -160,29 +160,29 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
         }
         adapter = new EntryAdapter(getActivity(), items);
         lv.setAdapter(adapter);
-        TeamsName.clear();
-        TeamsLogo.clear();
-        TeamsID.clear();
-
-        for(int j = 0 ;  j< lists.getListOfTeams().size(); j++){
-            TeamsName.add(j, lists.getListOfTeams().get(j).getName());
-            TeamsLogo.add(j, lists.getListOfTeams().get(j).getLogotipo());
-            TeamsID.add(j, String.valueOf(lists.getListOfTeams().get(j).getId()));
-        }
-
-        Set<String> set = new HashSet<String>();
-        Set<String> set1 = new HashSet<String>();
-        Set<String> set2 = new HashSet<String>();
-
-
-        set.addAll(TeamsName);
-        MainActivity.editor.putStringSet("TeamNames", set);
-        set1.addAll(TeamsLogo);
-        MainActivity.editor.putStringSet("TeamLogos", set1);
-        set2.addAll(TeamsID);
-        MainActivity.editor.putStringSet("TeamIDs", set2);
-
-        MainActivity.editor.commit();
+//        TeamsName.clear();
+//        TeamsLogo.clear();
+//        TeamsID.clear();
+//
+//        for(int j = 0 ;  j< lists.getListOfTeams().size(); j++){
+//            TeamsName.add(j, lists.getListOfTeams().get(j).getName());
+//            TeamsLogo.add(j, lists.getListOfTeams().get(j).getLogotipo());
+//            TeamsID.add(j, String.valueOf(lists.getListOfTeams().get(j).getId()));
+//        }
+//
+//        Set<String> set = new HashSet<String>();
+//        Set<String> set1 = new HashSet<String>();
+//        Set<String> set2 = new HashSet<String>();
+//
+//
+//        set.addAll(TeamsName);
+//        MainActivity.editor.putStringSet("TeamNames", set);
+//        set1.addAll(TeamsLogo);
+//        MainActivity.editor.putStringSet("TeamLogos", set1);
+//        set2.addAll(TeamsID);
+//        MainActivity.editor.putStringSet("TeamIDs", set2);
+//
+//        MainActivity.editor.commit();
     }
 
     ListViewSwipeGesture.TouchCallbacks swipeListener = new ListViewSwipeGesture.TouchCallbacks() {

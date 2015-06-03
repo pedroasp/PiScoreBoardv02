@@ -92,9 +92,9 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
 
         //preferences = this.getActivity().getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 //        Set<String> set = preferences.getStringSet("Publist", null);
-        Set<String> set = MainActivity.sharedpreferences.getStringSet("Publist", null);
-        jogo.getPublictyList().clear();
-        jogo.getPublictyList().addAll(set);
+//        Set<String> set = MainActivity.sharedpreferences.getStringSet("Publist", null);
+//        jogo.getPublictyList().clear();
+//        jogo.getPublictyList().addAll(set);
         //editor = MainActivity.sharedpreferences.edit();
         /**
          * Enabling Search Filter
@@ -139,10 +139,10 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
         adapter = new EntryAdapter(getActivity(), items);
         lv.setAdapter(adapter);
 
-        Set<String> set = new HashSet<String>();
-        set.addAll(jogo.getPublictyList());
-        MainActivity.editor.putStringSet("Publist", set);
-        MainActivity.editor.commit();
+//        Set<String> set = new HashSet<String>();
+//        set.addAll(jogo.getPublictyList());
+//        MainActivity.editor.putStringSet("Publist", set);
+//        MainActivity.editor.commit();
     }
 
     private String getImageName(String imagePath){
