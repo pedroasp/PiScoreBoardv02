@@ -3,7 +3,9 @@ package estg.mee.piscoreboard.model;
 import android.content.Context;
 import android.graphics.Color;
 
-import estg.mee.piscoreboard.R;
+import java.util.ArrayList;
+
+
 import estg.mee.piscoreboard.controller.MainActivity;
 
 /**
@@ -83,14 +85,25 @@ public class Graphics {
     }
 
 
-    public void sendColorCommand (Colors destination, int color){
+    public void sendColorCommand (Colors destination, int color,boolean checkConnection){
         String rgb = "@" + Color.red(color) + "," + Color.green(color) + "," + Color.blue(color) + "@";
         MainActivity activity = (MainActivity) context;
-        activity.sendCommand(destination.getCommand().concat(rgb));
+        activity.sendCommand(destination.getCommand().concat(rgb),checkConnection);
     }
-    public void sendColorCommand (Colors destination){
+    public void sendColorCommand (Colors destination,boolean checkConnection){
         String rgb = "@" + Color.red(destination.getColor()) + "," + Color.green(destination.getColor()) + "," + Color.blue(destination.getColor()) + "@";
         MainActivity activity = (MainActivity) context;
-        activity.sendCommand(destination.getCommand().concat(rgb));
+        activity.sendCommand(destination.getCommand().concat(rgb),checkConnection);
+    }
+    public void sendColorCommandArray (ArrayList<Colors> destination,boolean checkConnection){
+
+        String stringToSend = new String();
+        String rgb;
+        for (Colors colors:destination){
+            rgb = "@" + Color.red(colors.getColor()) + "," + Color.green(colors.getColor()) + "," + Color.blue(colors.getColor()) + "@";
+            stringToSend = stringToSend.concat(colors.getCommand()).concat(rgb+"\r\n");
+        }
+        MainActivity activity = (MainActivity) context;
+        activity.sendCommand(stringToSend,checkConnection);
     }
 }

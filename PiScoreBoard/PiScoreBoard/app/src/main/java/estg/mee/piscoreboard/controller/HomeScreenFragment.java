@@ -1,33 +1,25 @@
 package estg.mee.piscoreboard.controller;
 
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
 import estg.mee.piscoreboard.R;
-import me.nereo.multi_image_selector.bean.Image;
 
 /**
  * Created by Rúben Rodrigues on 07-05-2015.
  */
-public class HomeScreenFragment extends Fragment {
+public class HomeScreenFragment extends Fragment{
     View rootview;
     private int mInterval = 500;
     private static final String GLOCAL = "GLOCAL";
@@ -39,7 +31,6 @@ public class HomeScreenFragment extends Fragment {
     TextView  sLocalGoals, sVisitGoals, sTime, sLocalFaults, sVisitFaults;
     private String message;
     ImageView sLocalLogo, sVisitLogo;
-
 
     @Nullable
     @Override
@@ -127,10 +118,11 @@ public class HomeScreenFragment extends Fragment {
                         } else if (initialY - finalY > 100) {
                             nLocal++;
                         }
-                        message = getString(R.string.LocalGoals).concat("@"+nLocal+"@");
-                        ((MainActivity)getActivity()).sendCommand(message);
-                        sLocalGoals.setText("" + nLocal);
-
+                        if (Math.abs(finalY - initialY) > 100) {
+                            message = getString(R.string.LocalGoals).concat("@" + nLocal + "@");
+                            ((MainActivity) getActivity()).sendCommand(message, true);
+                            sLocalGoals.setText("" + nLocal);
+                        }
                         ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sLocalGoals.getLayoutParams();
                         if (nLocal>9){
                             llp.setMargins(15, 0, 0, 0);
@@ -172,11 +164,12 @@ public class HomeScreenFragment extends Fragment {
                         } else if (initialY - finalY > 100) {
                             nVisit++;
                         }
-                        message = getString(R.string.VisitGoals).concat("@"+nVisit+"@");
-                        ((MainActivity)getActivity()).sendCommand(message);
+                        if (Math.abs(finalY - initialY) > 100) {
+                            message = getString(R.string.VisitGoals).concat("@" + nVisit + "@");
+                            ((MainActivity) getActivity()).sendCommand(message, true);
 
-                        sVisitGoals.setText("" + nVisit);
-
+                            sVisitGoals.setText("" + nVisit);
+                        }
 
                         ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sVisitGoals.getLayoutParams();
                         if (nVisit>9){
@@ -220,10 +213,11 @@ public class HomeScreenFragment extends Fragment {
                         } else if (initialY - finalY > 100) {
                             nLocalFaults++;
                         }
-                        message = getString(R.string.LocalFaults).concat("@"+nLocalFaults+"@");
-                        ((MainActivity)getActivity()).sendCommand(message);
-                        sLocalFaults.setText("" + nLocalFaults);
-
+                        if (Math.abs(finalY - initialY) > 100) {
+                            message = getString(R.string.LocalFaults).concat("@" + nLocalFaults + "@");
+                            ((MainActivity) getActivity()).sendCommand(message, true);
+                            sLocalFaults.setText("" + nLocalFaults);
+                        }
 //                        ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sLocalFaults.getLayoutParams();
 //                        if (nLocalFaults>9){
 //                            llp.setMargins(0, 0, 25, 0);
@@ -265,10 +259,11 @@ public class HomeScreenFragment extends Fragment {
                         } else if (initialY - finalY > 100) {
                             nVisitFaults++;
                         }
-                        message = getString(R.string.VisitFaults).concat("@"+nVisitFaults+"@");
-                        ((MainActivity)getActivity()).sendCommand(message);
-                        sVisitFaults.setText("" + nVisitFaults);
-
+                        if (Math.abs(finalY - initialY) > 100) {
+                            message = getString(R.string.VisitFaults).concat("@" + nVisitFaults + "@");
+                            ((MainActivity) getActivity()).sendCommand(message, true);
+                            sVisitFaults.setText("" + nVisitFaults);
+                        }
 //                        ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sLocalFaults.getLayoutParams();
 //                        if (nLocalFaults>9){
 //                            llp.setMargins(0, 0, 25, 0);
@@ -332,7 +327,5 @@ public class HomeScreenFragment extends Fragment {
     void stopClock() {
         clockHandler.removeCallbacks(clockStatusChecker);
     }
-
-
 
 }

@@ -19,7 +19,7 @@ public class Game {
     private Date date = new Date();
     private Modality modality = new Modality();
     private Part[] part = new Part[2];
-    private Team[] team = new Team[2];
+
 
     private Team equipaLocal = new Team();
     private Team equipaVisitante = new Team();
@@ -151,4 +151,6 @@ public class Game {
     public void setPart(Part[] part) {
         this.part = part;
     }
+
+
 }

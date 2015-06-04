@@ -5,19 +5,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+<<<<<<< HEAD
 import android.os.Bundle;
 import android.util.Log;
+=======
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+>>>>>>> origin/MyWorkbranch
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
+<<<<<<< HEAD
 //import android.app.ListFragment;
 
 import java.io.EOFException;
@@ -38,10 +46,16 @@ import estg.mee.piscoreboard.customlistview.EntryItem;
 import estg.mee.piscoreboard.model.Game;
 import estg.mee.piscoreboard.model.PiScoreBoard;
 import estg.mee.piscoreboard.model.Team;
+=======
+
+import estg.mee.piscoreboard.R;
+>>>>>>> origin/MyWorkbranch
 import estg.mee.piscoreboard.model.Game;
 import estg.mee.piscoreboard.model.Graphics;
 import estg.mee.piscoreboard.utils.ClientSendThread;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
+
+//import android.app.ListFragment;
 
 
 public class MainActivity extends ActionBarActivity
@@ -64,7 +78,11 @@ public class MainActivity extends ActionBarActivity
 
 //    private static ArrayList<String> mSelectPath = null;
 
+<<<<<<< HEAD
    // public Game jogo;
+=======
+    public static Game jogo;
+>>>>>>> origin/MyWorkbranch
 
     public static String newTeamPath;
 
@@ -272,15 +290,24 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
-    public void sendCommand(String message){
+    public void sendCommand(String message, boolean checkConnection){
 
         //EditText sMessage = (EditText) findViewById(R.id.message);
         //String message = sMessage.getEditableText().toString();
 
         //String message = new String("Pub@on@");
-        Thread sendThread = new Thread(new ClientSendThread(message,this));
-        sendThread.start();
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
+
+            if (mWifi.isConnected()) {
+                Thread sendThread = new Thread(new ClientSendThread(message, this));
+                sendThread.start();
+            } else {
+                Toast.makeText(this, "Erro de ligação", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(WifiManager.ACTION_PICK_WIFI_NETWORK);
+                this.startActivity(intent);
+            }
 
 //        ClientReceiveThread received = new ClientReceiveThread();
 //        new Thread(received).start();

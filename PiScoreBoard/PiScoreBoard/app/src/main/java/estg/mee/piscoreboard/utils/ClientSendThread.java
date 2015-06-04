@@ -40,8 +40,6 @@ public class ClientSendThread implements Runnable {
         this.message=message; this.context = context;
     }
 
-
-
     public void run() {
 
         try {
@@ -66,9 +64,7 @@ public class ClientSendThread implements Runnable {
             //socket.close();                                 // Fecho do Socket...O socket é aberto e fechado todas as vezes que se efetua escrita ou leitura
         } catch (Exception e) {
             Log.e("ClientActivity", "C: Error", e);
-            showToastInThread(context,"Erro de ligação");
-            Intent intent = new Intent(WifiManager.ACTION_PICK_WIFI_NETWORK);
-            context.startActivity(intent);
+
         } finally {
             if(socket != null) {
                 try {
