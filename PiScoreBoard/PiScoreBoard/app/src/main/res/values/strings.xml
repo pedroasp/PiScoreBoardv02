@@ -92,12 +92,19 @@
     <string name="LocalGoals">ggoloslocal</string>
     <string name="VisitFaults">gfaltasvisit</string>
     <string name="LocalFaults">gfaltaslocal</string>
-    <string name="BackgroundColor">gbgColor@</string>
-    <string name="ResultColor">grColor@</string>
-    <string name="FaultColor">gfColor@</string>
-    <string name="NamesColor">gnColor@</string>
-    <string name="PartColor">gPColor@</string>
-    <string name="TimeColor">gcColor@</string>
+    <string name="LocalName">gnamelocal</string>
+    <string name="VisitName">gnamevisit</string>
+    <string name="VisitLogo">glogovisit</string>
+    <string name="LocalLogo">glogolocal</string>
+    <string name="SetClock">s_setclock</string>
+    <string name="Shutdown">s_shutdown</string>
+    <string name="Restart">s_restart</string>
+    <string name="Publicity">pub</string>
+    <string name="TimeMode">time</string>
+    <string name="SetCrono">setcrono</string>
+    <string name="CronoCommands">crono</string>
+
+
 
     <!--                           Swipe library                                    -->
 

@@ -5,7 +5,7 @@ import android.graphics.Color;
 
 import java.util.ArrayList;
 
-import estg.mee.piscoreboard.R;
+
 import estg.mee.piscoreboard.controller.MainActivity;
 
 /**

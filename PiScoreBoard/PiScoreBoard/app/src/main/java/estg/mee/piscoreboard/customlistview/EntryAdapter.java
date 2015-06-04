@@ -1,12 +1,8 @@
 package estg.mee.piscoreboard.customlistview;
-import java.io.File;
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.preference.ListPreference;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +12,15 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import java.io.File;
+import java.util.ArrayList;
+
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.controller.MainActivity;
 import estg.mee.piscoreboard.model.Colors;
-import estg.mee.piscoreboard.model.Game;
-import estg.mee.piscoreboard.utils.ClientSendThread;
 
 
 public class EntryAdapter extends ArrayAdapter<Item> {
@@ -50,7 +47,7 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 	@Override
  	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
-		
+
 		final Item i = this.items.get(position);
 		if (i != null) {
 			if (i.isSection()) {
@@ -150,15 +147,15 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                                 ColorsArrayList.add(MainActivity.graphics.PartColor);
                                 ColorsArrayList.add(MainActivity.graphics.ResultColor);
                                 ColorsArrayList.add(MainActivity.graphics.TimeColor);
-
                                 String stringToSend = new String();
                                 String rgb;
-
                                 for (Colors colors:ColorsArrayList){
                                     rgb = "@" + Color.red(colors.getColor()) + "," + Color.green(colors.getColor()) + "," + Color.blue(colors.getColor()) + "@";
                                     stringToSend = stringToSend.concat(colors.getCommand()).concat(rgb+"\r\n");
                                 }
-                                stringToSend = stringToSend.substring(0, stringToSend.length()-2);
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.LocalName)).concat("@"+"Nome"+"@"+"\r\n");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.VisitName)).concat("@"+"Nome"+"@");
+                                //stringToSend = stringToSend.substring(0, stringToSend.length()-2);
                                 MainActivity activity = (MainActivity) context;
                                 activity.sendCommand(stringToSend,true);
                                 ColorsArrayList.clear();
@@ -171,7 +168,7 @@ public class EntryAdapter extends ArrayAdapter<Item> {
             } else if (i.isSettings()== 4) {
 
                 // Entry Item Two Buttons
-                EntryItemTwoButtons eitb = (EntryItemTwoButtons)i;
+                final EntryItemTwoButtons eitb = (EntryItemTwoButtons)i;
 
                 v = vi.inflate(R.layout.list_item_entry_twobuttons, null);
                 final Button bt1 = (Button)v.findViewById(R.id.list_item_entry_button1);
@@ -181,6 +178,33 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                 bt1.setText(eitb.text1);
                 bt2.setText(eitb.text2);
 
+               bt1.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       String stringToSend;
+                       switch(eitb.id1){
+                           case 2:
+                               stringToSend = context.getResources().getString(R.string.Shutdown);
+                               MainActivity activity = (MainActivity) context;
+                               activity.sendCommand(stringToSend,true);
+                               break;
+                       }
+                   }
+               });
+
+                bt2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String stringToSend;
+                        switch (eitb.id2){
+                            case 3:
+                                stringToSend = context.getResources().getString(R.string.Restart);
+                                MainActivity activity = (MainActivity) context;
+                                activity.sendCommand(stringToSend,true);
+                                break;
+                        }
+                    }
+                });
             } else {
 				// Entry Item
 				EntryItem ei = (EntryItem)i;

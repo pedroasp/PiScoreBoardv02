@@ -8,35 +8,26 @@ import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
-//import android.app.ListFragment;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import estg.mee.piscoreboard.R;
-import estg.mee.piscoreboard.customlistview.EntryItem;
-import estg.mee.piscoreboard.model.Game;
-import estg.mee.piscoreboard.model.Team;
 import estg.mee.piscoreboard.model.Game;
 import estg.mee.piscoreboard.model.Graphics;
 import estg.mee.piscoreboard.utils.ClientSendThread;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
+
+//import android.app.ListFragment;
 
 
 public class MainActivity extends ActionBarActivity

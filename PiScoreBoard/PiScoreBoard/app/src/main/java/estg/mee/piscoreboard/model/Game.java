@@ -19,7 +19,7 @@ public class Game {
     private Date date = new Date();
     private Modality modality = new Modality();
     private Part[] part = new Part[2];
-    private Team[] team = new Team[2];
+
 
     ArrayList PublictyList = new ArrayList();
 
@@ -124,11 +124,5 @@ public class Game {
         this.part = part;
     }
 
-    public Team[] getTeam() {
-        return team;
-    }
 
-    public void setTeam(Team[] team) {
-        this.team = team;
-    }
 }
