@@ -29,7 +29,7 @@ import estg.mee.piscoreboard.controller.MainActivity;
 public class ClientSendThread implements Runnable {
     private String message;
     //private final String IP = "192.168.132.45";
-    private final String IP = "10.5.5.15";
+    private final String IP = "10.5.5.10";
     private final int PORT = 9999;
     private PrintWriter out;
     private Socket socket;

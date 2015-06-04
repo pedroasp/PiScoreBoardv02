@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,16 +20,23 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 //import android.app.ListFragment;
 
+import java.io.EOFException;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.customlistview.EntryItem;
 import estg.mee.piscoreboard.model.Game;
+import estg.mee.piscoreboard.model.PiScoreBoard;
 import estg.mee.piscoreboard.model.Team;
 import estg.mee.piscoreboard.model.Game;
 import estg.mee.piscoreboard.model.Graphics;
@@ -56,7 +64,7 @@ public class MainActivity extends ActionBarActivity
 
 //    private static ArrayList<String> mSelectPath = null;
 
-    public Game jogo;
+   // public Game jogo;
 
     public static String newTeamPath;
 
@@ -71,6 +79,10 @@ public class MainActivity extends ActionBarActivity
 ////    public void setmSelectPath(ArrayList<String> mSelectPath) {
 //        this.mSelectPath = mSelectPath;
 //    }
+
+    PiScoreBoard lists = PiScoreBoard.getInstance();
+
+    Game currentGame = Game.getInstance();
 
     public static int getRequestImage() {
         return REQUEST_IMAGE;
@@ -87,18 +99,46 @@ public class MainActivity extends ActionBarActivity
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
-        jogo = new Game();
+ //   try{
+//        FileInputStream fIn = openFileInput("PublicityFile.txt");
+//       // InputStreamReader isr = new InputStreamReader(fIn);
+//        ObjectInputStream savedStream = new ObjectInputStream(fIn);
+//
+//        jogo.getPublictyList().add(savedStream.readObject());
+//        //jogo.setPublictyList((ArrayList)savedStream.readObject());
+//
+//    } catch (IOException ioe)
+//    {
+//        ioe.printStackTrace();
+//    } catch (ClassNotFoundException e) {
+//        e.printStackTrace();
+//    }
+        mNavigationDrawerFragment.setUp( R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
-//        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-//        editor = sharedpreferences.edit();
-//       // preferences = this.getActivity().getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-//        // Set up the drawer.
 
 
+            try {
+                FileInputStream fIn = openFileInput("Teams.txt");
+                ObjectInputStream savedStream = new ObjectInputStream(fIn);
+                while(true) {
+                    try {
+                        lists.getListOfTeams().add((Team) savedStream.readObject());
 
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+                    } catch (EOFException e) {
+                        e.printStackTrace();
+                        break;
+                    }
+                }
+            }catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (StreamCorruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
     }
 
     @Override
@@ -118,7 +158,7 @@ public class MainActivity extends ActionBarActivity
                 objFragment = new TeamsManagmentFragment();
                 break;
             case 3:
-                objFragment = new PublicityManagmentFragment(jogo);
+                objFragment = new PublicityManagmentFragment();
                 break;
             case 4:
                 objFragment = new SettingsFragment();
@@ -265,7 +305,7 @@ public class MainActivity extends ActionBarActivity
 
                 switch (id){
                     case 3:
-                        jogo.setPublictyList(data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT));
+                        currentGame.setPublictyList(data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT));
 
                     break;
                     case 5: {
@@ -277,6 +317,41 @@ public class MainActivity extends ActionBarActivity
                 }
 
             }
+        }
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        try {
+            FileOutputStream savefile = openFileOutput("Teams.txt", MODE_WORLD_READABLE);
+//            ObjectOutputStream saveStream = new ObjectOutputStream(savefile);
+//            FileOutputStream  savefile = new FileOutputStream("Teams.txt");
+            ObjectOutputStream saveStream = new ObjectOutputStream(savefile);
+////            for (Iterator<String> i = jogo.getPublictyList().iterator(); i.hasNext(); ) {
+////                String pubs = i.next();
+////                saveStream.writeObject(pubs);
+////            }
+//            saveStream.writeObject(jogo.getPublictyList());
+////            saveStream.writeObject("Hello World!");
+//            for(Team equipa:lists.getListOfTeams()){
+//                saveStream.writeObject(equipa);
+//            }
+            for (Iterator<Team> i = lists.getListOfTeams().iterator(); i.hasNext(); ) {
+                Team teams = i.next();
+                saveStream.writeObject(teams);
+            }
+
+            saveStream.flush();
+            savefile.flush();
+            saveStream.close();
+            savefile.close();
+
+        } catch (FileNotFoundException a) {
+            System.out.println("File not found!");
+        } catch (IOException b) {
+            b.printStackTrace();
+            System.out.println("IO Exception!");
+
         }
     }
 

@@ -30,8 +30,15 @@ public class PiScoreBoard {
         return listOfModalities;
     }
 
-    public int aaa(){
+    public String [] getTeamsName(ArrayList<Team> listOfTeams){
+        String [] array = new String[listOfTeams.size()];
+        int i = 0;
 
-        return 1;
+        for(Team team : listOfTeams){
+            array[i] = team.getName();
+            i++;
+        }
+
+        return array;
     }
 }

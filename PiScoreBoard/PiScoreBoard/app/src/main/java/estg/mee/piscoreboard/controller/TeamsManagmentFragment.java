@@ -86,7 +86,7 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
         setHasOptionsMenu(true);
 
         lv = (ListView) this.rootView.findViewById(R.id.list_viewaa);
-        inputSearch = (EditText) this.rootView.findViewById(R.id.inputSearch);
+        //inputSearch = (EditText) this.rootView.findViewById(R.id.inputSearch);
 
 
         adapter = new EntryAdapter(getActivity(), items);

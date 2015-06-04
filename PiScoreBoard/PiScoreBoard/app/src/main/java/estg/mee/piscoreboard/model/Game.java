@@ -21,19 +21,47 @@ public class Game {
     private Part[] part = new Part[2];
     private Team[] team = new Team[2];
 
-    ArrayList PublictyList = new ArrayList();
+    private Team equipaLocal = new Team();
+    private Team equipaVisitante = new Team();
+
+    private static Game instance = null;
+
+    ArrayList <String> PublictyList = new ArrayList();
 
 
     public Game() {
 
     }
 
+    public static Game getInstance(){
+        if (instance == null){
+            instance = new Game();
+        }
+        return instance;
+    }
+
     public ArrayList getPublictyList() {
         return PublictyList;
     }
 
-    public void setPublictyList(ArrayList publictyList) {
+    public void setPublictyList(ArrayList<String> publictyList) {
         PublictyList = publictyList;
+    }
+
+    public Team getEquipaLocal() {
+        return equipaLocal;
+    }
+
+    public void setEquipaLocal(Team equipaLocal) {
+        this.equipaLocal = equipaLocal;
+    }
+
+    public Team getEquipaVisitante() {
+        return equipaVisitante;
+    }
+
+    public void setEquipaVisitante(Team equipaVisitante) {
+        this.equipaVisitante = equipaVisitante;
     }
 
     public int getId() {

@@ -1,9 +1,11 @@
 package estg.mee.piscoreboard.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Rúben Rodrigues on 01-05-2015.
  */
-public class Team {
+public class Team implements Serializable{
     private int id;
     private String name = new String();
     private String logotipo;

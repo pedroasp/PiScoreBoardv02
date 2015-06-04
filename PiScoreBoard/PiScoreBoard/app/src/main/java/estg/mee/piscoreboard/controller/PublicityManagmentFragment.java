@@ -54,7 +54,7 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
     // List view
     private ListView lv;
 
-    private Game jogo;
+  //  private Game jogo;
 
     // Search EditText
     EditText inputSearch;
@@ -62,9 +62,11 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
     // ArrayList for Listview
     ArrayList<Item> items = new ArrayList<Item>();
 
-    public PublicityManagmentFragment(Game jogo) {
-        this.jogo = jogo;
-    }
+    Game currentGame = Game.getInstance();
+
+//    public PublicityManagmentFragment(Game jogo) {
+//        this.jogo = jogo;
+//    }
 
     @Nullable
     @Override
@@ -76,49 +78,43 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
 
         lv = (ListView) this.rootView.findViewById(R.id.list_viewaa);
         lv.setTextFilterEnabled(true);
-        inputSearch = (EditText) this.rootView.findViewById(R.id.inputSearch);
+     //   inputSearch = (EditText) this.rootView.findViewById(R.id.inputSearch);
 
         final ListViewSwipeGesture touchListener = new ListViewSwipeGesture( lv, swipeListener, getActivity());
         touchListener.SwipeType	=	ListViewSwipeGesture.Double;    //Set two options at background of list item
 
         lv.setOnTouchListener(touchListener);
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ShowDetailsDialog(getActivity(), jogo.getPublictyList().get(position).toString());
-            }
-        });
+//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                ShowDetailsDialog(getActivity(), currentGame.getPublictyList().get(position).toString());
+//            }
+//        });
 
-        //preferences = this.getActivity().getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-//        Set<String> set = preferences.getStringSet("Publist", null);
-//        Set<String> set = MainActivity.sharedpreferences.getStringSet("Publist", null);
-//        jogo.getPublictyList().clear();
-//        jogo.getPublictyList().addAll(set);
-        //editor = MainActivity.sharedpreferences.edit();
-        /**
-         * Enabling Search Filter
-         * */
-        inputSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                // When user changed the Text
-                getFilter().filter(cs);
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                                          int arg3) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
-
-            }
-        });
+//        /**
+//         * Enabling Search Filter
+//         * */
+//        inputSearch.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+//                // When user changed the Text
+//                getFilter().filter(cs);
+//            }
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+//                                          int arg3) {
+//                // TODO Auto-generated method stub
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable arg0) {
+//                // TODO Auto-generated method stub
+//
+//            }
+//        });
 
         return rootView;
     }
@@ -132,7 +128,7 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
 
     private void refreshPubList(){
 
-        for(Iterator<String> i = jogo.getPublictyList().iterator(); i.hasNext(); ) {
+        for(Iterator<String> i = currentGame.getPublictyList().iterator(); i.hasNext(); ) {
             String item = i.next();
             items.add(new EntryItem(getImageName(item), null, null, item, 0));
         }
@@ -188,6 +184,7 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
         public void OnClickListView(int position) {
             // TODO Auto-generated method stub.
             //  startActivity(new Intent(getApplicationContext(),TestActivity.class));
+            ShowDetailsDialog(getActivity(), currentGame.getPublictyList().get(position).toString());
 
         }
 
@@ -211,7 +208,7 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
                 if (constraint != null && constraint.toString().length() > 0) {
                     ArrayList<String> founded = new ArrayList<String>();
 
-                    for(Iterator<String> i = jogo.getPublictyList().iterator(); i.hasNext(); ) {
+                    for(Iterator<String> i = currentGame.getPublictyList().iterator(); i.hasNext(); ) {
                         String item = i.next();
                         if(getImageName(item.toString()).toLowerCase().contains(constraint)){
                             founded.add(item);
@@ -221,8 +218,8 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
                     result.values = founded;
                     result.count = founded.size();
                 }else {
-                    result.values = jogo.getPublictyList();
-                    result.count = jogo.getPublictyList().size();
+                    result.values = currentGame.getPublictyList();
+                    result.count = currentGame.getPublictyList().size();
                 }
                 return result;
 
@@ -267,8 +264,8 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
 
                 intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
 
-                if (jogo.getPublictyList() != null && jogo.getPublictyList().size() > 0) {
-                    intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, jogo.getPublictyList());
+                if (currentGame.getPublictyList() != null && currentGame.getPublictyList().size() > 0) {
+                    intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, currentGame.getPublictyList());
                 }
                 getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
 

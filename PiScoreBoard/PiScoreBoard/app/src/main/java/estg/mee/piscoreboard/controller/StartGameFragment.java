@@ -23,6 +23,9 @@ import estg.mee.piscoreboard.customlistview.EntryItem;
 import estg.mee.piscoreboard.customlistview.EntryItemButton;
 import estg.mee.piscoreboard.customlistview.Item;
 import estg.mee.piscoreboard.customlistview.SectionItem;
+import estg.mee.piscoreboard.model.Game;
+import estg.mee.piscoreboard.model.PiScoreBoard;
+import estg.mee.piscoreboard.utils.Async_SFTP;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 /**
@@ -32,8 +35,13 @@ public class StartGameFragment extends Fragment {
 
 
     private View rootView = null;
+    PiScoreBoard lists = PiScoreBoard.getInstance();
 
-   //private ArrayList<String> mSelectPath;
+    Game currentGame = Game.getInstance();
+
+//    public StartGameFragment(Game jogo) {
+//       this.jogo = jogo;
+//   }
 
     @Nullable
     @Override
@@ -57,8 +65,8 @@ public class StartGameFragment extends Fragment {
         items.add(new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade),"Futsal", null,0));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionEquipas)));
-        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada),null,null,0));
-        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante),null, null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada),currentGame.getEquipaLocal().getName(),null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante),currentGame.getEquipaVisitante().getName(), null,0));
         items.add(new EntryItem("File picker", null,null, null,0));
 
         //items.add(new SectionItem(getResources().getString(R.string.sectionDefinicoesAvancadas)));
@@ -71,41 +79,42 @@ public class StartGameFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Object listItem = settingsList.getItemAtPosition(position);
-                String[] equipas = {"Benfica", "Sporting", "Porto"};
                 String[] modalidades = {"Futsal", "Basquetebol"};
                 switch (position){
                     case 1:
-                        Dialog dialogModalidades = onCreateDialogSingleChoice(modalidades, "Escolha a modalidade:");
+                        Dialog dialogModalidades = onCreateDialogSingleChoice(modalidades, "Escolha a modalidade:", 10);
                         dialogModalidades.show();
 
                         break;
                     case 3:
-                        Dialog dialogEquipaVisitada = onCreateDialogSingleChoice(equipas, "Escolha a equipa local:");
+                        Dialog dialogEquipaVisitada = onCreateDialogSingleChoice(lists.getTeamsName(lists.getListOfTeams()), "Escolha a equipa local:", 20);
                         dialogEquipaVisitada.show();
 
                         break;
                     case 4:
-                        Dialog dialogEquipaVisitante= onCreateDialogSingleChoice(equipas, "Escolha a equipa visitante:");
+                        Dialog dialogEquipaVisitante= onCreateDialogSingleChoice(lists.getTeamsName(lists.getListOfTeams()), "Escolha a equipa visitante:", 30);
                         dialogEquipaVisitante.show();
 
                         break;
                     case 5: {
+                        new Async_SFTP().uploadPubs(getActivity(), currentGame.getPublictyList());
 
-                        int selectedMode = MultiImageSelectorActivity.MODE_MULTI;
-
-                        boolean showCamera = true;
-
-                        int maxNum = 9;
-
-                        Intent intent = new Intent(getActivity(), MultiImageSelectorActivity.class);
-
-                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, showCamera);
-
-                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, maxNum);
-
-                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
-
-                        getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
+                        //new Async_SFTP().listVideos(getActivity());
+//                        int selectedMode = MultiImageSelectorActivity.MODE_MULTI;
+//
+//                        boolean showCamera = true;
+//
+//                        int maxNum = 9;
+//
+//                        Intent intent = new Intent(getActivity(), MultiImageSelectorActivity.class);
+//
+//                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, showCamera);
+//
+//                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, maxNum);
+//
+//                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
+//
+//                        getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
                     }break;
 
                 }
@@ -115,7 +124,7 @@ public class StartGameFragment extends Fragment {
     }
 
 
-    public Dialog onCreateDialogSingleChoice(String[] array, String title ) {
+    public Dialog onCreateDialogSingleChoice(String[] array, String title , int id) {
 
 //Initialize the Alert Dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -140,6 +149,10 @@ public class StartGameFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
 // User clicked OK, so save the result somewhere
 // or return them to the component that opened the dialog
+
+                        ListView lw = ((AlertDialog)dialog).getListView();
+                        Object checkedItem = lw.getAdapter().getItem(lw.getCheckedItemPosition());
+
                     }
                 })
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
