@@ -123,4 +123,12 @@ public class Game {
     public void setPart(Part[] part) {
         this.part = part;
     }
+
+    public Team[] getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team[] team) {
+        this.team = team;
+    }
 }

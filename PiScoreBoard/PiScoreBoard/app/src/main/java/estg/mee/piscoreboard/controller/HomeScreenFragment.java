@@ -27,7 +27,7 @@ import me.nereo.multi_image_selector.bean.Image;
 /**
  * Created by Rúben Rodrigues on 07-05-2015.
  */
-public class HomeScreenFragment extends Fragment {
+public class HomeScreenFragment extends Fragment{
     View rootview;
     private int mInterval = 500;
     private static final String GLOCAL = "GLOCAL";
@@ -128,7 +128,7 @@ public class HomeScreenFragment extends Fragment {
                             nLocal++;
                         }
                         message = getString(R.string.LocalGoals).concat("@"+nLocal+"@");
-                        ((MainActivity)getActivity()).sendCommand(message);
+                        ((MainActivity)getActivity()).sendCommand(message,true);
                         sLocalGoals.setText("" + nLocal);
 
                         ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sLocalGoals.getLayoutParams();
@@ -173,7 +173,7 @@ public class HomeScreenFragment extends Fragment {
                             nVisit++;
                         }
                         message = getString(R.string.VisitGoals).concat("@"+nVisit+"@");
-                        ((MainActivity)getActivity()).sendCommand(message);
+                        ((MainActivity)getActivity()).sendCommand(message,true);
 
                         sVisitGoals.setText("" + nVisit);
 
@@ -221,7 +221,7 @@ public class HomeScreenFragment extends Fragment {
                             nLocalFaults++;
                         }
                         message = getString(R.string.LocalFaults).concat("@"+nLocalFaults+"@");
-                        ((MainActivity)getActivity()).sendCommand(message);
+                        ((MainActivity)getActivity()).sendCommand(message,true);
                         sLocalFaults.setText("" + nLocalFaults);
 
 //                        ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sLocalFaults.getLayoutParams();
@@ -266,7 +266,7 @@ public class HomeScreenFragment extends Fragment {
                             nVisitFaults++;
                         }
                         message = getString(R.string.VisitFaults).concat("@"+nVisitFaults+"@");
-                        ((MainActivity)getActivity()).sendCommand(message);
+                        ((MainActivity)getActivity()).sendCommand(message,true);
                         sVisitFaults.setText("" + nVisitFaults);
 
 //                        ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sLocalFaults.getLayoutParams();

@@ -122,7 +122,7 @@ public class SettingsFragment extends Fragment {
                             @Override
                             public void onColorSelected(int color) {
                                 ((MainActivity)getActivity()).graphics.setBackgroundCentralColor(color);
-                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.BackgroundCentralColor);
+                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.BackgroundCentralColor,true);
                             }
                         });
                         colorPickerDialog.show();
@@ -132,7 +132,7 @@ public class SettingsFragment extends Fragment {
                             @Override
                             public void onColorSelected(int color) {
                                 ((MainActivity)getActivity()).graphics.setBackgroundSideColor(color);
-                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.BackgroundSideColor);
+                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.BackgroundSideColor,true);
                             }
                         });
                         colorPickerDialog.show();
@@ -142,7 +142,7 @@ public class SettingsFragment extends Fragment {
                             @Override
                             public void onColorSelected(int color) {
                                 ((MainActivity)getActivity()).graphics.setResultColor(color);
-                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.ResultColor);
+                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.ResultColor,true);
                             }
                         });
                         colorPickerDialog.show();
@@ -152,7 +152,7 @@ public class SettingsFragment extends Fragment {
                             @Override
                             public void onColorSelected(int color) {
                                 ((MainActivity)getActivity()).graphics.setFaultColor(color);
-                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.FaultColor);
+                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.FaultColor,true);
 
                             }
                         });
@@ -163,7 +163,7 @@ public class SettingsFragment extends Fragment {
                             @Override
                             public void onColorSelected(int color) {
                                 ((MainActivity)getActivity()).graphics.setNamesColor(color);
-                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.NamesColor);
+                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.NamesColor,true);
                             }
                         });
                         colorPickerDialog.show();
@@ -173,7 +173,7 @@ public class SettingsFragment extends Fragment {
                             @Override
                             public void onColorSelected(int color) {
                                 ((MainActivity)getActivity()).graphics.setPartColor(color);
-                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.PartColor);
+                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.PartColor,true);
                             }
                         });
                         colorPickerDialog.show();
@@ -183,7 +183,7 @@ public class SettingsFragment extends Fragment {
                             @Override
                             public void onColorSelected(int color) {
                                 ((MainActivity)getActivity()).graphics.setTimeColor(color);
-                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.TimeColor);
+                                ((MainActivity)getActivity()).graphics.sendColorCommand(((MainActivity)getActivity()).graphics.TimeColor,true);
                             }
                         });
                         colorPickerDialog.show();

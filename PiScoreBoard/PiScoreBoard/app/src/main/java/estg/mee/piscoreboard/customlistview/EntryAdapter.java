@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.preference.ListPreference;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.controller.MainActivity;
+import estg.mee.piscoreboard.model.Colors;
 import estg.mee.piscoreboard.model.Game;
+import estg.mee.piscoreboard.utils.ClientSendThread;
 
 
 public class EntryAdapter extends ArrayAdapter<Item> {
@@ -138,14 +141,27 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                     public void onClick(View v) {
                         switch (eib.id){
                             case 1:
+                                ArrayList<Colors> ColorsArrayList = new ArrayList<>();
+                                ColorsArrayList.add(MainActivity.graphics.BackgroundCentralColor);
+                                ColorsArrayList.add(MainActivity.graphics.BackgroundSideColor);
+                                ColorsArrayList.add(MainActivity.graphics.FaultColor);
+                                ColorsArrayList.add(MainActivity.graphics.NamesColor);
+                                ColorsArrayList.add(MainActivity.graphics.PartColor);
+                                ColorsArrayList.add(MainActivity.graphics.PartColor);
+                                ColorsArrayList.add(MainActivity.graphics.ResultColor);
+                                ColorsArrayList.add(MainActivity.graphics.TimeColor);
 
-                                MainActivity.graphics.sendColorCommand(MainActivity.graphics.BackgroundCentralColor);
-                                MainActivity.graphics.sendColorCommand(MainActivity.graphics.BackgroundSideColor);
-                                MainActivity.graphics.sendColorCommand(MainActivity.graphics.FaultColor);
-                                MainActivity.graphics.sendColorCommand(MainActivity.graphics.NamesColor);
-                                MainActivity.graphics.sendColorCommand(MainActivity.graphics.PartColor);
-                                MainActivity.graphics.sendColorCommand(MainActivity.graphics.ResultColor);
-                                MainActivity.graphics.sendColorCommand(MainActivity.graphics.TimeColor);
+                                String stringToSend = new String();
+                                String rgb;
+
+                                for (Colors colors:ColorsArrayList){
+                                    rgb = "@" + Color.red(colors.getColor()) + "," + Color.green(colors.getColor()) + "," + Color.blue(colors.getColor()) + "@";
+                                    stringToSend = stringToSend.concat(colors.getCommand()).concat(rgb+"\r\n");
+                                }
+                                stringToSend = stringToSend.substring(0, stringToSend.length()-2);
+                                MainActivity activity = (MainActivity) context;
+                                activity.sendCommand(stringToSend,true);
+                                ColorsArrayList.clear();
 
                                 break;
 
