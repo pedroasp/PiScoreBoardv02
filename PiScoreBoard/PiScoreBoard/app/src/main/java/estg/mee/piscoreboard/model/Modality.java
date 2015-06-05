@@ -12,17 +12,22 @@ public class Modality implements Serializable{
     private int nParts;
     private int nFaults;
     private String name;
+<<<<<<< HEAD
     private String imagePath;
 
+=======
+    private int imageRid;
+>>>>>>> origin/master
     public Modality() {
 
     }
 
-    public Modality (int id, int nParts, int nFaults, String name){
+    public Modality (int id, int nParts, int nFaults, String name, int imageRid){
         this.id = id;
         this.nParts = nParts;
         this.nFaults = nFaults;
         this.name = name;
+        this.imageRid = imageRid;
     }
 
     public String getName() {

@@ -124,7 +124,7 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
 
         for(Iterator<String> i = currentGame.getPublictyList().iterator(); i.hasNext(); ) {
             String item = i.next();
-            items.add(new EntryItem(getImageName(item), null, null, item));
+            items.add(new EntryItem(getImageName(item), null, null, item,0));
         }
         adapter = new EntryAdapter(getActivity(), items);
         lv.setAdapter(adapter);
@@ -221,7 +221,7 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
                 items.clear();
 
                 for (String item : (ArrayList<String>) results.values) {
-                    items.add(new EntryItem(getImageName(item), null, null, item));
+                    items.add(new EntryItem(getImageName(item), null, null, item,0));
                 }
                 adapter = new EntryAdapter(getActivity(), items);
                 lv.setAdapter(adapter);

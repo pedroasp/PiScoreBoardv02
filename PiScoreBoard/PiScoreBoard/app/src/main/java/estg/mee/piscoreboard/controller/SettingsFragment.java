@@ -59,6 +59,7 @@ public class SettingsFragment extends Fragment {
         items = new ArrayList<Item>();
 
         items.add(new SectionItem(getResources().getString(R.string.sectionComunicacao)));
+<<<<<<< HEAD
         items.add(new EntryItem(getResources().getString(R.string.itemIPAdress), getResources().getString(R.string.summaryitemIPAdress),piScoreBoard.getIpAdress(),null));
         items.add(new EntryItem(getResources().getString(R.string.itemPorto), getResources().getString(R.string.summaryItemPorto),String.valueOf(piScoreBoard.getPort()),null));
         items.add(new EntryItem(getResources().getString(R.string.itemPassword), getResources().getString(R.string.summaryItemPassword),piScoreBoard.getPassword(),null));
@@ -67,21 +68,29 @@ public class SettingsFragment extends Fragment {
 
         items.add(new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),piScoreBoard.getStringTimeMode(), null));
 
+=======
+        items.add(new EntryItem(getResources().getString(R.string.itemIPAdress), getResources().getString(R.string.summaryitemIPAdress),null,null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemPorto), getResources().getString(R.string.summaryItemPorto),null,null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemPassword), getResources().getString(R.string.summaryItemPassword),null,null,0));
+
+        items.add(new SectionItem(getResources().getString(R.string.sectionTemporizacao)));
+        items.add(new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),piScoreBoard.getStringTimeMode(), null,0));
+>>>>>>> origin/master
         items.add(new SectionItem(getResources().getString(R.string.sectionPublicidade)));
         items.add(new EntryItemSwitch(1, getResources().getString(R.string.itemPublicidade),null , true));
-        items.add(new EntryItem(getResources().getString(R.string.itemPeriodoPublicidade), getResources().getString(R.string.summaryItemPeriodoPublicidade),null,null));
+        items.add(new EntryItem(getResources().getString(R.string.itemPeriodoPublicidade), getResources().getString(R.string.summaryItemPeriodoPublicidade),null,null,0));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionControloRemoto)));
         items.add(new EntryItemTwoButtons(2,getResources().getString(R.string.labelDesligar),3, getResources().getString(R.string.labelReiniciar) ));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionColors)));
-        items.add(new EntryItem(getResources().getString(R.string.itemBackgroundCentralColor), getResources().getString(R.string.summaryItemBackgroundCentralColor),null,null));
-        items.add(new EntryItem(getResources().getString(R.string.itemBackgroundSideColor), getResources().getString(R.string.summaryItemBackgroundSideColor),null,null));
-        items.add(new EntryItem(getResources().getString(R.string.itemResultColor), getResources().getString(R.string.summaryItemResultColor),null,null));
-        items.add(new EntryItem(getResources().getString(R.string.itemFaultColor), getResources().getString(R.string.summaryItemFaultColor),null,null));
-        items.add(new EntryItem(getResources().getString(R.string.itemNameColor), getResources().getString(R.string.summaryItemNameColor),null,null));
-        items.add(new EntryItem(getResources().getString(R.string.itemPartColor), getResources().getString(R.string.summaryItemPartColor),null,null));
-        items.add(new EntryItem(getResources().getString(R.string.itemTimeColor), getResources().getString(R.string.summaryItemTimeColor),null,null));
+        items.add(new EntryItem(getResources().getString(R.string.itemBackgroundCentralColor), getResources().getString(R.string.summaryItemBackgroundCentralColor),null,null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemBackgroundSideColor), getResources().getString(R.string.summaryItemBackgroundSideColor),null,null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemResultColor), getResources().getString(R.string.summaryItemResultColor),null,null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemFaultColor), getResources().getString(R.string.summaryItemFaultColor),null,null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemNameColor), getResources().getString(R.string.summaryItemNameColor),null,null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemPartColor), getResources().getString(R.string.summaryItemPartColor),null,null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemTimeColor), getResources().getString(R.string.summaryItemTimeColor),null,null,0));
 
 
         adapter = new EntryAdapter(getActivity(), items);
@@ -99,6 +108,7 @@ public class SettingsFragment extends Fragment {
                 switch (position){
 
                     case 1:
+<<<<<<< HEAD
                         piScoreBoard.setIpAdress(onCreateInputDialog(getResources().getString(R.string.itemIPAdress),position));
 
                         break;
@@ -109,6 +119,21 @@ public class SettingsFragment extends Fragment {
                     case 3:
                         piScoreBoard.setPassword(onCreateInputDialog(getResources().getString(R.string.itemPassword),position));
 
+=======
+                        piScoreBoard.setIpAdress(onCreateInputDialog(getResources().getString(R.string.itemIPAdress)));
+                        items.set(position,(new EntryItem(getResources().getString(R.string.itemIPAdress), getResources().getString(R.string.summaryitemIPAdress),piScoreBoard.getIpAdress(),null,0)));
+                        adapter.notifyDataSetChanged();
+                        break;
+                    case 2:
+                        piScoreBoard.setPort(Integer.parseInt(onCreateInputDialog(getResources().getString(R.string.itemPorto)))) ;
+                        items.set(position,(new EntryItem(getResources().getString(R.string.itemPorto), getResources().getString(R.string.summaryItemPorto),String.valueOf(piScoreBoard.getPort()),null,0)));
+                        adapter.notifyDataSetChanged();
+                        break;
+                    case 3:
+                        piScoreBoard.setPassword(onCreateInputDialog(getResources().getString(R.string.itemPassword)));
+                        items.set(position,(new EntryItem(getResources().getString(R.string.itemIPAdress), getResources().getString(R.string.summaryitemIPAdress),piScoreBoard.getIpAdress(),null,0)));
+                        adapter.notifyDataSetChanged();
+>>>>>>> origin/master
                         break;
                     case 5:
                         Dialog dialogTemporizacao = onCreateDialogSingleChoice(temporizacao, "Método de temporização");
@@ -234,8 +259,13 @@ public class SettingsFragment extends Fragment {
                                 ((MainActivity) getActivity()).sendCommand(stringToSend,true);
                                 break;
                         }
+<<<<<<< HEAD
                         piScoreBoard.setTimeMode(checkedItem != 0);
                         items.set(5,new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),piScoreBoard.getStringTimeMode(), null));
+=======
+                        piScoreBoard.setTimeMode(checkedItem!=0);
+                        items.set(1,new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),piScoreBoard.getStringTimeMode(), null,0));
+>>>>>>> origin/master
                         adapter.notifyDataSetChanged();
                     }
                 })

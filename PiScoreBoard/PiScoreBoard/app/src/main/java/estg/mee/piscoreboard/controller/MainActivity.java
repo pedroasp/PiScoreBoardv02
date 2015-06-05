@@ -1,6 +1,7 @@
 package estg.mee.piscoreboard.controller;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -65,7 +66,12 @@ public class MainActivity extends ActionBarActivity
 
     PiScoreBoard piScoreBoard = PiScoreBoard.getInstance();
 
+    private PiScoreBoard dObject = new PiScoreBoard();
+
     Game currentGame = Game.getInstance();
+
+    private Game gObject = new Game();
+
 
     public static int getRequestImage() {
         return REQUEST_IMAGE;
@@ -106,39 +112,59 @@ public class MainActivity extends ActionBarActivity
 //            e.printStackTrace();
 //        }
 
-//        try {
-//            FileInputStream fIn = openFileInput("Settings.txt");
-//            ObjectInputStream savedStream = new ObjectInputStream(fIn);
-//            PiScoreBoard dObject = new PiScoreBoard();
-//            dObject = (PiScoreBoard) savedStream.readObject();
-//
-//            piScoreBoard.se
-//
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (StreamCorruptedException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        try {
-//            FileInputStream fIn = openFileInput("PreviousGame.txt");
-//            ObjectInputStream savedStream = new ObjectInputStream(fIn);
-//
-//            //currentGame = (Game) savedStream.readObject();
-//
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (StreamCorruptedException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-}
+        try {
+            FileInputStream fIn = openFileInput("Settings.txt");
+            ObjectInputStream savedStream = new ObjectInputStream(fIn);
+
+            dObject = (PiScoreBoard)savedStream.readObject();
+
+            piScoreBoard.setListOfTeams(dObject.getListOfTeams());
+            piScoreBoard.setPassword(dObject.getPassword());
+            piScoreBoard.setPort(dObject.getPort());
+            piScoreBoard.setIpAdress(dObject.getIpAdress());
+            piScoreBoard.setPubEnable(dObject.isPubEnable());
+            piScoreBoard.setTimeMode(dObject.isTimeMode());
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (StreamCorruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            FileInputStream fIn = openFileInput("PreviousGame.txt");
+            ObjectInputStream savedStream = new ObjectInputStream(fIn);
+
+            gObject = (Game)savedStream.readObject();
+            currentGame.setPublictyList(gObject.getPublictyList());
+            currentGame.setId(gObject.getId());
+            currentGame.setDate(gObject.getDate());
+            currentGame.setModality(gObject.getModality());
+            currentGame.setDate(gObject.getDate());
+            currentGame.setEquipaLocal(gObject.getEquipaLocal());
+            currentGame.setEquipaVisitante(gObject.getEquipaVisitante());
+            currentGame.setGameState(gObject.getGameState());
+            currentGame.setnLocal(gObject.getnLocal());
+            currentGame.setnLocalFaults(gObject.getnLocalFaults());
+            currentGame.setnPart(gObject.getnPart());
+            currentGame.setnVisit(gObject.getnVisit());
+            currentGame.setTotalTime(gObject.getTotalTime());
+            currentGame.setPart(gObject.getPart());
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (StreamCorruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void onNavigationDrawerItemSelected(int position) {
 
@@ -350,8 +376,7 @@ public class MainActivity extends ActionBarActivity
 //
 //
 //        }
-
-
+        Toast.makeText(this, "Aguarde que os dados sejam salvos!", Toast.LENGTH_SHORT).show();
         try{
             FileOutputStream savefile = openFileOutput("Settings.txt", MODE_WORLD_READABLE);
             ObjectOutputStream saveStream = new ObjectOutputStream(savefile);
@@ -376,7 +401,7 @@ public class MainActivity extends ActionBarActivity
             savefile.flush();
             saveStream.close();
             savefile.close();
-
+            Toast.makeText(this, "Dados guardados!", Toast.LENGTH_SHORT).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

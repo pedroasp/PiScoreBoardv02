@@ -206,15 +206,15 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                     }
                 });
             } else {
-				// Entry Item
-				EntryItem ei = (EntryItem)i;
-				v = vi.inflate(R.layout.list_item_entry, null);
-				final TextView title = (TextView)v.findViewById(R.id.list_item_entry_title);
-				final TextView subtitle = (TextView)v.findViewById(R.id.list_item_entry_summary);
-                final TextView actualValue = (TextView)v.findViewById(R.id.list_item_entry_title2);
-                ImageView image = (ImageView)v.findViewById(R.id.list_item_entry_drawable);
+                // Entry Item
+                EntryItem ei = (EntryItem) i;
+                v = vi.inflate(R.layout.list_item_entry, null);
+                final TextView title = (TextView) v.findViewById(R.id.list_item_entry_title);
+                final TextView subtitle = (TextView) v.findViewById(R.id.list_item_entry_summary);
+                final TextView actualValue = (TextView) v.findViewById(R.id.list_item_entry_title2);
+                ImageView image = (ImageView) v.findViewById(R.id.list_item_entry_drawable);
 
-                if(ei.imagePath!=null) {
+                if (ei.imagePath != null) {
                     File imgFile = new File(ei.imagePath);
 
                     if (imgFile.exists()) {
@@ -226,7 +226,17 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                         image.getLayoutParams().width = pixels;
                         image.setImageBitmap(myBitmap);
                     }
-                }
+                } else {
+                    if (ei.imageRId != 0) {
+                        image.requestLayout();
+                        final float scale = getContext().getResources().getDisplayMetrics().density;
+                        int pixels = (int) (40 * scale + 0.5f);
+                        image.getLayoutParams().height = pixels;
+                        image.getLayoutParams().width = pixels;
+                        image.setImageResource(ei.imageRId);
+                    }
+            }
+
 
 				//final ImageView image = (ImageView)v.findViewById(R.id.list_item_entry_drawable);
 				
