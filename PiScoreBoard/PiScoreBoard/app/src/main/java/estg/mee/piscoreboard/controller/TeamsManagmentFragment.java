@@ -39,6 +39,7 @@ import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.customlistview.EntryAdapter;
 import estg.mee.piscoreboard.customlistview.EntryItem;
 import estg.mee.piscoreboard.customlistview.Item;
+import estg.mee.piscoreboard.model.Modality;
 import estg.mee.piscoreboard.model.PiScoreBoard;
 import estg.mee.piscoreboard.model.Team;
 import estg.mee.piscoreboard.utils.ListViewSwipeGesture;
@@ -68,7 +69,7 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
 
     int maxNum = 9;
 
-    PiScoreBoard lists = PiScoreBoard.getInstance();
+    PiScoreBoard piScoreBoard = PiScoreBoard.getInstance();
 
     // ArrayList for Listview
     ArrayList<Item> items = new ArrayList<Item>();
@@ -86,7 +87,7 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
         setHasOptionsMenu(true);
 
         lv = (ListView) this.rootView.findViewById(R.id.list_viewaa);
-        //inputSearch = (EditText) this.rootView.findViewById(R.id.inputSearch);
+        inputSearch = (EditText) this.rootView.findViewById(R.id.inputSearch);
 
 
         adapter = new EntryAdapter(getActivity(), items);
@@ -100,7 +101,7 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            ShowDetailsDialog(getActivity(), lists.getListOfTeams().get(position));
+            ShowDetailsDialog(getActivity(), piScoreBoard.getListOfTeams().get(position));
         }
     });
         /**
@@ -128,24 +129,6 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
             }
         });
 
-//        Set<String> set = MainActivity.sharedpreferences.getStringSet("TeamNames", null);
-//        TeamsName.addAll(set);
-//        Set<String> set1 = MainActivity.sharedpreferences.getStringSet("TeamLogos", null);
-//        TeamsLogo.addAll(set1);
-//        Set<String> set2 = MainActivity.sharedpreferences.getStringSet("TeamIDs", null);
-//        TeamsID.addAll(set2);
-//
-//        lists.getListOfTeams().clear();
-//
-//        for(int j = 0 ;  j< TeamsName.size(); j++){
-//            Team equipa = new Team();
-//            equipa.setName(TeamsName.get(j));
-//            equipa.setLogotipo(TeamsLogo.get(j));
-//            equipa.setId(Integer.parseInt(TeamsID.get(j)));
-//
-//            lists.getListOfTeams().add(j, equipa);
-//        }
-
         return rootView;
     }
 
@@ -154,35 +137,12 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
         super.onResume();
         items.clear();
 
-        for(Iterator<Team> i = lists.getListOfTeams().iterator(); i.hasNext(); ) {
+        for(Iterator<Team> i = piScoreBoard.getListOfTeams().iterator(); i.hasNext(); ) {
             Team item = i.next();
-            items.add(new EntryItem(item.getName(), null, null, item.getLogotipo(), 0));
+            items.add(new EntryItem(item.getName(), null, null, item.getLogotipo()));
         }
         adapter = new EntryAdapter(getActivity(), items);
         lv.setAdapter(adapter);
-//        TeamsName.clear();
-//        TeamsLogo.clear();
-//        TeamsID.clear();
-//
-//        for(int j = 0 ;  j< lists.getListOfTeams().size(); j++){
-//            TeamsName.add(j, lists.getListOfTeams().get(j).getName());
-//            TeamsLogo.add(j, lists.getListOfTeams().get(j).getLogotipo());
-//            TeamsID.add(j, String.valueOf(lists.getListOfTeams().get(j).getId()));
-//        }
-//
-//        Set<String> set = new HashSet<String>();
-//        Set<String> set1 = new HashSet<String>();
-//        Set<String> set2 = new HashSet<String>();
-//
-//
-//        set.addAll(TeamsName);
-//        MainActivity.editor.putStringSet("TeamNames", set);
-//        set1.addAll(TeamsLogo);
-//        MainActivity.editor.putStringSet("TeamLogos", set1);
-//        set2.addAll(TeamsID);
-//        MainActivity.editor.putStringSet("TeamIDs", set2);
-//
-//        MainActivity.editor.commit();
     }
 
     ListViewSwipeGesture.TouchCallbacks swipeListener = new ListViewSwipeGesture.TouchCallbacks() {
@@ -241,7 +201,7 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
                 if (constraint != null && constraint.toString().length() > 0) {
                     ArrayList<Team> founded = new ArrayList<Team>();
 
-                    for(Iterator<Team> i = lists.getListOfTeams().iterator(); i.hasNext(); ) {
+                    for(Iterator<Team> i = piScoreBoard.getListOfTeams().iterator(); i.hasNext(); ) {
                         Team item = i.next();
                         if(item.getName().toLowerCase().contains(constraint)){
                             founded.add(item);
@@ -250,8 +210,8 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
                     result.values = founded;
                     result.count = founded.size();
                 }else {
-                    result.values = lists.getListOfTeams();
-                    result.count = lists.getListOfTeams().size();
+                    result.values = piScoreBoard.getListOfTeams();
+                    result.count = piScoreBoard.getListOfTeams().size();
                 }
                 return result;
 
@@ -263,7 +223,7 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
                 items.clear();
 
                 for (Team item : (ArrayList<Team>) results.values) {
-                    items.add(new EntryItem(item.getName(), null, null, item.getLogotipo(), 0));
+                    items.add(new EntryItem(item.getName(), null, null, item.getLogotipo()));
                 }
                 adapter = new EntryAdapter(getActivity(), items);
                 lv.setAdapter(adapter);
@@ -342,8 +302,8 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
 int actualID = 0;
     public void AddTeamDialog(Context c ) {
 
-        if(lists.getListOfTeams().size()!=0)
-            actualID = lists.getListOfTeams().get((lists.getListOfTeams().size())-1).getId();
+        if(piScoreBoard.getListOfTeams().size()!=0)
+            actualID = piScoreBoard.getListOfTeams().get((piScoreBoard.getListOfTeams().size())-1).getId();
         else
             actualID = 0;
 
@@ -405,7 +365,8 @@ int actualID = 0;
                 newTeam.setName(input.getText().toString());
                 newTeam.setLogotipo(MainActivity.newTeamPath);
                 newTeam.setId(++actualID);
-                lists.getListOfTeams().add(newTeam);
+                newTeam.setModality(piScoreBoard.getListOfModalities().get(0));
+                piScoreBoard.getListOfTeams().add(newTeam);
                 MainActivity.newTeamPath = null;
                 onResume();
             }

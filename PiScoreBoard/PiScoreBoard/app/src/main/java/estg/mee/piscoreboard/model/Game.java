@@ -1,5 +1,6 @@
 package estg.mee.piscoreboard.model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,7 +8,7 @@ import java.util.Date;
 /**
  * Created by Rúben on 01-05-2015.
  */
-public class Game {
+public class Game implements Serializable {
     private int id;
     private int nLocalFaults = 0;
     private int nVisitFaults = 0;
@@ -29,7 +30,7 @@ public class Game {
     ArrayList <String> PublictyList = new ArrayList();
 
 
-    public Game() {
+    private Game() {
 
     }
 

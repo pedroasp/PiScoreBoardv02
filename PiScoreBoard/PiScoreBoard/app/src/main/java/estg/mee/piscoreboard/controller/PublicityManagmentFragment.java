@@ -51,12 +51,9 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
 
     private static final int puBID = 3;
     EntryAdapter adapter;
-    // List view
     private ListView lv;
 
-  //  private Game jogo;
 
-    // Search EditText
     EditText inputSearch;
 
     // ArrayList for Listview
@@ -64,9 +61,6 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
 
     Game currentGame = Game.getInstance();
 
-//    public PublicityManagmentFragment(Game jogo) {
-//        this.jogo = jogo;
-//    }
 
     @Nullable
     @Override
@@ -78,43 +72,43 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
 
         lv = (ListView) this.rootView.findViewById(R.id.list_viewaa);
         lv.setTextFilterEnabled(true);
-     //   inputSearch = (EditText) this.rootView.findViewById(R.id.inputSearch);
+        inputSearch = (EditText) this.rootView.findViewById(R.id.inputSearch);
 
         final ListViewSwipeGesture touchListener = new ListViewSwipeGesture( lv, swipeListener, getActivity());
         touchListener.SwipeType	=	ListViewSwipeGesture.Double;    //Set two options at background of list item
 
         lv.setOnTouchListener(touchListener);
 
-//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                ShowDetailsDialog(getActivity(), currentGame.getPublictyList().get(position).toString());
-//            }
-//        });
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ShowDetailsDialog(getActivity(), currentGame.getPublictyList().get(position).toString());
+            }
+        });
 
-//        /**
-//         * Enabling Search Filter
-//         * */
-//        inputSearch.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-//                // When user changed the Text
-//                getFilter().filter(cs);
-//            }
-//
-//            @Override
-//            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-//                                          int arg3) {
-//                // TODO Auto-generated method stub
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable arg0) {
-//                // TODO Auto-generated method stub
-//
-//            }
-//        });
+        /**
+         * Enabling Search Filter
+         * */
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                getFilter().filter(cs);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
 
         return rootView;
     }
@@ -130,15 +124,11 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
 
         for(Iterator<String> i = currentGame.getPublictyList().iterator(); i.hasNext(); ) {
             String item = i.next();
-            items.add(new EntryItem(getImageName(item), null, null, item, 0));
+            items.add(new EntryItem(getImageName(item), null, null, item));
         }
         adapter = new EntryAdapter(getActivity(), items);
         lv.setAdapter(adapter);
 
-//        Set<String> set = new HashSet<String>();
-//        set.addAll(jogo.getPublictyList());
-//        MainActivity.editor.putStringSet("Publist", set);
-//        MainActivity.editor.commit();
     }
 
     private String getImageName(String imagePath){
@@ -231,7 +221,7 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
                 items.clear();
 
                 for (String item : (ArrayList<String>) results.values) {
-                    items.add(new EntryItem(getImageName(item), null, null, item, 0));
+                    items.add(new EntryItem(getImageName(item), null, null, item));
                 }
                 adapter = new EntryAdapter(getActivity(), items);
                 lv.setAdapter(adapter);

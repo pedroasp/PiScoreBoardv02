@@ -59,34 +59,28 @@ public class SettingsFragment extends Fragment {
         ListView settingsList = (ListView)this.rootView.findViewById(R.id.settings_lv);
         items = new ArrayList<Item>();
 
-//        items.add(new SectionItem(getResources().getString(R.string.sectionComunicacao)));
-//        items.add(new EntryItem(getResources().getString(R.string.itemIPAdress), getResources().getString(R.string.summaryitemIPAdress),"", 0));
-//        items.add(new EntryItem(getResources().getString(R.string.itemPorto), getResources().getString(R.string.summaryItemPorto),"", 0));
-
-//        items.add(new SectionItem(getResources().getString(R.string.sectionTemporizacao)));
-//        items.add(new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),"", null,0));
-//
-//        items.add(new SectionItem(getResources().getString(R.string.sectionPublicidade)));
-//        items.add(new EntryItemSwitch(1, getResources().getString(R.string.itemPublicidade),"" , true));
-//        items.add(new EntryItem(getResources().getString(R.string.itemPeriodoPublicidade), getResources().getString(R.string.summaryItemPeriodoPublicidade),"", null,0));
+        items.add(new SectionItem(getResources().getString(R.string.sectionComunicacao)));
+        items.add(new EntryItem(getResources().getString(R.string.itemIPAdress), getResources().getString(R.string.summaryitemIPAdress),null,null));
+        items.add(new EntryItem(getResources().getString(R.string.itemPorto), getResources().getString(R.string.summaryItemPorto),null,null));
+        items.add(new EntryItem(getResources().getString(R.string.itemPassword), getResources().getString(R.string.summaryItemPassword),null,null));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionTemporizacao)));
-        items.add(new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),piScoreBoard.getStringTimeMode(), null, 0));
+        items.add(new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),piScoreBoard.getStringTimeMode(), null));
         items.add(new SectionItem(getResources().getString(R.string.sectionPublicidade)));
         items.add(new EntryItemSwitch(1, getResources().getString(R.string.itemPublicidade),null , true));
-        items.add(new EntryItem(getResources().getString(R.string.itemPeriodoPublicidade), getResources().getString(R.string.summaryItemPeriodoPublicidade),null,null, 0));
+        items.add(new EntryItem(getResources().getString(R.string.itemPeriodoPublicidade), getResources().getString(R.string.summaryItemPeriodoPublicidade),null,null));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionControloRemoto)));
         items.add(new EntryItemTwoButtons(2,getResources().getString(R.string.labelDesligar),3, getResources().getString(R.string.labelReiniciar) ));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionColors)));
-        items.add(new EntryItem(getResources().getString(R.string.itemBackgroundCentralColor), getResources().getString(R.string.summaryItemBackgroundCentralColor),null,null, 0));
-        items.add(new EntryItem(getResources().getString(R.string.itemBackgroundSideColor), getResources().getString(R.string.summaryItemBackgroundSideColor),null,null, 0));
-        items.add(new EntryItem(getResources().getString(R.string.itemResultColor), getResources().getString(R.string.summaryItemResultColor),null,null, 0));
-        items.add(new EntryItem(getResources().getString(R.string.itemFaultColor), getResources().getString(R.string.summaryItemFaultColor),null,null, 0));
-        items.add(new EntryItem(getResources().getString(R.string.itemNameColor), getResources().getString(R.string.summaryItemNameColor),null,null, 0));
-        items.add(new EntryItem(getResources().getString(R.string.itemPartColor), getResources().getString(R.string.summaryItemPartColor),null,null, 0));
-        items.add(new EntryItem(getResources().getString(R.string.itemTimeColor), getResources().getString(R.string.summaryItemTimeColor),null,null, 0));
+        items.add(new EntryItem(getResources().getString(R.string.itemBackgroundCentralColor), getResources().getString(R.string.summaryItemBackgroundCentralColor),null,null));
+        items.add(new EntryItem(getResources().getString(R.string.itemBackgroundSideColor), getResources().getString(R.string.summaryItemBackgroundSideColor),null,null));
+        items.add(new EntryItem(getResources().getString(R.string.itemResultColor), getResources().getString(R.string.summaryItemResultColor),null,null));
+        items.add(new EntryItem(getResources().getString(R.string.itemFaultColor), getResources().getString(R.string.summaryItemFaultColor),null,null));
+        items.add(new EntryItem(getResources().getString(R.string.itemNameColor), getResources().getString(R.string.summaryItemNameColor),null,null));
+        items.add(new EntryItem(getResources().getString(R.string.itemPartColor), getResources().getString(R.string.summaryItemPartColor),null,null));
+        items.add(new EntryItem(getResources().getString(R.string.itemTimeColor), getResources().getString(R.string.summaryItemTimeColor),null,null));
 
 
         adapter = new EntryAdapter(getActivity(), items);
@@ -103,16 +97,30 @@ public class SettingsFragment extends Fragment {
                 String[] temporizacao = {"Relógio", "Cronómetro"};
                 switch (position){
 
-
                     case 1:
+                        piScoreBoard.setIpAdress(onCreateInputDialog(getResources().getString(R.string.itemIPAdress)));
+                        items.set(position,(new EntryItem(getResources().getString(R.string.itemIPAdress), getResources().getString(R.string.summaryitemIPAdress),piScoreBoard.getIpAdress(),null)));
+                        adapter.notifyDataSetChanged();
+                        break;
+                    case 2:
+                        piScoreBoard.setPort(Integer.parseInt(onCreateInputDialog(getResources().getString(R.string.itemPorto)))) ;
+                        items.set(position,(new EntryItem(getResources().getString(R.string.itemPorto), getResources().getString(R.string.summaryItemPorto),String.valueOf(piScoreBoard.getPort()),null)));
+                        adapter.notifyDataSetChanged();
+                        break;
+                    case 3:
+                        piScoreBoard.setPassword(onCreateInputDialog(getResources().getString(R.string.itemPassword)));
+                        items.set(position,(new EntryItem(getResources().getString(R.string.itemIPAdress), getResources().getString(R.string.summaryitemIPAdress),piScoreBoard.getIpAdress(),null)));
+                        adapter.notifyDataSetChanged();
+                        break;
+                    case 4:
                         Dialog dialogTemporizacao = onCreateDialogSingleChoice(temporizacao, "Método de temporização");
                         dialogTemporizacao.show();
                     break;
-                    case 4:
+                    case 8:
                         OnCreateNumberPicker(getActivity(),"Temporização");
                         break;
 
-                    case 8:
+                    case 12:
                         colorPickerDialog = new ColorPickerDialog(getActivity(), ((MainActivity)getActivity()).graphics.getBackgroundCentralColor(), new OnColorSelectedListener() {
                             @Override
                             public void onColorSelected(int color) {
@@ -122,7 +130,7 @@ public class SettingsFragment extends Fragment {
                         });
                         colorPickerDialog.show();
                         break;
-                    case 9:
+                    case 13:
                         colorPickerDialog = new ColorPickerDialog(getActivity(), ((MainActivity)getActivity()).graphics.getBackgroundSideColor(), new OnColorSelectedListener() {
                             @Override
                             public void onColorSelected(int color) {
@@ -132,7 +140,7 @@ public class SettingsFragment extends Fragment {
                         });
                         colorPickerDialog.show();
                         break;
-                    case 10:
+                    case 14:
                         colorPickerDialog = new ColorPickerDialog(getActivity(), ((MainActivity)getActivity()).graphics.getResultColor(), new OnColorSelectedListener() {
                             @Override
                             public void onColorSelected(int color) {
@@ -142,7 +150,7 @@ public class SettingsFragment extends Fragment {
                         });
                         colorPickerDialog.show();
                         break;
-                    case 11:
+                    case 15:
                         colorPickerDialog = new ColorPickerDialog(getActivity(), ((MainActivity)getActivity()).graphics.getFaultColor(), new OnColorSelectedListener() {
                             @Override
                             public void onColorSelected(int color) {
@@ -153,7 +161,7 @@ public class SettingsFragment extends Fragment {
                         });
                         colorPickerDialog.show();
                         break;
-                    case 12:
+                    case 16:
                         colorPickerDialog = new ColorPickerDialog(getActivity(), ((MainActivity)getActivity()).graphics.getNamesColor(), new OnColorSelectedListener() {
                             @Override
                             public void onColorSelected(int color) {
@@ -163,7 +171,7 @@ public class SettingsFragment extends Fragment {
                         });
                         colorPickerDialog.show();
                         break;
-                    case 13:
+                    case 17:
                         colorPickerDialog = new ColorPickerDialog(getActivity(), ((MainActivity)getActivity()).graphics.getPartColor(), new OnColorSelectedListener() {
                             @Override
                             public void onColorSelected(int color) {
@@ -173,7 +181,7 @@ public class SettingsFragment extends Fragment {
                         });
                         colorPickerDialog.show();
                         break;
-                    case 14:
+                    case 18:
                         colorPickerDialog = new ColorPickerDialog(getActivity(), ((MainActivity)getActivity()).graphics.getTimeColor(), new OnColorSelectedListener() {
                             @Override
                             public void onColorSelected(int color) {
@@ -229,7 +237,7 @@ public class SettingsFragment extends Fragment {
                                 break;
                         }
                         piScoreBoard.setTimeMode(checkedItem!=0);
-                        items.set(1,new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),piScoreBoard.getStringTimeMode(), null, 0));
+                        items.set(1,new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),piScoreBoard.getStringTimeMode(), null));
                         adapter.notifyDataSetChanged();
                     }
                 })

@@ -6,21 +6,20 @@ public class EntryItem implements Item {
 	public final String subtitle;
     public final String actualValue;
 	public final String imagePath;
-    public final int imageRId;
+   // public final int imageRId;
 	
 	/**
 	 * Construtor
 	 * @param title
 	 * @param subtitle
 	 * @param imagePath
-     * @param imageRId
 	 */
-	public EntryItem(String title, String subtitle,String actualValue, String imagePath, int imageRId) {
+	public EntryItem(String title, String subtitle,String actualValue, String imagePath) {
 		this.title = title;
 		this.subtitle = subtitle;
         this.actualValue = actualValue;
 		this.imagePath = imagePath;
-        this.imageRId = imageRId;
+      //  this.imageRId = imageRId;
 	}
 
     @Override

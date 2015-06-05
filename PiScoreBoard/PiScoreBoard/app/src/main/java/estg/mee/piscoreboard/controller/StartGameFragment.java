@@ -35,7 +35,7 @@ public class StartGameFragment extends Fragment {
 
 
     private View rootView = null;
-    PiScoreBoard lists = PiScoreBoard.getInstance();
+    PiScoreBoard piScoreBoard = PiScoreBoard.getInstance();
 
     Game currentGame = Game.getInstance();
 
@@ -62,12 +62,12 @@ public class StartGameFragment extends Fragment {
         ArrayList<Item> items = new ArrayList<Item>();
 
         items.add(new SectionItem(getResources().getString(R.string.sectionModalidade)));
-        items.add(new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade),"Futsal", null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade),"Futsal", null));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionEquipas)));
-        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada),currentGame.getEquipaLocal().getName(),null,0));
-        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante),currentGame.getEquipaVisitante().getName(), null,0));
-        items.add(new EntryItem("File picker", null,null, null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada),currentGame.getEquipaLocal().getName(),null));
+        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante),currentGame.getEquipaVisitante().getName(), null));
+        items.add(new EntryItem("File picker", null,null, null));
 
         //items.add(new SectionItem(getResources().getString(R.string.sectionDefinicoesAvancadas)));
         items.add(new EntryItemButton(1,getResources().getString(R.string.iniciarJogoButtonText)));
@@ -78,21 +78,20 @@ public class StartGameFragment extends Fragment {
         settingsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Object listItem = settingsList.getItemAtPosition(position);
-                String[] modalidades = {"Futsal", "Basquetebol"};
+
                 switch (position){
                     case 1:
-                        Dialog dialogModalidades = onCreateDialogSingleChoice(modalidades, "Escolha a modalidade:", 10);
+                        Dialog dialogModalidades = onCreateDialogSingleChoice(piScoreBoard.getModalitiesName(piScoreBoard.getListOfModalities()), "Escolha a modalidade:", 10);
                         dialogModalidades.show();
 
                         break;
                     case 3:
-                        Dialog dialogEquipaVisitada = onCreateDialogSingleChoice(lists.getTeamsName(lists.getListOfTeams()), "Escolha a equipa local:", 20);
+                        Dialog dialogEquipaVisitada = onCreateDialogSingleChoice(piScoreBoard.getTeamsName(piScoreBoard.getListOfTeams()), "Escolha a equipa local:", 20);
                         dialogEquipaVisitada.show();
 
                         break;
                     case 4:
-                        Dialog dialogEquipaVisitante= onCreateDialogSingleChoice(lists.getTeamsName(lists.getListOfTeams()), "Escolha a equipa visitante:", 30);
+                        Dialog dialogEquipaVisitante= onCreateDialogSingleChoice(piScoreBoard.getTeamsName(piScoreBoard.getListOfTeams()), "Escolha a equipa visitante:", 30);
                         dialogEquipaVisitante.show();
 
                         break;
