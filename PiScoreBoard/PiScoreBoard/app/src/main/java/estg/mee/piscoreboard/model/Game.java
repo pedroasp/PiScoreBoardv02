@@ -30,7 +30,7 @@ public class Game implements Serializable {
     ArrayList <String> PublictyList = new ArrayList();
 
 
-    private Game() {
+    public Game() {
 
     }
 

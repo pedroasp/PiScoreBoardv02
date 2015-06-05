@@ -62,12 +62,12 @@ public class StartGameFragment extends Fragment {
         ArrayList<Item> items = new ArrayList<Item>();
 
         items.add(new SectionItem(getResources().getString(R.string.sectionModalidade)));
-        items.add(new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade),"Futsal", null));
+        items.add(new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade),"Futsal", null,R.drawable.handball_ball));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionEquipas)));
-        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada),currentGame.getEquipaLocal().getName(),null));
-        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante),currentGame.getEquipaVisitante().getName(), null));
-        items.add(new EntryItem("File picker", null,null, null));
+        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada),currentGame.getEquipaLocal().getName(),null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante),currentGame.getEquipaVisitante().getName(), null,0));
+        items.add(new EntryItem("File picker", null,null, null,0));
 
         //items.add(new SectionItem(getResources().getString(R.string.sectionDefinicoesAvancadas)));
         items.add(new EntryItemButton(1,getResources().getString(R.string.iniciarJogoButtonText)));
@@ -99,21 +99,6 @@ public class StartGameFragment extends Fragment {
                         new Async_SFTP().uploadPubs(getActivity(), currentGame.getPublictyList());
 
                         //new Async_SFTP().listVideos(getActivity());
-//                        int selectedMode = MultiImageSelectorActivity.MODE_MULTI;
-//
-//                        boolean showCamera = true;
-//
-//                        int maxNum = 9;
-//
-//                        Intent intent = new Intent(getActivity(), MultiImageSelectorActivity.class);
-//
-//                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, showCamera);
-//
-//                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, maxNum);
-//
-//                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
-//
-//                        getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
                     }break;
 
                 }

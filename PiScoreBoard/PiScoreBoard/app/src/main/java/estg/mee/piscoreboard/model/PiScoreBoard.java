@@ -5,6 +5,8 @@ import android.content.Context;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import estg.mee.piscoreboard.R;
+
 /**
  * Created by Pedro on 28/05/2015.
  */
@@ -18,13 +20,13 @@ public class PiScoreBoard implements Serializable{
     private boolean pubEnable ;
     private int pubPeriod;
     private String ipAdress;
-    private int port;
+    private int port = 9999 ;
     private String password;
 
     public PiScoreBoard() {
-        listOfModalities.add(new Modality(1, 2, 0, "Futsal"));
-        listOfModalities.add(new Modality(2, 4, 0, "Basquetebol"));
-        listOfModalities.add(new Modality(3, 2, 0, "Andebol"));
+        listOfModalities.add(new Modality(0, 2, 0, "Futsal", R.drawable.football_ball));
+        listOfModalities.add(new Modality(1, 4, 0, "Basquetebol",R.drawable.basketball_ball));
+        listOfModalities.add(new Modality(2, 2, 0, "Andebol",R.drawable.handball_ball));
     }
 
     public static PiScoreBoard getInstance(){
@@ -32,6 +34,10 @@ public class PiScoreBoard implements Serializable{
             instance = new PiScoreBoard();
         }
         return instance;
+    }
+
+    public void setListOfTeams(ArrayList<Team> listOfTeams) {
+        this.listOfTeams = listOfTeams;
     }
 
     public String getPassword() {

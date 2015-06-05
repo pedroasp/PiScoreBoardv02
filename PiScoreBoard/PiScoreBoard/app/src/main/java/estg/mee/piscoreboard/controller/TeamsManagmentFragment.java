@@ -139,7 +139,7 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
 
         for(Iterator<Team> i = piScoreBoard.getListOfTeams().iterator(); i.hasNext(); ) {
             Team item = i.next();
-            items.add(new EntryItem(item.getName(), null, null, item.getLogotipo()));
+            items.add(new EntryItem(item.getName(), null, null, item.getLogotipo(),0));
         }
         adapter = new EntryAdapter(getActivity(), items);
         lv.setAdapter(adapter);
@@ -223,7 +223,7 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
                 items.clear();
 
                 for (Team item : (ArrayList<Team>) results.values) {
-                    items.add(new EntryItem(item.getName(), null, null, item.getLogotipo()));
+                    items.add(new EntryItem(item.getName(), null, null, item.getLogotipo(),0));
                 }
                 adapter = new EntryAdapter(getActivity(), items);
                 lv.setAdapter(adapter);
