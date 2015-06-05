@@ -1,16 +1,8 @@
 package estg.mee.piscoreboard.utils;
 
-import java.io.PrintWriter;
-
-import android.app.Fragment;
-
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.wifi.WifiManager;
 import android.os.Looper;
 import android.os.MessageQueue;
-import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -20,7 +12,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import estg.mee.piscoreboard.controller.MainActivity;
+import estg.mee.piscoreboard.model.PiScoreBoard;
 
 
 /**
@@ -29,11 +21,9 @@ import estg.mee.piscoreboard.controller.MainActivity;
 public class ClientSendThread implements Runnable {
     private String message;
     //private final String IP = "192.168.132.45";
-    private final String IP = "10.5.5.15";
-    private final int PORT = 9999;
     private PrintWriter out;
     private Socket socket;
-
+    PiScoreBoard piScoreBoard = PiScoreBoard.getInstance();
     Context context;
 
     public ClientSendThread(String message,Context context) {
@@ -43,7 +33,7 @@ public class ClientSendThread implements Runnable {
     public void run() {
 
         try {
-            socket = new Socket(IP, PORT);   // Abertura Socket
+            socket = new Socket(piScoreBoard.getIpAdress(), piScoreBoard.getPort());   // Abertura Socket
 //            Boolean a = socket.isConnected();
 //            if (socket == null){ Toast.makeText(c,"Erro de ligação", Toast.LENGTH_SHORT).show();}
             try {

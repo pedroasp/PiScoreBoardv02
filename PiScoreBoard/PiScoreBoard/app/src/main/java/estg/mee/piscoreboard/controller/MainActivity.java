@@ -3,7 +3,6 @@ package estg.mee.piscoreboard.controller;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -21,11 +20,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.model.Game;
 import estg.mee.piscoreboard.model.Graphics;
+import estg.mee.piscoreboard.model.PiScoreBoard;
 import estg.mee.piscoreboard.utils.ClientSendThread;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
+
+//import android.app.ListFragment;
 
 //import android.app.ListFragment;
 
@@ -48,23 +55,17 @@ public class MainActivity extends ActionBarActivity
 
     private static final int REQUEST_IMAGE = 2;
 
+
 //    private static ArrayList<String> mSelectPath = null;
 
     public static Game jogo;
 
+
     public static String newTeamPath;
 
-    public static final String MyPREFERENCES = "MyPrefs" ;
-    public static SharedPreferences sharedpreferences;
-    public static SharedPreferences.Editor editor;
+    PiScoreBoard piScoreBoard = PiScoreBoard.getInstance();
 
-//    public static ArrayList<String> getmSelectPath() {
-//        return mSelectPath;
-//    }
-
-////    public void setmSelectPath(ArrayList<String> mSelectPath) {
-//        this.mSelectPath = mSelectPath;
-//    }
+    Game currentGame = Game.getInstance();
 
     public static int getRequestImage() {
         return REQUEST_IMAGE;
@@ -81,20 +82,63 @@ public class MainActivity extends ActionBarActivity
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
-        jogo = new Game();
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
-//        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-//        editor = sharedpreferences.edit();
-//       // preferences = this.getActivity().getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-//        // Set up the drawer.
+//        try {
+//            FileInputStream fIn = openFileInput("Teams.txt");
+//            ObjectInputStream savedStream = new ObjectInputStream(fIn);
+//            while (true) {
+//                try {
+//                    piScoreBoard.getListOfTeams().add((Team) savedStream.readObject());
+//
+//                } catch (EOFException e) {
+//                    e.printStackTrace();
+//                    break;
+//                }
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (StreamCorruptedException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
-
-
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
-    }
-
+//        try {
+//            FileInputStream fIn = openFileInput("Settings.txt");
+//            ObjectInputStream savedStream = new ObjectInputStream(fIn);
+//            PiScoreBoard dObject = new PiScoreBoard();
+//            dObject = (PiScoreBoard) savedStream.readObject();
+//
+//            piScoreBoard.se
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (StreamCorruptedException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        try {
+//            FileInputStream fIn = openFileInput("PreviousGame.txt");
+//            ObjectInputStream savedStream = new ObjectInputStream(fIn);
+//
+//            //currentGame = (Game) savedStream.readObject();
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (StreamCorruptedException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+}
     @Override
     public void onNavigationDrawerItemSelected(int position) {
 
@@ -112,7 +156,7 @@ public class MainActivity extends ActionBarActivity
                 objFragment = new TeamsManagmentFragment();
                 break;
             case 3:
-                objFragment = new PublicityManagmentFragment(jogo);
+                objFragment = new PublicityManagmentFragment();
                 break;
             case 4:
                 objFragment = new SettingsFragment();
@@ -228,6 +272,7 @@ public class MainActivity extends ActionBarActivity
 
     public void sendCommand(String message, boolean checkConnection){
 
+
         //EditText sMessage = (EditText) findViewById(R.id.message);
         //String message = sMessage.getEditableText().toString();
 
@@ -253,9 +298,6 @@ public class MainActivity extends ActionBarActivity
 //        responseTV.setText(response);
 
 
-
-
-//        Log.d("Received", received.getMessage());
     }
 
     @Override
@@ -268,7 +310,7 @@ public class MainActivity extends ActionBarActivity
 
                 switch (id){
                     case 3:
-                        jogo.setPublictyList(data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT));
+                        currentGame.setPublictyList(data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT));
 
                     break;
                     case 5: {
@@ -280,6 +322,65 @@ public class MainActivity extends ActionBarActivity
                 }
 
             }
+        }
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        try {
+//            FileOutputStream savefile = openFileOutput("Teams.txt", MODE_WORLD_READABLE);
+//            ObjectOutputStream saveStream = new ObjectOutputStream(savefile);
+//
+//
+//            for (Iterator<Team> i = piScoreBoard.getListOfTeams().iterator(); i.hasNext(); ) {
+//                Team teams = i.next();
+//                saveStream.writeObject(teams);
+//            }
+//
+//            saveStream.flush();
+//            savefile.flush();
+//            saveStream.close();
+//            savefile.close();
+//
+//        } catch (FileNotFoundException a) {
+//            System.out.println("File not found!");
+//        } catch (IOException b) {
+//            b.printStackTrace();
+//            System.out.println("IO Exception!");
+//
+//
+//        }
+
+
+        try{
+            FileOutputStream savefile = openFileOutput("Settings.txt", MODE_WORLD_READABLE);
+            ObjectOutputStream saveStream = new ObjectOutputStream(savefile);
+            saveStream.writeObject(piScoreBoard);
+
+            saveStream.flush();
+            savefile.flush();
+            saveStream.close();
+            savefile.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try{
+            FileOutputStream savefile = openFileOutput("PreviousGame.txt", MODE_WORLD_READABLE);
+            ObjectOutputStream saveStream = new ObjectOutputStream(savefile);
+            saveStream.writeObject(currentGame);
+
+            saveStream.flush();
+            savefile.flush();
+            saveStream.close();
+            savefile.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

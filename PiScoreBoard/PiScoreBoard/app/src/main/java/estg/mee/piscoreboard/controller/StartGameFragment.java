@@ -2,13 +2,10 @@ package estg.mee.piscoreboard.controller;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-//import android.app.Fragment;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +20,11 @@ import estg.mee.piscoreboard.customlistview.EntryItem;
 import estg.mee.piscoreboard.customlistview.EntryItemButton;
 import estg.mee.piscoreboard.customlistview.Item;
 import estg.mee.piscoreboard.customlistview.SectionItem;
-import me.nereo.multi_image_selector.MultiImageSelectorActivity;
+import estg.mee.piscoreboard.model.Game;
+import estg.mee.piscoreboard.model.PiScoreBoard;
+import estg.mee.piscoreboard.utils.Async_SFTP;
+
+//import android.app.Fragment;
 
 /**
  * Created by Rúben on 13/05/2015.
@@ -32,8 +33,14 @@ public class StartGameFragment extends Fragment {
 
 
     private View rootView = null;
+    PiScoreBoard piScoreBoard = PiScoreBoard.getInstance();
 
-   //private ArrayList<String> mSelectPath;
+    Game currentGame = Game.getInstance();
+    ArrayList<Item> items;
+    EntryAdapter adapter;
+//    public StartGameFragment(Game jogo) {
+//       this.jogo = jogo;
+//   }
 
     @Nullable
     @Override
@@ -51,61 +58,61 @@ public class StartGameFragment extends Fragment {
 
     private void initSettingsFields(){
         ListView settingsList = (ListView)this.rootView.findViewById(R.id.settings_lv);
-        ArrayList<Item> items = new ArrayList<Item>();
+        items = new ArrayList<Item>();
 
         items.add(new SectionItem(getResources().getString(R.string.sectionModalidade)));
-        items.add(new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade),"Futsal", null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade),currentGame.getModality().getName(), null));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionEquipas)));
-        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada),null,null,0));
-        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante),null, null,0));
-        items.add(new EntryItem("File picker", null,null, null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada),currentGame.getEquipaLocal().getName(),null));
+        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante),currentGame.getEquipaVisitante().getName(), null));
+        items.add(new EntryItem("File picker", null,null, null));
 
         //items.add(new SectionItem(getResources().getString(R.string.sectionDefinicoesAvancadas)));
         items.add(new EntryItemButton(1,getResources().getString(R.string.iniciarJogoButtonText)));
 
-        EntryAdapter adapter = new EntryAdapter(getActivity(), items);
+        adapter = new EntryAdapter(getActivity(), items);
         settingsList.setAdapter(adapter);
 
         settingsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Object listItem = settingsList.getItemAtPosition(position);
-                String[] equipas = {"Benfica", "Sporting", "Porto"};
-                String[] modalidades = {"Futsal", "Basquetebol"};
+
                 switch (position){
                     case 1:
-                        Dialog dialogModalidades = onCreateDialogSingleChoice(modalidades, "Escolha a modalidade:");
+                        Dialog dialogModalidades = onCreateDialogSingleChoice(position,piScoreBoard.getModalitiesName(piScoreBoard.getListOfModalities()),currentGame.getModality().getName(), "Escolha a modalidade:");
                         dialogModalidades.show();
 
                         break;
                     case 3:
-                        Dialog dialogEquipaVisitada = onCreateDialogSingleChoice(equipas, "Escolha a equipa local:");
+                        Dialog dialogEquipaVisitada = onCreateDialogSingleChoice(position,piScoreBoard.getTeamsName(piScoreBoard.getListOfTeams()),currentGame.getEquipaLocal().getName(), "Escolha a equipa local:");
                         dialogEquipaVisitada.show();
 
                         break;
                     case 4:
-                        Dialog dialogEquipaVisitante= onCreateDialogSingleChoice(equipas, "Escolha a equipa visitante:");
+                        Dialog dialogEquipaVisitante= onCreateDialogSingleChoice(position,piScoreBoard.getTeamsName(piScoreBoard.getListOfTeams()),currentGame.getEquipaVisitante().getName(), "Escolha a equipa visitante:");
                         dialogEquipaVisitante.show();
 
                         break;
                     case 5: {
+                        new Async_SFTP().uploadPubs(getActivity(), currentGame.getPublictyList());
 
-                        int selectedMode = MultiImageSelectorActivity.MODE_MULTI;
-
-                        boolean showCamera = true;
-
-                        int maxNum = 9;
-
-                        Intent intent = new Intent(getActivity(), MultiImageSelectorActivity.class);
-
-                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, showCamera);
-
-                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, maxNum);
-
-                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
-
-                        getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
+                        //new Async_SFTP().listVideos(getActivity());
+//                        int selectedMode = MultiImageSelectorActivity.MODE_MULTI;
+//
+//                        boolean showCamera = true;
+//
+//                        int maxNum = 9;
+//
+//                        Intent intent = new Intent(getActivity(), MultiImageSelectorActivity.class);
+//
+//                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, showCamera);
+//
+//                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, maxNum);
+//
+//                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
+//
+//                        getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
                     }break;
 
                 }
@@ -115,7 +122,8 @@ public class StartGameFragment extends Fragment {
     }
 
 
-    public Dialog onCreateDialogSingleChoice(String[] array, String title ) {
+    public Dialog onCreateDialogSingleChoice(final int position, final String[] array, String string, String title ) {
+
 
 //Initialize the Alert Dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -125,7 +133,8 @@ public class StartGameFragment extends Fragment {
 // Set the dialog title
 // Specify the list array, the items to be selected by default (null for none),
 // and the listener through which to receive callbacks when items are selected
-        builder.setTitle(title).setSingleChoiceItems(array, 1, new DialogInterface.OnClickListener() {
+
+        builder.setTitle(title).setSingleChoiceItems(array, piScoreBoard.getMatchStringArray(string, array), new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -140,6 +149,31 @@ public class StartGameFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
 // User clicked OK, so save the result somewhere
 // or return them to the component that opened the dialog
+
+                        ListView lw = ((AlertDialog) dialog).getListView();
+                        int checkedItem = lw.getCheckedItemPosition();
+                        String stringToSend;
+                        if (array.length != 0) {
+                            switch (position) {
+                                case 1:
+                                    //stringToSend = getActivity().getResources().getString(R.string.TimeMode).concat("@clock@");
+                                    //((MainActivity) getActivity()).sendCommand(stringToSend, true);
+                                    currentGame.setModality(piScoreBoard.getListOfModalities().get(checkedItem));
+                                    items.set(position, new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade), currentGame.getModality().getName(), null));
+
+                                    break;
+                                case 3:
+                                    currentGame.setEquipaVisitante(piScoreBoard.getListOfTeams().get(checkedItem));
+                                    items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada), currentGame.getEquipaLocal().getName(), null));
+                                    //stringToSend = getActivity().getResources().getString(R.string.TimeMode).concat("@crono@");
+                                    //((MainActivity) getActivity()).sendCommand(stringToSend,true);
+                                    break;
+                                case 4:
+                                    break;
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
+
                     }
                 })
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

@@ -43,6 +43,9 @@
     <string name="itemPorto">Porto</string>
     <string name="summaryItemPorto">Selecione o porto pretendido</string>
 
+    <string name="itemPassword">Password</string>
+    <string name="summaryItemPassword">Edite a password de acesso</string>
+
     <string name="sectionControloRemoto">Controlo remoto</string>
 
     <string name="labelLigar">Ligar</string>

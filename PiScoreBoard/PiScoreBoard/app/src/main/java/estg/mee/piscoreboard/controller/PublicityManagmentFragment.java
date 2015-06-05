@@ -51,20 +51,16 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
 
     private static final int puBID = 3;
     EntryAdapter adapter;
-    // List view
     private ListView lv;
 
-    private Game jogo;
 
-    // Search EditText
     EditText inputSearch;
 
     // ArrayList for Listview
     ArrayList<Item> items = new ArrayList<Item>();
 
-    public PublicityManagmentFragment(Game jogo) {
-        this.jogo = jogo;
-    }
+    Game currentGame = Game.getInstance();
+
 
     @Nullable
     @Override
@@ -86,16 +82,10 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ShowDetailsDialog(getActivity(), jogo.getPublictyList().get(position).toString());
+                ShowDetailsDialog(getActivity(), currentGame.getPublictyList().get(position).toString());
             }
         });
 
-        //preferences = this.getActivity().getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-//        Set<String> set = preferences.getStringSet("Publist", null);
-//        Set<String> set = MainActivity.sharedpreferences.getStringSet("Publist", null);
-//        jogo.getPublictyList().clear();
-//        jogo.getPublictyList().addAll(set);
-        //editor = MainActivity.sharedpreferences.edit();
         /**
          * Enabling Search Filter
          * */
@@ -132,17 +122,13 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
 
     private void refreshPubList(){
 
-        for(Iterator<String> i = jogo.getPublictyList().iterator(); i.hasNext(); ) {
+        for(Iterator<String> i = currentGame.getPublictyList().iterator(); i.hasNext(); ) {
             String item = i.next();
-            items.add(new EntryItem(getImageName(item), null, null, item, 0));
+            items.add(new EntryItem(getImageName(item), null, null, item));
         }
         adapter = new EntryAdapter(getActivity(), items);
         lv.setAdapter(adapter);
 
-//        Set<String> set = new HashSet<String>();
-//        set.addAll(jogo.getPublictyList());
-//        MainActivity.editor.putStringSet("Publist", set);
-//        MainActivity.editor.commit();
     }
 
     private String getImageName(String imagePath){
@@ -188,6 +174,7 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
         public void OnClickListView(int position) {
             // TODO Auto-generated method stub.
             //  startActivity(new Intent(getApplicationContext(),TestActivity.class));
+            ShowDetailsDialog(getActivity(), currentGame.getPublictyList().get(position).toString());
 
         }
 
@@ -211,7 +198,7 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
                 if (constraint != null && constraint.toString().length() > 0) {
                     ArrayList<String> founded = new ArrayList<String>();
 
-                    for(Iterator<String> i = jogo.getPublictyList().iterator(); i.hasNext(); ) {
+                    for(Iterator<String> i = currentGame.getPublictyList().iterator(); i.hasNext(); ) {
                         String item = i.next();
                         if(getImageName(item.toString()).toLowerCase().contains(constraint)){
                             founded.add(item);
@@ -221,8 +208,8 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
                     result.values = founded;
                     result.count = founded.size();
                 }else {
-                    result.values = jogo.getPublictyList();
-                    result.count = jogo.getPublictyList().size();
+                    result.values = currentGame.getPublictyList();
+                    result.count = currentGame.getPublictyList().size();
                 }
                 return result;
 
@@ -234,7 +221,7 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
                 items.clear();
 
                 for (String item : (ArrayList<String>) results.values) {
-                    items.add(new EntryItem(getImageName(item), null, null, item, 0));
+                    items.add(new EntryItem(getImageName(item), null, null, item));
                 }
                 adapter = new EntryAdapter(getActivity(), items);
                 lv.setAdapter(adapter);
@@ -267,8 +254,8 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
 
                 intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
 
-                if (jogo.getPublictyList() != null && jogo.getPublictyList().size() > 0) {
-                    intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, jogo.getPublictyList());
+                if (currentGame.getPublictyList() != null && currentGame.getPublictyList().size() > 0) {
+                    intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, currentGame.getPublictyList());
                 }
                 getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
 

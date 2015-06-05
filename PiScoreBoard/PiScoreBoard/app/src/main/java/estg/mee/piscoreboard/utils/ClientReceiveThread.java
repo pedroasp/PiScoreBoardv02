@@ -11,7 +11,7 @@ import java.net.Socket;
  */
 public class ClientReceiveThread implements Runnable {
     private String message = null;
-    private final String IP = "192.168.132.45";
+    private final String IP = "10.5.5.10";
     private final int PORT = 9999;
 
     public void run() {

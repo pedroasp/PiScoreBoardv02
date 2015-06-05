@@ -1,5 +1,6 @@
 package estg.mee.piscoreboard.model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,7 +8,7 @@ import java.util.Date;
 /**
  * Created by Rúben on 01-05-2015.
  */
-public class Game {
+public class Game implements Serializable {
     private int id;
     private int nLocalFaults = 0;
     private int nVisitFaults = 0;
@@ -20,20 +21,47 @@ public class Game {
     private Modality modality = new Modality();
     private Part[] part = new Part[2];
 
+    private Team equipaLocal = new Team();
+    private Team equipaVisitante = new Team();
 
-    ArrayList PublictyList = new ArrayList();
+    private static Game instance = null;
+
+    ArrayList <String> PublictyList = new ArrayList();
 
 
-    public Game() {
+    private Game() {
 
+    }
+
+    public static Game getInstance(){
+        if (instance == null){
+            instance = new Game();
+        }
+        return instance;
     }
 
     public ArrayList getPublictyList() {
         return PublictyList;
     }
 
-    public void setPublictyList(ArrayList publictyList) {
+    public void setPublictyList(ArrayList<String> publictyList) {
         PublictyList = publictyList;
+    }
+
+    public Team getEquipaLocal() {
+        return equipaLocal;
+    }
+
+    public void setEquipaLocal(Team equipaLocal) {
+        this.equipaLocal = equipaLocal;
+    }
+
+    public Team getEquipaVisitante() {
+        return equipaVisitante;
+    }
+
+    public void setEquipaVisitante(Team equipaVisitante) {
+        this.equipaVisitante = equipaVisitante;
     }
 
     public int getId() {

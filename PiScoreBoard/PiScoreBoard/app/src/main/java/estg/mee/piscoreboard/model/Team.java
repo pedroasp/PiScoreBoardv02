@@ -1,19 +1,32 @@
 package estg.mee.piscoreboard.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  * Created by Rúben Rodrigues on 01-05-2015.
  */
-public class Team {
+public class Team implements Serializable{
     private int id;
     private String name = new String();
     private String logotipo;
     private boolean uploadstate;
+    private Modality modality ;
 
     public Team() {
         this.id = 0;
         this.name = null;
         this.logotipo = null;
         this.uploadstate = false;
+    }
+
+    public Modality getModality() {
+        return modality;
+    }
+
+    public void setModality(Modality modality) {
+
+        this.modality = modality;
     }
 
     public int getId() {
