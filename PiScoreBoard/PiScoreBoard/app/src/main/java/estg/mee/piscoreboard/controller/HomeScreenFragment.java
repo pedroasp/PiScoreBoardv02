@@ -23,7 +23,7 @@ import estg.mee.piscoreboard.model.Game;
 public class HomeScreenFragment extends Fragment{
     View rootview;
     private int mInterval = 500;
-    private int nVisit,nLocal, nLocalFaults, nVisitFaults;
+    private int nVisit = 0,nLocal = 0, nLocalFaults = 0, nVisitFaults = 0;
     private Handler clockHandler;
     float initialX, initialY;
     float finalX, finalY;
@@ -44,23 +44,23 @@ public class HomeScreenFragment extends Fragment{
         final int desfasamentoSimbolos = (int) (width * 0.15);
 
         sLocalGoals= (TextView) rootview.findViewById(R.id.sLocalGoals);
+        sVisitGoals = (TextView) rootview.findViewById(R.id.sVisitGoals);
+        sVisitFaults = (TextView) rootview.findViewById(R.id.sVisitFaults);
+        sLocalFaults = (TextView) rootview.findViewById(R.id.sLocalFaults);
         sTime = (TextView) rootview.findViewById(R.id.sTime);
-
         sLocalLogo = (ImageView) rootview.findViewById(R.id.sLocalLogo);
         sVisitLogo = (ImageView) rootview.findViewById(R.id.sVisitLogo);
 
+        nLocal = currentGame.getnLocal();
+        sLocalGoals.setText("" + nLocal);
+        nVisit = currentGame.getnVisit();
+        sVisitGoals.setText("" + nVisit);
+        nVisitFaults = currentGame.getnVisitFaults();
+        sVisitFaults.setText("" + nVisitFaults);
+        nLocalFaults = currentGame.getnVisitFaults();
+        sLocalFaults.setText("" + nLocalFaults);
 
-        //Resize Logos
-        android.view.ViewGroup.LayoutParams sLocalLogoLayoutParams = sLocalLogo.getLayoutParams();
-        android.view.ViewGroup.LayoutParams sVisitLogoLayoutParams = sVisitLogo.getLayoutParams();
-        sLocalLogoLayoutParams.width = (int) (width * 0.20);
-        sLocalLogoLayoutParams.height = (int) (height * 0.20);
-        sVisitLogoLayoutParams.width = (int) (width * 0.20);
-        sVisitLogoLayoutParams.height = (int) (height * 0.20);
 
-
-        sLocalLogo.setLayoutParams(sLocalLogoLayoutParams);
-        sVisitLogo.setLayoutParams(sVisitLogoLayoutParams);
 
 //    //Draw Point
 //        //...
@@ -76,15 +76,7 @@ public class HomeScreenFragment extends Fragment{
 //        //...
 //    //
 
-        ViewGroup.MarginLayoutParams sLocalLogoMargins = (ViewGroup.MarginLayoutParams) sLocalLogo.getLayoutParams();
-        sLocalLogoMargins.setMargins(HCENTER - desfasamentoSimbolos - sLocalLogo.getLayoutParams().width,
-                (int) (width * 0.04), 0, 0);//all in pixels
-        sLocalLogo.setLayoutParams(sLocalLogoMargins);
 
-        ViewGroup.MarginLayoutParams sVisitLogoMargins = (ViewGroup.MarginLayoutParams) sVisitLogo.getLayoutParams();
-        sVisitLogoMargins.setMargins(HCENTER + desfasamentoSimbolos,
-                (int) (width * 0.04), 0, 0);//all in pixels
-        sVisitLogo.setLayoutParams(sVisitLogoMargins);
 
 
         //sLocalGoals.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) (width/7));
@@ -111,6 +103,7 @@ public class HomeScreenFragment extends Fragment{
                         finalX = event.getX();
                         finalY = event.getY();
 
+
                         if (finalY - initialY > 100 && nLocal != 0) {
                             nLocal--;
                             if(nLocal<0) nLocal=0;
@@ -121,6 +114,7 @@ public class HomeScreenFragment extends Fragment{
                             message = getString(R.string.LocalGoals).concat("@" + nLocal + "@");
                             ((MainActivity) getActivity()).sendCommand(message, true);
                             sLocalGoals.setText("" + nLocal);
+                            currentGame.setnLocal(nLocal);
                         }
                         ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sLocalGoals.getLayoutParams();
                         if (nLocal>9){
@@ -139,7 +133,7 @@ public class HomeScreenFragment extends Fragment{
                 return true;
             }
         });
-        sVisitGoals = (TextView) rootview.findViewById(R.id.sVisitGoals);
+
 
 
         sVisitGoals.setOnTouchListener(new View.OnTouchListener() {
@@ -168,6 +162,7 @@ public class HomeScreenFragment extends Fragment{
                             ((MainActivity) getActivity()).sendCommand(message, true);
 
                             sVisitGoals.setText("" + nVisit);
+                            currentGame.setnVisit(nVisit);
                         }
 
                         ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sVisitGoals.getLayoutParams();
@@ -189,7 +184,7 @@ public class HomeScreenFragment extends Fragment{
             }
         });
 
-        sLocalFaults = (TextView) rootview.findViewById(R.id.sLocalFaults);
+
 
         sLocalFaults.setOnTouchListener(new View.OnTouchListener() {
 
@@ -216,6 +211,7 @@ public class HomeScreenFragment extends Fragment{
                             message = getString(R.string.LocalFaults).concat("@" + nLocalFaults + "@");
                             ((MainActivity) getActivity()).sendCommand(message, true);
                             sLocalFaults.setText("" + nLocalFaults);
+                            currentGame.setnLocalFaults(nLocalFaults);
                         }
 //                        ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sLocalFaults.getLayoutParams();
 //                        if (nLocalFaults>9){
@@ -235,7 +231,7 @@ public class HomeScreenFragment extends Fragment{
                 return true;
             }
         });
-        sVisitFaults = (TextView) rootview.findViewById(R.id.sVisitFaults);
+
 
         sVisitFaults.setOnTouchListener(new View.OnTouchListener() {
 
@@ -262,6 +258,7 @@ public class HomeScreenFragment extends Fragment{
                             message = getString(R.string.VisitFaults).concat("@" + nVisitFaults + "@");
                             ((MainActivity) getActivity()).sendCommand(message, true);
                             sVisitFaults.setText("" + nVisitFaults);
+                            currentGame.setnVisitFaults(nVisitFaults);
                         }
 //                        ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sLocalFaults.getLayoutParams();
 //                        if (nLocalFaults>9){
@@ -287,6 +284,30 @@ public class HomeScreenFragment extends Fragment{
         refreshTime();
 
         startClock();
+
+
+
+        //Resize Logos
+
+        //     Size Image
+        android.view.ViewGroup.LayoutParams sLocalLogoLayoutParams = sLocalLogo.getLayoutParams();
+        android.view.ViewGroup.LayoutParams sVisitLogoLayoutParams = sVisitLogo.getLayoutParams();
+        sLocalLogoLayoutParams.width = (int) (width * 0.20);
+        sLocalLogoLayoutParams.height = (int) (height * 0.20);
+        sVisitLogoLayoutParams.width = (int) (width * 0.20);
+        sVisitLogoLayoutParams.height = (int) (height * 0.20);
+        sLocalLogo.setLayoutParams(sLocalLogoLayoutParams);
+        sVisitLogo.setLayoutParams(sVisitLogoLayoutParams);
+        //    Position Image
+        ViewGroup.MarginLayoutParams sLocalLogoMargins = (ViewGroup.MarginLayoutParams) sLocalLogo.getLayoutParams();
+        sLocalLogoMargins.setMargins(HCENTER - desfasamentoSimbolos - sLocalLogo.getLayoutParams().width,
+                (int) (width * 0.04), 0, 0);//all in pixels
+        sLocalLogo.setLayoutParams(sLocalLogoMargins);
+
+        ViewGroup.MarginLayoutParams sVisitLogoMargins = (ViewGroup.MarginLayoutParams) sVisitLogo.getLayoutParams();
+        sVisitLogoMargins.setMargins(HCENTER + desfasamentoSimbolos,
+                (int) (width * 0.04), 0, 0);//all in pixels
+        sVisitLogo.setLayoutParams(sVisitLogoMargins);
 
         return rootview;
     }

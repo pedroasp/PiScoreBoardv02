@@ -189,8 +189,10 @@ public class MainActivity extends ActionBarActivity
 
         switch (position){
             case 0:
-                objFragment = new HomeScreenFragment();
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                objFragment = new HomeScreenFragment();
+
+
                 break;
             case 1:
                 objFragment = new StartGameFragment();

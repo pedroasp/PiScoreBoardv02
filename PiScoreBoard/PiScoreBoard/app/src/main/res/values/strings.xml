@@ -83,10 +83,10 @@
 
 
     <string name="Faults">FALTAS</string>
-    <string name="sLocalGoals">0</string>
-    <string name="sVisitGoals">0</string>
-    <string name="sLocalFaults">0</string>
-    <string name="sVisitFaults">0</string>
+    <string name="sLocalGoals"></string>
+    <string name="sVisitGoals"></string>
+    <string name="sLocalFaults"></string>
+    <string name="sVisitFaults"></string>
     <string name="sTime">23:53</string>
     <string name="edit_message">HELP</string>
 

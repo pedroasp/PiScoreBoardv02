@@ -366,14 +366,11 @@ int actualID = 0;
                 newTeam.setId(++actualID);
                 newTeam.setModality(piScoreBoard.getListOfModalities().get(0));
                 piScoreBoard.getListOfTeams().add(newTeam);
-<<<<<<< HEAD
                 final ArrayList<String> arrayList = new ArrayList<>();
                 final Async_SFTP async_sftp = new Async_SFTP();
                 arrayList.add(newTeam.getLogotipo());
                 async_sftp.uploadLogos(getActivity(),arrayList);
-=======
                 ((MainActivity) getActivity()).saveData();
->>>>>>> origin/master
                 MainActivity.newTeamPath = null;
                 onResume();
 
