@@ -128,6 +128,9 @@ public class MainActivity extends ActionBarActivity
             piScoreBoard.setPubEnable(dObject.isPubEnable());
             piScoreBoard.setTimeMode(dObject.isTimeMode());
 
+            savedStream.close();
+            savedStream.close();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (StreamCorruptedException e) {
@@ -157,6 +160,9 @@ public class MainActivity extends ActionBarActivity
             currentGame.setnVisit(gObject.getnVisit());
             currentGame.setTotalTime(gObject.getTotalTime());
             currentGame.setPart(gObject.getPart());
+
+            savedStream.close();
+            savedStream.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -348,7 +354,7 @@ public class MainActivity extends ActionBarActivity
                 switch (id){
                     case 3:
                         currentGame.setPublictyList(data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT));
-
+                        saveData();
                     break;
                     case 5: {
                         String fullPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT).toString();
@@ -361,32 +367,9 @@ public class MainActivity extends ActionBarActivity
             }
         }
     }
-    @Override
-    protected void onStop() {
-        super.onStop();
-//        try {
-//            FileOutputStream savefile = openFileOutput("Teams.txt", MODE_WORLD_READABLE);
-//            ObjectOutputStream saveStream = new ObjectOutputStream(savefile);
-//
-//
-//            for (Iterator<Team> i = piScoreBoard.getListOfTeams().iterator(); i.hasNext(); ) {
-//                Team teams = i.next();
-//                saveStream.writeObject(teams);
-//            }
-//
-//            saveStream.flush();
-//            savefile.flush();
-//            saveStream.close();
-//            savefile.close();
-//
-//        } catch (FileNotFoundException a) {
-//            System.out.println("File not found!");
-//        } catch (IOException b) {
-//            b.printStackTrace();
-//            System.out.println("IO Exception!");
-//
-//
-//        }
+
+    public void saveData(){
+
         Toast.makeText(this, "Aguarde que os dados sejam salvos!", Toast.LENGTH_SHORT).show();
         try{
             FileOutputStream savefile = openFileOutput("Settings.txt", MODE_WORLD_READABLE);
@@ -418,6 +401,36 @@ public class MainActivity extends ActionBarActivity
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        try {
+//            FileOutputStream savefile = openFileOutput("Teams.txt", MODE_WORLD_READABLE);
+//            ObjectOutputStream saveStream = new ObjectOutputStream(savefile);
+//
+           // saveData();
+//
+//            for (Iterator<Team> i = piScoreBoard.getListOfTeams().iterator(); i.hasNext(); ) {
+//                Team teams = i.next();
+//                saveStream.writeObject(teams);
+//            }
+//
+//            saveStream.flush();
+//            savefile.flush();
+//            saveStream.close();
+//            savefile.close();
+//
+//        } catch (FileNotFoundException a) {
+//            System.out.println("File not found!");
+//        } catch (IOException b) {
+//            b.printStackTrace();
+//            System.out.println("IO Exception!");
+//
+//
+//        }
+
     }
 
 }
