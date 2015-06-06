@@ -57,6 +57,7 @@ public class HomeScreenFragment extends Fragment{
         sVisitLogo = (ImageView) rootview.findViewById(R.id.sVisitLogo);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         nLocal = currentGame.getnLocal();
         sLocalGoals.setText("" + nLocal);
         nVisit = currentGame.getnVisit();
@@ -66,6 +67,8 @@ public class HomeScreenFragment extends Fragment{
         nLocalFaults = currentGame.getnVisitFaults();
         sLocalFaults.setText("" + nLocalFaults);
 =======
+=======
+>>>>>>> origin/master
         //Resize Logos
 
 
