@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import estg.mee.piscoreboard.R;
+import estg.mee.piscoreboard.model.Game;
 
 /**
  * Created by Rúben Rodrigues on 07-05-2015.
@@ -29,7 +30,7 @@ public class HomeScreenFragment extends Fragment{
     TextView  sLocalGoals, sVisitGoals, sTime, sLocalFaults, sVisitFaults;
     private String message;
     ImageView sLocalLogo, sVisitLogo;
-
+    Game currentGame = Game.getInstance();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){

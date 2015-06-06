@@ -164,7 +164,7 @@ public class StartGameFragment extends Fragment{
                                 case 4:
                                     currentGame.setEquipaVisitante(piScoreBoard.getListOfTeams().get(checkedItem));
                                     items.set(position, new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante), currentGame.getEquipaVisitante().getName(), currentGame.getEquipaVisitante().getLogotipo(), 0));
-                                    stringToSend = getActivity().getResources().getString(R.string.VisitName).concat("@" + currentGame.getEquipaVisitante().getName() + "@");
+                                    stringToSend = getActivity().getResources().getString(R.string.VisitName).concat("@" + currentGame.getEquipaVisitante().getName() + "@" + "\r\n");
                                     stringToSend = stringToSend.concat(getActivity().getResources().getString(R.string.VisitLogo)).concat("@" + async_sftp.getREMOTE_LOGOS_DIR() + "/" + currentGame.getEquipaVisitante().getLogoName() + "@");
                                     ((MainActivity) getActivity()).sendCommand(stringToSend, true);
                                     break;
