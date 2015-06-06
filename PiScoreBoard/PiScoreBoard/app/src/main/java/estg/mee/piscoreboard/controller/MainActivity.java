@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.util.Calendar;
 
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.model.Game;
@@ -166,6 +167,14 @@ public class MainActivity extends ActionBarActivity
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        Calendar sysTime = Calendar.getInstance();
+        String stringToSend;
+        stringToSend = getResources().getString(R.string.SetClock).concat("@"+String.valueOf(sysTime.get(Calendar.HOUR))+"," + String.valueOf(sysTime.get(Calendar.MINUTE)) + "@" + "\r\n");
+        stringToSend = stringToSend.concat(stringToSend).concat(stringToSend).concat(stringToSend);
+        stringToSend = stringToSend.substring(0, stringToSend.length()-2);
+        sendCommand(stringToSend,true);
+
+
     }
     @Override
     public void onNavigationDrawerItemSelected(int position) {
