@@ -1,5 +1,6 @@
 package estg.mee.piscoreboard.controller;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -39,7 +40,11 @@ public class HomeScreenFragment extends Fragment{
         int height = this.getResources().getDisplayMetrics().heightPixels;
         int width = this.getResources().getDisplayMetrics().widthPixels;
 
-
+        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            width = this.getResources().getDisplayMetrics().heightPixels;
+            height = this.getResources().getDisplayMetrics().widthPixels;
+        }
+        
         final int HCENTER = (int) (width * 0.5);   //Centro Horizontal
         final int desfasamentoSimbolos = (int) (width * 0.15);
 
@@ -51,6 +56,7 @@ public class HomeScreenFragment extends Fragment{
         sLocalLogo = (ImageView) rootview.findViewById(R.id.sLocalLogo);
         sVisitLogo = (ImageView) rootview.findViewById(R.id.sVisitLogo);
 
+<<<<<<< HEAD
         nLocal = currentGame.getnLocal();
         sLocalGoals.setText("" + nLocal);
         nVisit = currentGame.getnVisit();
@@ -59,6 +65,17 @@ public class HomeScreenFragment extends Fragment{
         sVisitFaults.setText("" + nVisitFaults);
         nLocalFaults = currentGame.getnVisitFaults();
         sLocalFaults.setText("" + nLocalFaults);
+=======
+        //Resize Logos
+
+
+        android.view.ViewGroup.LayoutParams sLocalLogoLayoutParams = sLocalLogo.getLayoutParams();
+        android.view.ViewGroup.LayoutParams sVisitLogoLayoutParams = sVisitLogo.getLayoutParams();
+        sLocalLogoLayoutParams.width = (int) (width * 0.20);
+        sLocalLogoLayoutParams.height = (int) (height * 0.20);
+        sVisitLogoLayoutParams.width = (int) (width * 0.20);
+        sVisitLogoLayoutParams.height = (int) (height * 0.20);
+>>>>>>> origin/master
 
 
 
