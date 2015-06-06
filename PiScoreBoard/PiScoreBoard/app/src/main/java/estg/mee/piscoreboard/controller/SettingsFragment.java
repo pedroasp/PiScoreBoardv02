@@ -238,7 +238,7 @@ public class SettingsFragment extends Fragment {
 
                         piScoreBoard.setTimeMode(checkedItem != 0);
                         items.set(5,new EntryItem(getResources().getString(R.string.itemTemporizacao), getResources().getString(R.string.summaryItemTemporizacao),piScoreBoard.getStringTimeMode(), null,0));
-
+                        ((MainActivity) getActivity()).saveData();
                         adapter.notifyDataSetChanged();
                     }
                 })
@@ -298,6 +298,7 @@ public class SettingsFragment extends Fragment {
 
                         break;
                 }
+                ((MainActivity) getActivity()).saveData();
                 adapter.notifyDataSetChanged();
             }
         });

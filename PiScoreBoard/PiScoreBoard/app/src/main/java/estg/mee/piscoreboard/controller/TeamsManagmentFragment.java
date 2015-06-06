@@ -367,6 +367,7 @@ int actualID = 0;
                 newTeam.setId(++actualID);
                 newTeam.setModality(piScoreBoard.getListOfModalities().get(0));
                 piScoreBoard.getListOfTeams().add(newTeam);
+                ((MainActivity) getActivity()).saveData();
                 MainActivity.newTeamPath = null;
                 onResume();
             }

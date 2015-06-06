@@ -93,6 +93,7 @@ public class Graphics {
     public void sendColorCommand (Colors destination,boolean checkConnection){
         String rgb = "@" + Color.red(destination.getColor()) + "," + Color.green(destination.getColor()) + "," + Color.blue(destination.getColor()) + "@";
         MainActivity activity = (MainActivity) context;
+        activity.saveData();
         activity.sendCommand(destination.getCommand().concat(rgb),checkConnection);
     }
     public void sendColorCommandArray (ArrayList<Colors> destination,boolean checkConnection){
@@ -104,6 +105,7 @@ public class Graphics {
             stringToSend = stringToSend.concat(colors.getCommand()).concat(rgb+"\r\n");
         }
         MainActivity activity = (MainActivity) context;
+        activity.saveData();
         activity.sendCommand(stringToSend,checkConnection);
     }
 }

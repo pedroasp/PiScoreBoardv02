@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ import estg.mee.piscoreboard.utils.Async_SFTP;
 /**
  * Created by Rúben on 13/05/2015.
  */
-public class StartGameFragment extends Fragment {
+public class StartGameFragment extends Fragment{
 
 
     private View rootView = null;
@@ -49,7 +50,6 @@ public class StartGameFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_settings,container,false);
 
         this.rootView = rootView;
-
         this.initSettingsFields();
 
         return rootView;
@@ -153,6 +153,7 @@ public class StartGameFragment extends Fragment {
                                     items.set(position,new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada), currentGame.getEquipaLocal().getName(), currentGame.getEquipaLocal().getLogotipo(),0));
                                     //stringToSend = getActivity().getResources().getString(R.string.TimeMode).concat("@crono@");
                                     //((MainActivity) getActivity()).sendCommand(stringToSend,true);
+
                                     break;
                                 case 4:
                                     currentGame.setEquipaVisitante(piScoreBoard.getListOfTeams().get(checkedItem));
@@ -160,6 +161,7 @@ public class StartGameFragment extends Fragment {
                                     break;
                             }
                             adapter.notifyDataSetChanged();
+                            ((MainActivity) getActivity()).saveData();
                         }
 
                     }
@@ -173,4 +175,5 @@ public class StartGameFragment extends Fragment {
 
         return builder.create();
     }
+
 }
