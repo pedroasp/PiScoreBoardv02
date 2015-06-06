@@ -264,8 +264,6 @@ public class MainActivity extends ActionBarActivity
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case R.id.action_home:
-
-                Toast.makeText(this, "Go hard or go home!", Toast.LENGTH_SHORT).show();
                 objFragment = new HomeScreenFragment();
                 fragmentManager.beginTransaction().replace(R.id.container, objFragment).commit();
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);

@@ -43,7 +43,19 @@
         android:layout_gravity="center_horizontal|top"
         android:inputType="time"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/sLocalLogo" />
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/sParts"
+        android:layout_gravity="center_horizontal|top"
+        android:inputType="time"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:textIsSelectable="false"
+        android:textSize="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -81,14 +93,6 @@
         android:layout_below="@+id/sLocalLogo"
         android:layout_marginTop="50dp" />
 
-    <ImageView
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:id="@+id/sVisitLogo"
-        android:src="@drawable/porto"
-        android:adjustViewBounds="true"
-        android:clickable="true"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -104,6 +108,14 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="45dp"
         android:layout_marginStart="45dp" />
+
+    <ImageView
+        android:layout_width="76dp"
+        android:layout_height="76dp"
+        android:id="@+id/sVisitLogo"
+        android:src="@drawable/porto"
+        android:adjustViewBounds="true"
+        android:clickable="true"/>
 
     <!-- activity_screen_slide.xml -->
     <android.support.v4.view.ViewPager
