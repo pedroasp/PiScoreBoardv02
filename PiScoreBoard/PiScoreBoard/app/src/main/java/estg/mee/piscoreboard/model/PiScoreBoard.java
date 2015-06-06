@@ -1,7 +1,5 @@
 package estg.mee.piscoreboard.model;
 
-import android.content.Context;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -15,7 +13,6 @@ import estg.mee.piscoreboard.R;
 public class PiScoreBoard implements Serializable {
 
     boolean TimeMode = true;
-    Context context;
 
     private ArrayList<Team> listOfTeams=  new ArrayList<Team>();
     private ArrayList<Modality> listOfModalities = new ArrayList<Modality>();

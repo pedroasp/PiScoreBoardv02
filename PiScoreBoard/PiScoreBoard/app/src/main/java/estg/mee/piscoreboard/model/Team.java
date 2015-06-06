@@ -1,7 +1,6 @@
 package estg.mee.piscoreboard.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by Rúben Rodrigues on 01-05-2015.
@@ -59,5 +58,14 @@ public class Team implements Serializable{
 
     public void setUploadstate(boolean uploadstate) {
         this.uploadstate = uploadstate;
+    }
+
+    public String getLogoName(){
+
+        int index = logotipo.lastIndexOf('/');
+
+        String name = logotipo.substring(index+1,logotipo.length());
+
+        return name;
     }
 }

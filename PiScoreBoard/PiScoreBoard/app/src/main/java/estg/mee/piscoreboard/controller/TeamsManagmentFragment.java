@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -31,17 +30,15 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.customlistview.EntryAdapter;
 import estg.mee.piscoreboard.customlistview.EntryItem;
 import estg.mee.piscoreboard.customlistview.Item;
-import estg.mee.piscoreboard.model.Modality;
 import estg.mee.piscoreboard.model.PiScoreBoard;
 import estg.mee.piscoreboard.model.Team;
+import estg.mee.piscoreboard.utils.Async_SFTP;
 import estg.mee.piscoreboard.utils.ListViewSwipeGesture;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
@@ -337,6 +334,8 @@ int actualID = 0;
                 intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
 
                 getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
+
+
             }
         });
 
@@ -367,8 +366,14 @@ int actualID = 0;
                 newTeam.setId(++actualID);
                 newTeam.setModality(piScoreBoard.getListOfModalities().get(0));
                 piScoreBoard.getListOfTeams().add(newTeam);
+                final ArrayList<String> arrayList = new ArrayList<>();
+                final Async_SFTP async_sftp = new Async_SFTP();
+                arrayList.add(newTeam.getLogotipo());
+                async_sftp.uploadLogos(getActivity(),arrayList);
                 MainActivity.newTeamPath = null;
                 onResume();
+
+
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

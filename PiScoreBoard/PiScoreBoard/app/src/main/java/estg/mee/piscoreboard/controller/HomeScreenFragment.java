@@ -22,8 +22,6 @@ import estg.mee.piscoreboard.R;
 public class HomeScreenFragment extends Fragment{
     View rootview;
     private int mInterval = 500;
-    private static final String GLOCAL = "GLOCAL";
-    private static final String GVISIT = "GVISIT";
     private int nVisit,nLocal, nLocalFaults, nVisitFaults;
     private Handler clockHandler;
     float initialX, initialY;

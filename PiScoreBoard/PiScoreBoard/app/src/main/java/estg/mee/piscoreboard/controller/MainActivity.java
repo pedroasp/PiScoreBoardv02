@@ -169,12 +169,12 @@ public class MainActivity extends ActionBarActivity
         }
         Calendar sysTime = Calendar.getInstance();
         String stringToSend;
-        stringToSend = getResources().getString(R.string.SetClock).concat("@"+String.valueOf(sysTime.get(Calendar.HOUR))+"," + String.valueOf(sysTime.get(Calendar.MINUTE)) + "@" + "\r\n");
-        stringToSend = stringToSend.concat(stringToSend).concat(stringToSend).concat(stringToSend);
+        stringToSend = getResources().getString(R.string.SetClock).concat("@"+String.valueOf(sysTime.get(Calendar.YEAR))+"-"+String.valueOf(sysTime.get(Calendar.MONTH))+"-"+String.valueOf(sysTime.get(Calendar.DAY_OF_MONTH))+","+String.valueOf(sysTime.get(Calendar.HOUR))+":" + String.valueOf(sysTime.get(Calendar.MINUTE)) + ":" + String.valueOf(sysTime.get(Calendar.SECOND)) + "@" + "\r\n");
+        stringToSend = stringToSend.concat(stringToSend).concat(stringToSend).concat(stringToSend).concat(stringToSend);
         stringToSend = stringToSend.substring(0, stringToSend.length()-2);
-        sendCommand(stringToSend,true);
+       // sendCommand(stringToSend,true);
 
-
+//@2011-12-07,12:12:12@
     }
     @Override
     public void onNavigationDrawerItemSelected(int position) {

@@ -34,13 +34,14 @@ public class StartGameFragment extends Fragment {
 
     private View rootView = null;
     PiScoreBoard piScoreBoard = PiScoreBoard.getInstance();
-
+    Async_SFTP async_sftp = Async_SFTP.getInstance();
     Game currentGame = Game.getInstance();
     ArrayList<Item> items;
     EntryAdapter adapter;
 //    public StartGameFragment(Game jogo) {
 //       this.jogo = jogo;
 //   }
+
 
     @Nullable
     @Override
@@ -67,7 +68,7 @@ public class StartGameFragment extends Fragment {
         items.add(new SectionItem(getResources().getString(R.string.sectionEquipas)));
         items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada),currentGame.getEquipaLocal().getName(),currentGame.getEquipaLocal().getLogotipo(),0));
         items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante),currentGame.getEquipaVisitante().getName(), currentGame.getEquipaVisitante().getLogotipo(),0));
-        items.add(new EntryItem("File picker", null,null, null,0));
+        //items.add(new EntryItem("File picker", null,null, null,0));
 
         //items.add(new SectionItem(getResources().getString(R.string.sectionDefinicoesAvancadas)));
         items.add(new EntryItemButton(1,getResources().getString(R.string.iniciarJogoButtonText)));
@@ -95,11 +96,11 @@ public class StartGameFragment extends Fragment {
                         dialogEquipaVisitante.show();
 
                         break;
-                    case 5: {
-                        new Async_SFTP().uploadPubs(getActivity(), currentGame.getPublictyList());
+                   // case 5: {
+                    //    new Async_SFTP().uploadPubs(getActivity(), currentGame.getPublictyList());
 
                         //new Async_SFTP().listVideos(getActivity());
-                    }break;
+//                    }break;
 
                 }
             }
@@ -113,6 +114,7 @@ public class StartGameFragment extends Fragment {
 
 //Initialize the Alert Dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
 //Source of the data in the DIalog
         // array = {"High", "Medium", "Low"};
 
@@ -142,21 +144,23 @@ public class StartGameFragment extends Fragment {
                         if (array.length != 0) {
                             switch (position) {
                                 case 1:
-                                    //stringToSend = getActivity().getResources().getString(R.string.TimeMode).concat("@clock@");
-                                    //((MainActivity) getActivity()).sendCommand(stringToSend, true);
                                     currentGame.setModality(piScoreBoard.getListOfModalities().get(checkedItem));
-                                    items.set(position, new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade), currentGame.getModality().getName(), null,currentGame.getModality().getImageRid()));
-
+                                    items.set(position, new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade), currentGame.getModality().getName(), null, currentGame.getModality().getImageRid()));
                                     break;
                                 case 3:
                                     currentGame.setEquipaLocal(piScoreBoard.getListOfTeams().get(checkedItem));
-                                    items.set(position,new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada), currentGame.getEquipaLocal().getName(), currentGame.getEquipaLocal().getLogotipo(),0));
-                                    //stringToSend = getActivity().getResources().getString(R.string.TimeMode).concat("@crono@");
-                                    //((MainActivity) getActivity()).sendCommand(stringToSend,true);
+                                    items.set(position, new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada), currentGame.getEquipaLocal().getName(), currentGame.getEquipaLocal().getLogotipo(), 0));
+                                    stringToSend = getActivity().getResources().getString(R.string.LocalName).concat("@" + currentGame.getEquipaLocal().getName() + "@" + "\r\n");
+                                    stringToSend = stringToSend.concat(getActivity().getResources().getString(R.string.LocalLogo)).concat("@" + async_sftp.getREMOTE_LOGOS_DIR() + "/" + currentGame.getEquipaLocal().getLogoName() + "@");
+                                    ((MainActivity) getActivity()).sendCommand(stringToSend, true);
+
                                     break;
                                 case 4:
                                     currentGame.setEquipaVisitante(piScoreBoard.getListOfTeams().get(checkedItem));
-                                    items.set(position,new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante), currentGame.getEquipaVisitante().getName(), currentGame.getEquipaVisitante().getLogotipo(),0));
+                                    items.set(position, new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante), currentGame.getEquipaVisitante().getName(), currentGame.getEquipaVisitante().getLogotipo(), 0));
+                                    stringToSend = getActivity().getResources().getString(R.string.VisitName).concat("@" + currentGame.getEquipaVisitante().getName() + "@");
+                                    stringToSend = stringToSend.concat(getActivity().getResources().getString(R.string.VisitLogo)).concat("@" + async_sftp.getREMOTE_LOGOS_DIR() + "/" + currentGame.getEquipaVisitante().getLogoName() + "@");
+                                    ((MainActivity) getActivity()).sendCommand(stringToSend, true);
                                     break;
                             }
                             adapter.notifyDataSetChanged();

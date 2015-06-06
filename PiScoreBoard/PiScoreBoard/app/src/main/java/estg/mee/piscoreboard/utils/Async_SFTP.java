@@ -3,13 +3,10 @@ package estg.mee.piscoreboard.utils;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
-import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.controller.MainActivity;
 
 /**
@@ -30,9 +27,17 @@ public class Async_SFTP {
     private final String LOCAL_VIDEOS_DIR = Environment.getExternalStorageDirectory().toString() + "/piScoreBoard/videos";
     private final String LOCAL_PUBS_DIR = Environment.getExternalStorageDirectory().toString() + "/piScoreBoard/pubs";
     private final String LOCAL_LOGOS_DIR = Environment.getExternalStorageDirectory().toString() + "/piScoreBoard/logos";
+    private static Async_SFTP instance = null;
 
     public Async_SFTP() {
 
+    }
+
+    public static Async_SFTP getInstance(){
+        if (instance == null){
+            instance = new Async_SFTP();
+        }
+        return instance;
     }
 
     public void listLogos(Context context) {
@@ -290,4 +295,27 @@ public class Async_SFTP {
         }
     }
 
+    public String getREMOTE_PUBS_DIR() {
+        return REMOTE_PUBS_DIR;
+    }
+
+    public String getLOCAL_LOGOS_DIR() {
+        return LOCAL_LOGOS_DIR;
+    }
+
+    public String getREMOTE_LOGOS_DIR() {
+        return REMOTE_LOGOS_DIR;
+    }
+
+    public String getREMOTE_VIDEOS_DIR() {
+        return REMOTE_VIDEOS_DIR;
+    }
+
+    public String getLOCAL_VIDEOS_DIR() {
+        return LOCAL_VIDEOS_DIR;
+    }
+
+    public String getLOCAL_PUBS_DIR() {
+        return LOCAL_PUBS_DIR;
+    }
 }
