@@ -22,25 +22,15 @@ public class PiScoreBoard implements Serializable {
     private static PiScoreBoard instance = null;
     private boolean pubEnable ;
     private int pubPeriod;
-<<<<<<< HEAD
+
     private String ipAdress = "10.5.5.1";
     private int port = 9999;
-    private String password;
-
-    public PiScoreBoard() {
-        listOfModalities.add(new Modality(0, 2, 0, "Futsal"));
-        listOfModalities.add(new Modality(1, 4, 0, "Basquetebol"));
-        listOfModalities.add(new Modality(2, 2, 0, "Andebol"));
-=======
-    private String ipAdress;
-    private int port = 9999 ;
     private String password;
 
     public PiScoreBoard() {
         listOfModalities.add(new Modality(0, 2, 0, "Futsal", R.drawable.football_ball));
         listOfModalities.add(new Modality(1, 4, 0, "Basquetebol",R.drawable.basketball_ball));
         listOfModalities.add(new Modality(2, 2, 0, "Andebol",R.drawable.handball_ball));
->>>>>>> origin/master
     }
 
     public static PiScoreBoard getInstance(){

@@ -100,8 +100,8 @@
     <string name="VisitLogo">glogovisit</string>
     <string name="LocalLogo">glogolocal</string>
     <string name="SetClock">s_setclock</string>
-    <string name="Shutdown">s_shutdown</string>
-    <string name="Restart">s_restart</string>
+    <string name="Shutdown">s_shutdown@lixo@</string>
+    <string name="Restart">s_restart@lixo@</string>
     <string name="Publicity">pub</string>
     <string name="TimeMode">time</string>
     <string name="SetCrono">setcrono</string>

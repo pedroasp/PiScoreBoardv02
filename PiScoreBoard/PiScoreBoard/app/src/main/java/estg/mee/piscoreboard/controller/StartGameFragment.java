@@ -61,15 +61,12 @@ public class StartGameFragment extends Fragment {
         items = new ArrayList<Item>();
 
         items.add(new SectionItem(getResources().getString(R.string.sectionModalidade)));
-<<<<<<< HEAD
-        items.add(new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade),currentGame.getModality().getName(), null));
-=======
-        items.add(new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade),"Futsal", null,R.drawable.handball_ball));
->>>>>>> origin/master
+
+        items.add(new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade),currentGame.getModality().getName(), null,currentGame.getModality().getImageRid()));
 
         items.add(new SectionItem(getResources().getString(R.string.sectionEquipas)));
-        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada),currentGame.getEquipaLocal().getName(),null,0));
-        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante),currentGame.getEquipaVisitante().getName(), null,0));
+        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada),currentGame.getEquipaLocal().getName(),currentGame.getEquipaLocal().getLogotipo(),0));
+        items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante),currentGame.getEquipaVisitante().getName(), currentGame.getEquipaVisitante().getLogotipo(),0));
         items.add(new EntryItem("File picker", null,null, null,0));
 
         //items.add(new SectionItem(getResources().getString(R.string.sectionDefinicoesAvancadas)));
@@ -148,16 +145,18 @@ public class StartGameFragment extends Fragment {
                                     //stringToSend = getActivity().getResources().getString(R.string.TimeMode).concat("@clock@");
                                     //((MainActivity) getActivity()).sendCommand(stringToSend, true);
                                     currentGame.setModality(piScoreBoard.getListOfModalities().get(checkedItem));
-                                    items.set(position, new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade), currentGame.getModality().getName(), null));
+                                    items.set(position, new EntryItem(getResources().getString(R.string.itemModalidade), getResources().getString(R.string.summaryItemModalidade), currentGame.getModality().getName(), null,currentGame.getModality().getImageRid()));
 
                                     break;
                                 case 3:
-                                    currentGame.setEquipaVisitante(piScoreBoard.getListOfTeams().get(checkedItem));
-                                    items.add(new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada), currentGame.getEquipaLocal().getName(), null));
+                                    currentGame.setEquipaLocal(piScoreBoard.getListOfTeams().get(checkedItem));
+                                    items.set(position,new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada), currentGame.getEquipaLocal().getName(), currentGame.getEquipaLocal().getLogotipo(),0));
                                     //stringToSend = getActivity().getResources().getString(R.string.TimeMode).concat("@crono@");
                                     //((MainActivity) getActivity()).sendCommand(stringToSend,true);
                                     break;
                                 case 4:
+                                    currentGame.setEquipaVisitante(piScoreBoard.getListOfTeams().get(checkedItem));
+                                    items.set(position,new EntryItem(getResources().getString(R.string.itemEquipaVisitante), getResources().getString(R.string.summaryitemEquipaVisitante), currentGame.getEquipaVisitante().getName(), currentGame.getEquipaVisitante().getLogotipo(),0));
                                     break;
                             }
                             adapter.notifyDataSetChanged();

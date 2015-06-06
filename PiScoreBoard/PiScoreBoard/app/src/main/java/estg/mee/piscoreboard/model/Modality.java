@@ -12,12 +12,7 @@ public class Modality implements Serializable{
     private int nParts;
     private int nFaults;
     private String name;
-<<<<<<< HEAD
-    private String imagePath;
-
-=======
     private int imageRid;
->>>>>>> origin/master
     public Modality() {
 
     }
@@ -68,5 +63,13 @@ public class Modality implements Serializable{
 
     public void setnFaults(int nFaults) {
         this.nFaults = nFaults;
+    }
+
+    public int getImageRid() {
+        return imageRid;
+    }
+
+    public void setImageRid(int imageRid) {
+        this.imageRid = imageRid;
     }
 }
