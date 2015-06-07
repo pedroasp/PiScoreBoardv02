@@ -311,14 +311,10 @@ int actualID = 0;
         if(MainActivity.newTeamPath == null) {
             img.setImageResource(R.drawable.question_icon);
         }else{
-
             File imgFile = new File(MainActivity.newTeamPath);
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             Drawable drawable = new BitmapDrawable(getResources(), myBitmap);
-
-
             //img.setImageBitmap(myBitmap);
-
             img.setImageDrawable(drawable);
         }
 

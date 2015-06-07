@@ -1,8 +1,10 @@
 package estg.mee.piscoreboard.customlistview;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.controller.MainActivity;
 import estg.mee.piscoreboard.model.Colors;
 import estg.mee.piscoreboard.model.Game;
+import estg.mee.piscoreboard.model.PiScoreBoard;
 import estg.mee.piscoreboard.utils.Async_SFTP;
 
 
@@ -30,6 +33,7 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 	private ArrayList<Item> items;
 	private LayoutInflater vi;
     Game currentGame = Game.getInstance();
+    PiScoreBoard piScoreBoard = PiScoreBoard.getInstance();
     Async_SFTP async_sftp = Async_SFTP.getInstance();
 	/**
 	 * Constructor
@@ -91,8 +95,22 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 				switch1.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-						// Log.d("TAGX", "Switch " + eisId + " is " + (isChecked ? "on" : "off"));
+						Log.d("TAGX", "Switch " + eisId + " is " + (isChecked ? "on" : "off"));
 						//SettingsFragment.switchOnClick(eisId, isChecked);
+                        String stringToSend;
+                        switch(eisId){
+                            case 1:
+                                piScoreBoard.setFaultsEnable(isChecked);
+                                stringToSend = context.getResources().getString(R.string.FaultsCommand).concat("@"+ (isChecked ? "on" : "off") +"@");
+                                ((MainActivity) context).sendCommand(stringToSend,true);
+                                break;
+                            case 2:
+                                piScoreBoard.setPubEnable(isChecked);
+                                stringToSend = context.getResources().getString(R.string.Publicity).concat("@"+ (isChecked ? "on" : "off") +"@");
+                                ((MainActivity) context).sendCommand(stringToSend,true);
+                                break;
+
+                        }
 					}
 				});
             } else if (i.isSettings()== 2) {

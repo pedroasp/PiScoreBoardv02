@@ -43,7 +43,9 @@
         android:layout_gravity="center_horizontal|top"
         android:inputType="time"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:enabled="true"
+        android:visibility="visible" />
 
     <TextView
         android:layout_width="wrap_content"

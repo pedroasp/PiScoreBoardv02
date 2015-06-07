@@ -56,6 +56,9 @@
     <string name="sectionTemporizacao">Temporização</string>
     <string name="itemTemporizacao">Temporização</string>
     <string name="summaryItemTemporizacao">Selecione um método de temporização</string>
+    <string name="sectionFaltas">Faltas</string>
+    <string name="itemFaltas">Faltas</string>
+    <string name="summaryItemFaltas">Defina o estado das faltas</string>
 
     <string name="sectionColors">Cores</string>
     <string name="itemBackgroundCentralColor">Cor de fundo central</string>
@@ -106,6 +109,7 @@
     <string name="Shutdown">s_shutdown@lixo@</string>
     <string name="Restart">s_restart@lixo@</string>
     <string name="Publicity">pub</string>
+    <string name="FaultsCommand">faults</string>
     <string name="TimeMode">time</string>
     <string name="SetCrono">setcrono</string>
     <string name="CronoCommands">crono</string>
