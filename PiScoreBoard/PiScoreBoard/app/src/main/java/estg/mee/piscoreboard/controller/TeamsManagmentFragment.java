@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -304,15 +306,20 @@ int actualID = 0;
         else
             actualID = 0;
 
-
         Team novaEquipa = new Team();
         final ImageView img = new ImageView(c);
         if(MainActivity.newTeamPath == null) {
             img.setImageResource(R.drawable.question_icon);
         }else{
+
             File imgFile = new File(MainActivity.newTeamPath);
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            img.setImageBitmap(myBitmap);
+            Drawable drawable = new BitmapDrawable(getResources(), myBitmap);
+
+
+            //img.setImageBitmap(myBitmap);
+
+            img.setImageDrawable(drawable);
         }
 
 
@@ -352,6 +359,11 @@ int actualID = 0;
         ll.setOrientation(LinearLayout.VERTICAL);
         ll.addView(editImage);
         ll.addView(img);
+        img.requestLayout();
+        final float scale = c.getResources().getDisplayMetrics().density;
+        int pixels = (int) (40 * scale + 0.5f);
+        img.getLayoutParams().height = pixels;
+        img.getLayoutParams().width = pixels;
         ll.addView(editNome);
         ll.addView(input);
         builder.setView(ll);
@@ -371,7 +383,7 @@ int actualID = 0;
                 arrayList.add(newTeam.getLogotipo());
                 async_sftp.uploadLogos(getActivity(),arrayList);
                 ((MainActivity) getActivity()).saveData();
-                MainActivity.newTeamPath = null;
+                //MainActivity.newTeamPath = null;
                 onResume();
 
 
