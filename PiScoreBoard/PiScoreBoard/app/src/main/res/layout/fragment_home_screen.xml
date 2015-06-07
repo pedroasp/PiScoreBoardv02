@@ -124,4 +124,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sLocalName"
+        android:layout_alignTop="@+id/sLocalGoals"
+        android:layout_alignLeft="@+id/sLocalGoals"
+        android:layout_alignStart="@+id/sLocalGoals"
+        android:text="@string/sLocalName"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sVisitName"
+        android:text="@string/sVisitName"
+        android:textSize="20sp"
+        android:layout_alignBottom="@+id/sLocalName"
+        android:layout_alignStart="@+id/sVisitGoals"
+        android:layout_alignLeft="@+id/sVisitGoals" />
+
 </RelativeLayout>

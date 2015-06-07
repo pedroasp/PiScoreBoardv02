@@ -89,6 +89,8 @@
     <string name="sVisitFaults"></string>
     <string name="sTime">23:53</string>
     <string name="sPart">ªParte</string>
+    <string name="sLocalName">Local</string>
+    <string name="sVisitName">Visitante</string>
     <string name="edit_message">HELP</string>
 
     <!--                           Commands                                    -->
