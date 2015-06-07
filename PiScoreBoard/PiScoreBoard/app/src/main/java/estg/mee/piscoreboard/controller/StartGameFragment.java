@@ -150,9 +150,13 @@ public class StartGameFragment extends Fragment{
                                     currentGame.setEquipaLocal(piScoreBoard.getListOfTeams().get(checkedItem));
                                     items.set(position, new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada), currentGame.getEquipaLocal().getName(), currentGame.getEquipaLocal().getLogotipo(), 0));
                                     stringToSend = getActivity().getResources().getString(R.string.LocalName).concat("@" + currentGame.getEquipaLocal().getName() + "@" + "\r\n");
-                                    stringToSend = stringToSend.concat(getActivity().getResources().getString(R.string.LocalLogo)).concat("@" + async_sftp.getREMOTE_LOGOS_DIR() + "/" + currentGame.getEquipaLocal().getLogoName() + "@");
+                                    if(currentGame.getEquipaLocal().getLogoName()!=null){
+                                        stringToSend = stringToSend.concat(getActivity().getResources().getString(R.string.LocalLogo)).concat("@" + async_sftp.getREMOTE_LOGOS_DIR() + "/" + currentGame.getEquipaLocal().getLogoName() + "@");
+                                    }else{
+                                        stringToSend = stringToSend.concat(getActivity().getResources().getString(R.string.LocalLogo)).concat("@" + "null" + "@");
+                                    }
+
                                     ((MainActivity) getActivity()).sendCommand(stringToSend, true);
-                                    items.set(position,new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada), currentGame.getEquipaLocal().getName(), currentGame.getEquipaLocal().getLogotipo(),0));
                                     //stringToSend = getActivity().getResources().getString(R.string.TimeMode).concat("@crono@");
                                     //((MainActivity) getActivity()).sendCommand(stringToSend,true);
 

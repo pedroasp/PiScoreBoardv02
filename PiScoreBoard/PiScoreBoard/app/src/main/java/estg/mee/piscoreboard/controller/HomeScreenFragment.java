@@ -365,8 +365,19 @@ public class HomeScreenFragment extends Fragment{
 
         //     Size Image
       //  sLocalLogo.setImageResource(currentGame.getEquipaLocal().getLogotipo());
-        sLocalLogo.setImageURI(Uri.parse(currentGame.getEquipaLocal().getLogotipo()));
-        sVisitLogo.setImageURI(Uri.parse(currentGame.getEquipaVisitante().getLogotipo()));
+        if(currentGame.getEquipaLocal().getLogotipo() != null){
+            sLocalLogo.setImageURI(Uri.parse(currentGame.getEquipaLocal().getLogotipo()));
+            sLocalLogo.setVisibility(View.VISIBLE);
+        }else{
+            sLocalLogo.setVisibility(View.INVISIBLE);
+        }
+       if(currentGame.getEquipaVisitante().getLogotipo() != null){
+           sVisitLogo.setImageURI(Uri.parse(currentGame.getEquipaVisitante().getLogotipo()));
+           sVisitLogo.setVisibility(View.VISIBLE);
+       }else{
+           sVisitLogo.setVisibility(View.INVISIBLE);
+       }
+
         android.view.ViewGroup.LayoutParams sLocalLogoLayoutParams = sLocalLogo.getLayoutParams();
         android.view.ViewGroup.LayoutParams sVisitLogoLayoutParams = sVisitLogo.getLayoutParams();
         sLocalLogoLayoutParams.width = (int) (width * 0.20);
@@ -420,12 +431,12 @@ public class HomeScreenFragment extends Fragment{
         textView.setGravity(Gravity.CENTER);
         final int textviewwidth = (int) Math.round(0.2 * width);
         final int textviewheight =(int) Math.round(0.2 * height);
-        final int maxLinesCount=2;
+        final int maxLinesCount=1;
         textView.setMaxLines(maxLinesCount);
         textView.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, width, getResources().getDisplayMetrics()));
         textView.setEllipsize(TextUtils.TruncateAt.END);
         // since we use it only once per each click, we don't need to cache the results, ever
-        textView.setEnableSizeCache(false);
+        //textView.setEnableSizeCache(false);
         textView.setEnableSizeCache(false);
         textView.setLayoutParams(new ViewGroup.LayoutParams(textviewwidth, textviewheight));
         textView.setX(x);
