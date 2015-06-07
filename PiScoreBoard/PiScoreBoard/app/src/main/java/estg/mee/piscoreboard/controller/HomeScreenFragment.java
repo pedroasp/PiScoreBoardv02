@@ -24,11 +24,11 @@ import estg.mee.piscoreboard.model.Game;
 public class HomeScreenFragment extends Fragment{
     View rootview;
     private int mInterval = 500;
-    private int nVisit = 0,nLocal = 0, nLocalFaults = 0, nVisitFaults = 0;
+    private int nVisit = 0,nLocal = 0, nLocalFaults = 0, nVisitFaults = 0, nParts;
     private Handler clockHandler;
     float initialX, initialY;
     float finalX, finalY;
-    TextView  sLocalGoals, sVisitGoals, sTime, sLocalFaults, sVisitFaults;
+    TextView  sLocalGoals, sVisitGoals, sTime, sLocalFaults, sVisitFaults, sParts;
     private String message;
     ImageView sLocalLogo, sVisitLogo;
     Game currentGame = Game.getInstance();
@@ -52,11 +52,15 @@ public class HomeScreenFragment extends Fragment{
         sVisitGoals = (TextView) rootview.findViewById(R.id.sVisitGoals);
         sVisitFaults = (TextView) rootview.findViewById(R.id.sVisitFaults);
         sLocalFaults = (TextView) rootview.findViewById(R.id.sLocalFaults);
+        sParts = (TextView) rootview.findViewById(R.id.sParts);
         sTime = (TextView) rootview.findViewById(R.id.sTime);
         sLocalLogo = (ImageView) rootview.findViewById(R.id.sLocalLogo);
         sVisitLogo = (ImageView) rootview.findViewById(R.id.sVisitLogo);
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/MyWorkbranch
         nLocal = currentGame.getnLocal();
         sLocalGoals.setText("" + nLocal);
         nVisit = currentGame.getnVisit();
@@ -65,6 +69,7 @@ public class HomeScreenFragment extends Fragment{
         sVisitFaults.setText("" + nVisitFaults);
         nLocalFaults = currentGame.getnVisitFaults();
         sLocalFaults.setText("" + nLocalFaults);
+<<<<<<< HEAD
 
         //Resize Logos
 
@@ -75,6 +80,10 @@ public class HomeScreenFragment extends Fragment{
 //        sLocalLogoLayoutParams.height = (int) (height * 0.20);
 //        sVisitLogoLayoutParams.width = (int) (width * 0.20);
 //        sVisitLogoLayoutParams.height = (int) (height * 0.20);
+=======
+        nParts = currentGame.getnPart();
+        sParts.setText(String.valueOf(currentGame.getnPart()).concat(getString(R.string.sPart)));
+>>>>>>> origin/MyWorkbranch
 
 //
 //        sLocalLogo.setLayoutParams(sLocalLogoLayoutParams);
@@ -233,10 +242,10 @@ public class HomeScreenFragment extends Fragment{
                         if (finalY - initialY > 20 && nLocalFaults != 0) {
                             nLocalFaults--;
                             if(nLocalFaults<0) nLocalFaults=0;
-                        } else if (initialY - finalY > 100) {
+                        } else if (initialY - finalY > 20 && nLocalFaults < currentGame.getModality().getnFaults()) {
                             nLocalFaults++;
                         }
-                        if (Math.abs(finalY - initialY) > 100) {
+                        if (Math.abs(finalY - initialY) > 20) {
                             message = getString(R.string.LocalFaults).concat("@" + nLocalFaults + "@");
                             ((MainActivity) getActivity()).sendCommand(message, true);
                             sLocalFaults.setText("" + nLocalFaults);
@@ -280,10 +289,10 @@ public class HomeScreenFragment extends Fragment{
                         if (finalY - initialY > 20 && nVisitFaults != 0) {
                             nVisitFaults--;
                             if(nVisitFaults<0) nVisitFaults=0;
-                        } else if (initialY - finalY > 100) {
+                        } else if (initialY - finalY > 20 && nVisitFaults < currentGame.getModality().getnFaults()) {
                             nVisitFaults++;
                         }
-                        if (Math.abs(finalY - initialY) > 100) {
+                        if (Math.abs(finalY - initialY) > 20) {
                             message = getString(R.string.VisitFaults).concat("@" + nVisitFaults + "@");
                             ((MainActivity) getActivity()).sendCommand(message, true);
                             sVisitFaults.setText("" + nVisitFaults);
@@ -297,6 +306,57 @@ public class HomeScreenFragment extends Fragment{
 //                            llp.setMargins(0, 0, 70, 0);
 //                        }
 //                        sLocalFaults.setLayoutParams(llp);
+
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        initialX = event.getX();
+                        initialY = event.getY();
+                        break;
+                }
+                return true;
+            }
+        });
+
+        sParts.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub~
+
+                switch (event.getActionMasked()) {
+
+                    case MotionEvent.ACTION_MOVE:
+
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        finalX = event.getX();
+                        finalY = event.getY();
+
+
+
+                        if (finalY - initialY > 60 && nParts != 0) {
+                            nParts--;
+                            if(nParts<1) nParts=1;
+                        } else if (initialY - finalY > 60 && nParts < currentGame.getModality().getnParts()) {
+                            nParts++;
+                            currentGame.setnVisitFaults(0);
+                            currentGame.setnLocalFaults(0);
+                            nVisitFaults = 0;
+                            nLocalFaults = 0;
+                            sVisitFaults.setText("" + currentGame.getnLocalFaults());
+                            sLocalFaults.setText("" + currentGame.getnVisitFaults());
+                            message = getString(R.string.VisitFaults).concat("@" + currentGame.getnVisitFaults() + "@" + "\r\n").concat(getString(R.string.LocalFaults).concat("@" + currentGame.getnLocalFaults() + "@" + "\r\n"));
+                            ((MainActivity) getActivity()).sendCommand(message, true);
+                        }
+                        if (Math.abs(finalY - initialY) > 60) {
+                            sParts.setText(String.valueOf(nParts).concat(getString(R.string.sPart)));
+                            currentGame.setnPart(nParts);
+                            message = getString(R.string.Parts).concat("@" + nParts + "@");
+                            ((MainActivity) getActivity()).sendCommand(message, true);
+
+                        }
+
 
                         break;
                     case MotionEvent.ACTION_DOWN:

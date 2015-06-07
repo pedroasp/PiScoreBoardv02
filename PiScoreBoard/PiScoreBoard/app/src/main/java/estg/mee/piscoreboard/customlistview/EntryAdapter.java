@@ -21,13 +21,16 @@ import java.util.ArrayList;
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.controller.MainActivity;
 import estg.mee.piscoreboard.model.Colors;
+import estg.mee.piscoreboard.model.Game;
+import estg.mee.piscoreboard.utils.Async_SFTP;
 
 
 public class EntryAdapter extends ArrayAdapter<Item> {
 	private Context context;
 	private ArrayList<Item> items;
 	private LayoutInflater vi;
-		
+    Game currentGame = Game.getInstance();
+    Async_SFTP async_sftp = Async_SFTP.getInstance();
 	/**
 	 * Constructor
 	 * @param context
@@ -138,6 +141,11 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                     public void onClick(View v) {
                         switch (eib.id){
                             case 1:
+                                currentGame.setnLocalFaults(0);
+                                currentGame.setnVisitFaults(0);
+                                currentGame.setnLocal(0);
+                                currentGame.setnVisit(0);
+                                currentGame.setnPart(1);
                                 ArrayList<Colors> ColorsArrayList = new ArrayList<>();
                                 ColorsArrayList.add(MainActivity.graphics.BackgroundCentralColor);
                                 ColorsArrayList.add(MainActivity.graphics.BackgroundSideColor);
@@ -153,8 +161,14 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                                     rgb = "@" + Color.red(colors.getColor()) + "," + Color.green(colors.getColor()) + "," + Color.blue(colors.getColor()) + "@";
                                     stringToSend = stringToSend.concat(colors.getCommand()).concat(rgb+"\r\n");
                                 }
-                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.LocalName)).concat("@"+"Nome"+"@"+"\r\n");
-                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.VisitName)).concat("@"+"Nome"+"@");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.Parts)).concat("@"+currentGame.getnPart()+"@"+"\r\n");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.VisitGoals)).concat("@"+currentGame.getnVisit()+"@"+"\r\n");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.LocalGoals)).concat("@"+currentGame.getnLocal()+"@"+"\r\n");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.LocalFaults)).concat("@"+currentGame.getnLocalFaults()+"@"+"\r\n");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.VisitFaults)).concat("@"+currentGame.getnVisitFaults()+"@"+"\r\n");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.LocalLogo)).concat("@" + async_sftp.getREMOTE_LOGOS_DIR() + "/" + currentGame.getEquipaLocal().getLogoName() + "@"+"\r\n");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.LocalName)).concat("@"+currentGame.getEquipaLocal().getName()+"@"+"\r\n");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.VisitName)).concat("@"+currentGame.getEquipaVisitante().getName()+"@");
                                 //stringToSend = stringToSend.substring(0, stringToSend.length()-2);
                                 MainActivity activity = (MainActivity) context;
                                 activity.sendCommand(stringToSend,true);

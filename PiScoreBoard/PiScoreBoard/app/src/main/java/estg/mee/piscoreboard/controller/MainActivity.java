@@ -27,12 +27,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.model.Game;
 import estg.mee.piscoreboard.model.Graphics;
 import estg.mee.piscoreboard.model.PiScoreBoard;
+import estg.mee.piscoreboard.model.Team;
+import estg.mee.piscoreboard.utils.Async_SFTP;
 import estg.mee.piscoreboard.utils.ClientSendThread;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
@@ -68,7 +71,7 @@ public class MainActivity extends ActionBarActivity
     public static String newTeamPath;
 
     PiScoreBoard piScoreBoard = PiScoreBoard.getInstance();
-
+    Async_SFTP async_sftp = Async_SFTP.getInstance();
     private PiScoreBoard dObject = new PiScoreBoard();
 
     Game currentGame = Game.getInstance();
@@ -173,6 +176,17 @@ public class MainActivity extends ActionBarActivity
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        async_sftp.removeAllLogos(this);
+        async_sftp.removeAllPubs(this);
+        final ArrayList<String> arrayList = new ArrayList<>();
+        final Async_SFTP async_sftp = new Async_SFTP();
+        for (Team logosequipas:piScoreBoard.getListOfTeams()){
+            arrayList.add(logosequipas.getLogotipo());
+        }
+        async_sftp.uploadLogos(this,arrayList);
+        async_sftp.uploadPubs(this,currentGame.getPublictyList());
+
         Calendar sysTime = Calendar.getInstance();
         String stringToSend;
         stringToSend = getResources().getString(R.string.SetClock).concat("@"+String.valueOf(sysTime.get(Calendar.YEAR))+"-"+String.valueOf(sysTime.get(Calendar.MONTH))+"-"+String.valueOf(sysTime.get(Calendar.DAY_OF_MONTH))+","+String.valueOf(sysTime.get(Calendar.HOUR))+":" + String.valueOf(sysTime.get(Calendar.MINUTE)) + ":" + String.valueOf(sysTime.get(Calendar.SECOND)) + "@" + "\r\n");
@@ -264,7 +278,10 @@ public class MainActivity extends ActionBarActivity
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case R.id.action_home:
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/MyWorkbranch
                 objFragment = new HomeScreenFragment();
                 fragmentManager.beginTransaction().replace(R.id.container, objFragment).commit();
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);

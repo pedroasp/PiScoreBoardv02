@@ -88,6 +88,7 @@
     <string name="sLocalFaults"></string>
     <string name="sVisitFaults"></string>
     <string name="sTime">23:53</string>
+    <string name="sPart">ªParte</string>
     <string name="edit_message">HELP</string>
 
     <!--                           Commands                                    -->
@@ -106,6 +107,7 @@
     <string name="TimeMode">time</string>
     <string name="SetCrono">setcrono</string>
     <string name="CronoCommands">crono</string>
+    <string name="Parts">gparte</string>
 
 
 
