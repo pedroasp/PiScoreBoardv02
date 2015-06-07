@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PiScoreBoard</string>
+    <string name="app_name">HeRo-Pi</string>
 
     <string name="title_section1">Ecrã Principal</string>
     <string name="title_section2">Iniciar Jogo</string>

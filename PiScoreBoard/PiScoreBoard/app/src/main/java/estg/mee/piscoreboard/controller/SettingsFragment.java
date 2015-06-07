@@ -106,11 +106,9 @@ public class SettingsFragment extends Fragment {
 
                     case 1:
                         onCreateInputDialog(getResources().getString(R.string.itemIPAdress),position);
-
                         break;
                     case 2:
-                        piScoreBoard.setPort(Integer.parseInt(onCreateInputDialog(getResources().getString(R.string.itemPorto),position))) ;
-
+                        onCreateInputDialog(getResources().getString(R.string.itemPorto),position);
                         break;
                     case 3:
                         piScoreBoard.setPassword(onCreateInputDialog(getResources().getString(R.string.itemPassword),position));
@@ -119,7 +117,7 @@ public class SettingsFragment extends Fragment {
                     case 5:
                         Dialog dialogTemporizacao = onCreateDialogSingleChoice(temporizacao, "Método de temporização");
                         dialogTemporizacao.show();
-                    break;
+                        break;
                     case 10:
                         OnCreateNumberPicker(getActivity(),"Temporização");
                         break;
@@ -298,6 +296,7 @@ public class SettingsFragment extends Fragment {
                         //((MainActivity) getActivity()).sendCommand(stringToSend, true);
                         break;
                     case 2:
+                        piScoreBoard.setPort(Integer.parseInt(input.getText().toString()));
                         items.set(2,(new EntryItem(getResources().getString(R.string.itemPorto), getResources().getString(R.string.summaryItemPorto),String.valueOf(piScoreBoard.getPort()),null,0)));
                         break;
                     case 3:
