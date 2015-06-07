@@ -109,7 +109,7 @@
     <string name="Shutdown">s_shutdown@lixo@</string>
     <string name="Restart">s_restart@lixo@</string>
     <string name="Publicity">pub</string>
-    <string name="FaultsCommand">faults</string>
+    <string name="FaultsCommand">faltas</string>
     <string name="TimeMode">time</string>
     <string name="SetCrono">setcrono</string>
     <string name="CronoCommands">crono</string>

@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +22,7 @@ import java.util.Calendar;
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.model.Game;
 import estg.mee.piscoreboard.model.PiScoreBoard;
+import estg.mee.piscoreboard.utils.AutoResizeTextView;
 
 /**
  * Created by Rúben Rodrigues on 07-05-2015.
@@ -30,18 +34,25 @@ public class HomeScreenFragment extends Fragment{
     private Handler clockHandler;
     float initialX, initialY;
     float finalX, finalY;
-    TextView  sLocalGoals, sVisitGoals, sTime, sLocalFaults, sVisitFaults, sParts, sLocalName,sVisitName, sFaults;
+    TextView  sLocalGoals, sVisitGoals, sTime, sLocalFaults, sVisitFaults, sParts, sFaults;
     private String message;
     ImageView sLocalLogo, sVisitLogo;
     Game currentGame = Game.getInstance();
     PiScoreBoard piScoreBoard = PiScoreBoard.getInstance();
+    private ViewGroup _textViewcontainer;
+    int height, width;
+    ViewGroup.MarginLayoutParams sVisitGoalsMargins;
+    ViewGroup.MarginLayoutParams sLocalGoalsMargins;
+    AutoResizeTextView sLocalNameResized, sVisitNameResized;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         rootview = inflater.inflate(R.layout.fragment_home_screen,container,false);
+        //_textViewcontainer = container;
+        _textViewcontainer = (ViewGroup)rootview.findViewById(R.id.parameterscontainer);
 
-        int height = this.getResources().getDisplayMetrics().heightPixels;
-        int width = this.getResources().getDisplayMetrics().widthPixels;
+        height = this.getResources().getDisplayMetrics().heightPixels;
+        width = this.getResources().getDisplayMetrics().widthPixels;
 
         if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             width = this.getResources().getDisplayMetrics().heightPixels;
@@ -50,13 +61,13 @@ public class HomeScreenFragment extends Fragment{
         
         final int HCENTER = (int) (width * 0.5);   //Centro Horizontal
         final int desfasamentoSimbolos = (int) (width * 0.10);
+        final int desfasamentoNames = (int) (width * 0.26);
 
         sLocalGoals= (TextView) rootview.findViewById(R.id.sLocalGoals);
         sVisitGoals = (TextView) rootview.findViewById(R.id.sVisitGoals);
         sVisitFaults = (TextView) rootview.findViewById(R.id.sVisitFaults);
         sLocalFaults = (TextView) rootview.findViewById(R.id.sLocalFaults);
-        sLocalName = (TextView) rootview.findViewById(R.id.sLocalName);
-        sVisitName = (TextView) rootview.findViewById(R.id.sVisitName);
+
         sParts = (TextView) rootview.findViewById(R.id.sParts);
         sTime = (TextView) rootview.findViewById(R.id.sTime);
         sLocalLogo = (ImageView) rootview.findViewById(R.id.sLocalLogo);
@@ -73,8 +84,6 @@ public class HomeScreenFragment extends Fragment{
         sLocalFaults.setText(String.valueOf(nLocalFaults));
         nParts = currentGame.getnPart();
         sParts.setText(String.valueOf(currentGame.getnPart()).concat(getString(R.string.sPart)));
-        sLocalName.setText(currentGame.getEquipaLocal().getName());
-        sVisitName.setText(currentGame.getEquipaVisitante().getName());
         sLocalFaults.setText(String.valueOf(nLocalFaults));
 
         if(piScoreBoard.isTimeMode()){
@@ -148,14 +157,14 @@ public class HomeScreenFragment extends Fragment{
                             sLocalGoals.setText(String.valueOf(nLocal));
                             currentGame.setnLocal(nLocal);
                         }
-                        ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sLocalGoals.getLayoutParams();
+                        sLocalGoalsMargins = (ViewGroup.MarginLayoutParams) sLocalGoals.getLayoutParams();
                         if (nLocal>9){
-                            llp.setMargins(15, 0, 0, 0);
+                            sLocalGoalsMargins.setMargins(15, 0, 0, 0);
                         }else
                         {
-                            llp.setMargins(70, 0, 0, 0);
+                            sLocalGoalsMargins.setMargins(70, 0, 0, 0);
                         }
-                        sLocalGoals.setLayoutParams(llp);
+                        sLocalGoals.setLayoutParams(sLocalGoalsMargins);
                         break;
                     case MotionEvent.ACTION_DOWN:
                         initialX = event.getX();
@@ -164,6 +173,7 @@ public class HomeScreenFragment extends Fragment{
                 }
                 return true;
             }
+
         });
 
 
@@ -195,15 +205,15 @@ public class HomeScreenFragment extends Fragment{
                             sVisitGoals.setText(String.valueOf(nVisit));
                             currentGame.setnVisit(nVisit);
                         }
-
-                        ViewGroup.MarginLayoutParams llp = (ViewGroup.MarginLayoutParams) sVisitGoals.getLayoutParams();
+                        sVisitGoalsMargins = (ViewGroup.MarginLayoutParams) sVisitGoals.getLayoutParams();
                         if (nVisit>9){
-                            llp.setMargins(0, 0, 25, 0);
+                            sVisitGoalsMargins.setMargins(0, 0, 25, 0);
                         }else
                         {
-                            llp.setMargins(0, 0, 70, 0);
+                            sVisitGoalsMargins.setMargins(0, 0, 70, 0);
                         }
-                        sVisitGoals.setLayoutParams(llp);
+                        sVisitGoals.setLayoutParams(sVisitGoalsMargins);
+
 
                         break;
                     case MotionEvent.ACTION_DOWN:
@@ -351,8 +361,6 @@ public class HomeScreenFragment extends Fragment{
 
         startClock();
 
-
-
         //Resize Logos
 
         //     Size Image
@@ -373,14 +381,63 @@ public class HomeScreenFragment extends Fragment{
                 (int) (width * 0.04), 0, 0);//all in pixels
         sLocalLogo.setLayoutParams(sLocalLogoMargins);
 
+
         ViewGroup.MarginLayoutParams sVisitLogoMargins = (ViewGroup.MarginLayoutParams) sVisitLogo.getLayoutParams();
         sVisitLogoMargins.setMargins(HCENTER + desfasamentoSimbolos,
                 (int) (width * 0.04), 0, 0);//all in pixels
         sVisitLogo.setLayoutParams(sVisitLogoMargins);
+        //Position Goals
+        sLocalGoalsMargins = (ViewGroup.MarginLayoutParams) sLocalGoals.getLayoutParams();
+        if (nLocal>9){
+            sLocalGoalsMargins.setMargins(15, 0, 0, 0);
+        }else
+        {
+            sLocalGoalsMargins.setMargins(70, 0, 0, 0);
+        }
+        sLocalGoals.setLayoutParams(sLocalGoalsMargins);
+        sVisitGoalsMargins = (ViewGroup.MarginLayoutParams) sVisitGoals.getLayoutParams();
+        if (nVisit>9){
+            sVisitGoalsMargins.setMargins(0, 0, 25, 0);
+        }else
+        {
+            sVisitGoalsMargins.setMargins(0, 0, 70, 0);
+        }
+        sVisitGoals.setLayoutParams(sVisitGoalsMargins);
+
+
+        sLocalNameResized = recreateTextViewName(sLocalNameResized,currentGame.getEquipaLocal().getName(),HCENTER - desfasamentoNames-(int) (0.2 * width),(int) (width * 0.04));
+        sVisitNameResized = recreateTextViewName(sVisitNameResized,currentGame.getEquipaVisitante().getName(),HCENTER + desfasamentoNames,(int) (width * 0.04));
 
         return rootview;
     }
 
+
+    protected AutoResizeTextView recreateTextViewName(AutoResizeTextView textView, String title, int x, int y)
+    {
+        //_textViewcontainer.removeAllViews();
+        _textViewcontainer.removeView(textView);
+        textView = new AutoResizeTextView(getActivity());
+        textView.setGravity(Gravity.CENTER);
+        final int textviewwidth = (int) Math.round(0.2 * width);
+        final int textviewheight =(int) Math.round(0.2 * height);
+        final int maxLinesCount=2;
+        textView.setMaxLines(maxLinesCount);
+        textView.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, width, getResources().getDisplayMetrics()));
+        textView.setEllipsize(TextUtils.TruncateAt.END);
+        // since we use it only once per each click, we don't need to cache the results, ever
+        textView.setEnableSizeCache(false);
+        textView.setEnableSizeCache(false);
+        textView.setLayoutParams(new ViewGroup.LayoutParams(textviewwidth, textviewheight));
+        textView.setX(x);
+        textView.setY(y);
+        textView.setBackgroundColor(0x00ffffff);
+        textView.setText(title);
+        textView.getLeft();
+
+
+        _textViewcontainer.addView(textView);
+        return textView;
+    }
 
 
 
