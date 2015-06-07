@@ -59,6 +59,8 @@ public class HomeScreenFragment extends Fragment{
         sTime = (TextView) rootview.findViewById(R.id.sTime);
         sLocalLogo = (ImageView) rootview.findViewById(R.id.sLocalLogo);
         sVisitLogo = (ImageView) rootview.findViewById(R.id.sVisitLogo);
+
+
         nLocal = currentGame.getnLocal();
         sLocalGoals.setText(String.valueOf(nLocal));
         nVisit = currentGame.getnVisit();
@@ -71,6 +73,34 @@ public class HomeScreenFragment extends Fragment{
         sParts.setText(String.valueOf(currentGame.getnPart()).concat(getString(R.string.sPart)));
         sLocalName.setText(currentGame.getEquipaLocal().getName());
         sVisitName.setText(currentGame.getEquipaVisitante().getName());
+        sLocalFaults.setText("" + nLocalFaults);
+
+        //Resize Logos
+
+
+//        android.view.ViewGroup.LayoutParams sLocalLogoLayoutParams = sLocalLogo.getLayoutParams();
+//        android.view.ViewGroup.LayoutParams sVisitLogoLayoutParams = sVisitLogo.getLayoutParams();
+//        sLocalLogoLayoutParams.width = (int) (width * 0.20);
+//        sLocalLogoLayoutParams.height = (int) (height * 0.20);
+//        sVisitLogoLayoutParams.width = (int) (width * 0.20);
+//        sVisitLogoLayoutParams.height = (int) (height * 0.20);
+        nParts = currentGame.getnPart();
+        sParts.setText(String.valueOf(currentGame.getnPart()).concat(getString(R.string.sPart)));
+
+//
+//        sLocalLogo.setLayoutParams(sLocalLogoLayoutParams);
+//        sVisitLogo.setLayoutParams(sVisitLogoLayoutParams);
+        //    Position Image
+//        ViewGroup.MarginLayoutParams sLocalLogoMargins = (ViewGroup.MarginLayoutParams) sLocalLogo.getLayoutParams();
+//        sLocalLogoMargins.setMargins(HCENTER - desfasamentoSimbolos - sLocalLogo.getLayoutParams().width,
+//                (int) (width * 0.04), 0, 0);//all in pixels
+//        sLocalLogo.setLayoutParams(sLocalLogoMargins);
+//
+//        ViewGroup.MarginLayoutParams sVisitLogoMargins = (ViewGroup.MarginLayoutParams) sVisitLogo.getLayoutParams();
+//        sVisitLogoMargins.setMargins(HCENTER + desfasamentoSimbolos,
+//                (int) (width * 0.04), 0, 0);//all in pixels
+//        sVisitLogo.setLayoutParams(sVisitLogoMargins);
+
 
 //    //Draw Point
 //        //...
