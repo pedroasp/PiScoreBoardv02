@@ -1,9 +1,7 @@
 package estg.mee.piscoreboard.controller;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
@@ -20,10 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileInputStream;
@@ -303,6 +297,11 @@ public class MainActivity extends ActionBarActivity
                 //ShowDialog(this);
                 return true;
 
+            case R.id.action_chronometer:
+                ChronometerDialogFragment FragmentChronometer = new ChronometerDialogFragment();
+                FragmentChronometer.show(getFragmentManager(),"");
+                return true;
+
 
         }
         return super.onOptionsItemSelected(item);
@@ -469,7 +468,7 @@ public class MainActivity extends ActionBarActivity
 
     }
 
-    public void ShowDialog(Context c) {
+   /* public void ShowDialog(Context c) {
 
         final ImageView img = new ImageView(c);
         //File imgFile = new File(team.getLogotipo());
@@ -495,7 +494,7 @@ public class MainActivity extends ActionBarActivity
        // editNome.setTextSize(14);
 
 
-        final ImageView publicityStop = new ImageView(c);
+  *//*      final ImageView publicityStop = new ImageView(c);
         final ImageView publicityPlay = new ImageView(c);
         final ImageView videosPrevious = new ImageView(c);
         final ImageView videosPlay = new ImageView(c);
@@ -510,7 +509,7 @@ public class MainActivity extends ActionBarActivity
         videosPlay.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
         videosPause.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
         videosStop.setImageResource(R.drawable.ic_stop_black_24dp);
-        videosNext.setImageResource(R.drawable.ic_skip_next_black_24dp);
+        videosNext.setImageResource(R.drawable.ic_skip_next_black_24dp);*//*
 
         LinearLayout ll=new LinearLayout(c);
         ll.setOrientation(LinearLayout.VERTICAL);
@@ -528,7 +527,7 @@ public class MainActivity extends ActionBarActivity
         });
         builder.show();
 
-    }
+    }*/
 
 
 }

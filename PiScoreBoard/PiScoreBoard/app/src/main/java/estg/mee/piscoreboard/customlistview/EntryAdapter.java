@@ -110,8 +110,8 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                                 break;
                             case 2:
                                 piScoreBoard.setPubEnable(isChecked);
-                                stringToSend = context.getResources().getString(R.string.Publicity).concat("@"+ (isChecked ? "on" : "off") +"@");
-                                ((MainActivity) context).sendCommand(stringToSend,true);
+                                //stringToSend = context.getResources().getString(R.string.Publicity).concat("@"+ (isChecked ? "on" : "off") +"@");
+                                //((MainActivity) context).sendCommand(stringToSend,true);
                                 break;
 
                         }

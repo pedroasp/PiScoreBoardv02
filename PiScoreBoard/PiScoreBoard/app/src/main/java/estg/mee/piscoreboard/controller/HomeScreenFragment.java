@@ -493,6 +493,13 @@ public class HomeScreenFragment extends Fragment{
         //super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.global, menu);
         menu.findItem(R.id.action_multimedia).setVisible(true);
+        if (!piScoreBoard.isTimeMode()){
+            menu.findItem(R.id.action_chronometer).setVisible(false);
+        }else{
+            menu.findItem(R.id.action_chronometer).setVisible(true);
+        }
+
+
         //menu.findItem(R.id.action_addPub).setVisible(false);
         //menu.findItem(R.id.action_addTeams).setVisible(false);
     }

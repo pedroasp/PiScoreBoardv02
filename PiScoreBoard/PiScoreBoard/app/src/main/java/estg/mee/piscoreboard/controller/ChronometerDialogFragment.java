@@ -16,10 +16,10 @@ import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.model.PiScoreBoard;
 
 /**
- * Created by Rúben on 01-07-2015.
+ * Created by Rúben on 02-07-2015.
  */
 
-public class MultimediaDialogFragment extends DialogFragment {
+public class ChronometerDialogFragment extends DialogFragment {
     Button mButton;
     String message;
     PiScoreBoard piScoreBoard = PiScoreBoard.getInstance();
@@ -48,18 +48,18 @@ public class MultimediaDialogFragment extends DialogFragment {
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        dialog.setContentView(R.layout.dialog_multimedia);
+        dialog.setContentView(R.layout.dialog_chronometer);
         dialog.getWindow().setBackgroundDrawable(
                 new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
-        mButton = (Button) dialog.findViewById(R.id.button1);
-        ImageView videoPrevious = (ImageView) dialog.findViewById(R.id.videoPrevious);
-        ImageView videoNext = (ImageView) dialog.findViewById(R.id.videoNext);
-        ImageView videoPause = (ImageView) dialog.findViewById(R.id.videoPause);
-        ImageView videoPlay = (ImageView) dialog.findViewById(R.id.videoPlay);
-        ImageView videoStop = (ImageView) dialog.findViewById(R.id.videoStop);
-        ImageView publicityPlay = (ImageView) dialog.findViewById(R.id.publicityPlay);
-        ImageView publicityStop = (ImageView) dialog.findViewById(R.id.publicityStop);
+        mButton = (Button) dialog.findViewById(R.id.buttonOK);
+        ImageView chronometerPlay = (ImageView) dialog.findViewById(R.id.chronometerPlay);
+        ImageView chronometerPause = (ImageView) dialog.findViewById(R.id.chronometerPause);
+        ImageView chronometerReset = (ImageView) dialog.findViewById(R.id.chronometerReset);
+        //ImageView videoPlay = (ImageView) dialog.findViewById(R.id.videoPlay);
+        //ImageView videoStop = (ImageView) dialog.findViewById(R.id.videoStop);
+        //ImageView publicityPlay = (ImageView) dialog.findViewById(R.id.publicityPlay);
+        //ImageView publicityStop = (ImageView) dialog.findViewById(R.id.publicityStop);
 
 
 
@@ -74,63 +74,42 @@ public class MultimediaDialogFragment extends DialogFragment {
             }
         });
 
-        videoPrevious.setOnClickListener(new View.OnClickListener() {
+        chronometerPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
-        });
-
-        videoNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        videoPause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                message = getString(R.string.Video).concat("@"+ "pause" +"@");
-                ((MainActivity) getActivity()).sendCommand(message, true);
-            }
-        });
-        videoPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                message = getString(R.string.Video).concat("@"+ "start" +"@");
-                ((MainActivity) getActivity()).sendCommand(message, true);
-            }
-        });
-        videoStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                message = getString(R.string.Video).concat("@"+ "stop" +"@");
-                ((MainActivity) getActivity()).sendCommand(message, true);
-            }
-        });
-        publicityPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (piScoreBoard.isPubEnable()){
-                    message = getString(R.string.Publicity).concat("@"+ "on" +"@");
+                if (piScoreBoard.isTimeMode()){
+                    message = getString(R.string.CronoCommands).concat("@"+ "pause" +"@");
                     ((MainActivity) getActivity()).sendCommand(message, true);
                 }else{
-                    Toast.makeText(getActivity(), "Publicidade desativada!", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-        publicityStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (piScoreBoard.isPubEnable()){
-                    message = getString(R.string.Publicity).concat("@"+ "off" +"@");
-                    ((MainActivity) getActivity()).sendCommand(message, true);
-                }else{
-                     Toast.makeText(getActivity(), "Publicidade desativada!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Está em modo Relógio!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+         chronometerPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (piScoreBoard.isTimeMode()){
+                    message = getString(R.string.CronoCommands).concat("@"+ "play" +"@");
+                    ((MainActivity) getActivity()).sendCommand(message, true);
+                }else{
+                    Toast.makeText(getActivity(), "Está em modo Relógio!", Toast.LENGTH_SHORT).show();
+                }
+             }
+        });
+
+        chronometerReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (piScoreBoard.isTimeMode()){
+                    message = getString(R.string.SetCrono).concat("@"+ "0,0"  +"@");
+                    ((MainActivity) getActivity()).sendCommand(message, true);
+                }else{
+                    Toast.makeText(getActivity(), "Está em modo Relógio!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         return dialog;
     }
 }
