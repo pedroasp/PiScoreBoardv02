@@ -1,7 +1,9 @@
 package estg.mee.piscoreboard.controller;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
@@ -18,6 +20,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileInputStream;
@@ -287,10 +293,21 @@ public class MainActivity extends ActionBarActivity
                 fragmentManager.beginTransaction().replace(R.id.container, objFragment).commit();
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 return true;
+            case R.id.action_multimedia:
+                MultimediaDialogFragment newFragment = new MultimediaDialogFragment();
+               // newFragment.show(this.getFragmentManager(), "multimediadialog");
+                //newFragment.mListener = MainActivity.this;
+                //newFragment.text = mTextView.getText().toString();
+                newFragment.show(getFragmentManager(), "");
+
+                //ShowDialog(this);
+                return true;
+
 
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     /**
      * A placeholder fragment containing a simple view.
@@ -452,4 +469,67 @@ public class MainActivity extends ActionBarActivity
 
     }
 
+    public void ShowDialog(Context c) {
+
+        final ImageView img = new ImageView(c);
+        //File imgFile = new File(team.getLogotipo());
+        //Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+        //img.setImageBitmap(myBitmap);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        //builder.setView(inflater.inflate(R.layout.dialog_multimedia, null));
+
+        //builder.setTitle("Multimedia");
+
+        builder.setView(img);
+
+        final TextView editImage= new TextView(c);
+        editImage.setText("Publicidade");
+        final TextView editNome = new TextView(c);
+        editNome.setText("Videos");
+       // editNome.setTextSize(14);
+
+
+        final ImageView publicityStop = new ImageView(c);
+        final ImageView publicityPlay = new ImageView(c);
+        final ImageView videosPrevious = new ImageView(c);
+        final ImageView videosPlay = new ImageView(c);
+        final ImageView videosPause = new ImageView(c);
+        final ImageView videosStop = new ImageView(c);
+        final ImageView videosNext = new ImageView(c);
+
+
+        publicityStop.setImageResource(R.drawable.ic_stop_black_24dp);
+        publicityPlay.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
+        videosPrevious.setImageResource(R.drawable.ic_skip_previous_black_24dp);
+        videosPlay.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
+        videosPause.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
+        videosStop.setImageResource(R.drawable.ic_stop_black_24dp);
+        videosNext.setImageResource(R.drawable.ic_skip_next_black_24dp);
+
+        LinearLayout ll=new LinearLayout(c);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        ll.addView(editImage);
+        GridView gridView = new GridView(c);
+        ll.addView(gridView);
+        ll.addView(editNome);
+        builder.setView(ll);
+
+        //Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.show();
+
+    }
+
+
 }
+

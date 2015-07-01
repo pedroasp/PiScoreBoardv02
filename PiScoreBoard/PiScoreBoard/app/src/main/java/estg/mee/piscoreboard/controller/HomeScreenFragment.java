@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -484,5 +486,18 @@ public class HomeScreenFragment extends Fragment{
     void stopClock() {
         clockHandler.removeCallbacks(clockStatusChecker);
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        //super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.global, menu);
+        menu.findItem(R.id.action_multimedia).setVisible(true);
+        //menu.findItem(R.id.action_addPub).setVisible(false);
+        //menu.findItem(R.id.action_addTeams).setVisible(false);
+    }
+
+
+
 
 }
