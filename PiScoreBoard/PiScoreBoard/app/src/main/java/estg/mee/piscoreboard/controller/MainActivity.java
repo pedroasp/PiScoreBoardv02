@@ -43,6 +43,10 @@ import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 //import android.app.ListFragment;
 
+/**
+ * @version 1.0
+ *
+ */
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {

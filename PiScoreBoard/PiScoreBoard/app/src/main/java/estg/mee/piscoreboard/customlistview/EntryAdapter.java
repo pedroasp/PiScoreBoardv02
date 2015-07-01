@@ -27,6 +27,10 @@ import estg.mee.piscoreboard.model.Game;
 import estg.mee.piscoreboard.model.PiScoreBoard;
 import estg.mee.piscoreboard.utils.Async_SFTP;
 
+/**
+ * @version 1.0 13/05/2015
+ *
+ */
 
 public class EntryAdapter extends ArrayAdapter<Item> {
 	private Context context;

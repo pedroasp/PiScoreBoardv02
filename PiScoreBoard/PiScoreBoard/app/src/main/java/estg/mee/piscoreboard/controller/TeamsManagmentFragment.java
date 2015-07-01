@@ -45,7 +45,9 @@ import estg.mee.piscoreboard.utils.ListViewSwipeGesture;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 /**
- * Created by Pedro on 22/05/2015.
+ * @author Pedro Pires
+ * @version 1.0 22/05/2015
+ * Esta class
  */
 public class TeamsManagmentFragment extends Fragment implements Filterable{
 
