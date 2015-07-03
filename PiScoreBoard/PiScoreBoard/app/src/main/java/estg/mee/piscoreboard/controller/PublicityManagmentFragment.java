@@ -12,7 +12,8 @@ import android.support.v4.app.Fragment;
         import android.os.Bundle;
 import android.support.annotation.Nullable;
         import android.text.Editable;
-        import android.text.TextWatcher;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,8 +25,11 @@ import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-        import android.widget.Toast;
+import android.widget.PopupMenu;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -83,6 +87,33 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ShowDetailsDialog(getActivity(), currentGame.getPublictyList().get(position).toString());
+            }
+        });
+
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long l) {
+
+
+                PopupMenu popup = new PopupMenu(getActivity(), view);
+                popup.getMenuInflater().inflate(R.menu.popup_menu_delete, popup.getMenu());
+
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getItemId()) {
+                            case R.id.delete_option:
+
+                                ShowDeleteDialog(getActivity(), position);
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show();//showing popup menu
+                return true;
             }
         });
 
@@ -265,12 +296,16 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
     }
 
     public void ShowDetailsDialog(Context c , String pubPath) {
-
+        Bitmap myBitmap, myScaledBitmap;
         final ImageView img = new ImageView(c);
         File imgFile = new File(pubPath);
-        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+        myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
-        img.setImageBitmap(myBitmap);
+        final float scale = c.getResources().getDisplayMetrics().density;
+        int dpixeis = (int) (100 * scale + 0.5f);
+
+        myScaledBitmap = resize(myBitmap,dpixeis,dpixeis);
+        img.setImageBitmap(myScaledBitmap);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setTitle(getImageName(pubPath));
@@ -283,6 +318,55 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
             public void onClick(DialogInterface dialog, int which) {
             }
         });
+        builder.show();
+
+    }
+
+    private static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+
+        if (maxHeight > 0 && maxWidth > 0) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > 1) {
+                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+            } else {
+                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+            }
+            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return image;
+        } else {
+            return image;
+        }
+    }
+
+    public void ShowDeleteDialog(Context c, final int position) {
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setIcon(R.drawable.ic_delete_black_24dp);
+        builder.setTitle("Remover publicidade");
+        builder.setMessage("Tem a certeza que pretende remover " + getImageName(currentGame.getPublictyList().get(position).toString()) + " da lista de publicidades?");
+
+        //Set up the buttons
+        builder.setNegativeButton("Nao", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                currentGame.getPublictyList().remove(position);
+                onResume();
+                ((MainActivity) getActivity()).saveData();
+            }
+        });
+
         builder.show();
 
     }

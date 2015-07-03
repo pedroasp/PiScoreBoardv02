@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.RectF;
+import android.opengl.Matrix;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,6 +27,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,7 +96,8 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
         final ListViewSwipeGesture touchListener = new ListViewSwipeGesture( lv, swipeListener, getActivity());
         touchListener.SwipeType	=	ListViewSwipeGesture.Double;    //Set two options at background of list item
 
-        lv.setOnTouchListener(touchListener);
+       // lv.setOnTouchListener(touchListener);
+        lv.setClickable(false);
 
     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         @Override
@@ -101,6 +105,40 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
             ShowDetailsDialog(getActivity(), piScoreBoard.getListOfTeams().get(position));
         }
     });
+
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long l) {
+
+
+                PopupMenu popup = new PopupMenu(getActivity(), view);
+                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getItemId()) {
+
+                            case R.id.edit_option:
+                                Object listItem = lv.getItemAtPosition(position);
+
+                                //EditTeamDialog(getActivity(), (Team)listItem);
+                                EditTeamDialog(getActivity(), piScoreBoard.getListOfTeams().get(position));
+                                break;
+                            case R.id.delete_option:
+
+                                ShowDeleteDialog(getActivity(), position);
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show();//showing popup menu
+                return true;
+            }
+        });
         /**
          * Enabling Search Filter
          * */
@@ -245,16 +283,45 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
         return super.onOptionsItemSelected(item);
     }
 
-    public void EditTeamDialog(Context c, String title ) {
+    private static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
 
+        if (maxHeight > 0 && maxWidth > 0) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > 1) {
+                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+            } else {
+                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+            }
+            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return image;
+        } else {
+            return image;
+        }
+    }
+
+    public void EditTeamDialog(Context c, final Team team) {
+        Bitmap myScaledBitmap,myBitmap;
         final ImageView img = new ImageView(c);
-        File imgFile = new File("/storage/sdcard0/DCIM/Camera/football_ball.png");
-        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+        //File imgFile = new File("/storage/sdcard0/DCIM/Camera/football_ball.png");
+        File imgFile = new File(team.getLogotipo());
+        myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
-        img.setImageBitmap(myBitmap);
+        final float scale = c.getResources().getDisplayMetrics().density;
+        int dpixeis = (int) (70 * scale + 0.5f);
+        myScaledBitmap = resize(myBitmap,dpixeis,dpixeis);
+
+
+        //img.setImageBitmap(Bitmap.createScaledBitmap(myBitmap, 100, 100, false));
+        img.setImageBitmap(myScaledBitmap);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
-        builder.setTitle(title);
+        builder.setTitle("Editar equipa");
 
         img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,11 +334,11 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
         editImage.setText("Editar imagem:");
         final TextView editNome = new TextView(c);
         editNome.setText("Editar nome:");
-        editNome.setHint("Benfica");
 
         final EditText input = new EditText(c);
 
         input.setInputType(InputType.TYPE_CLASS_TEXT );
+        input.setHint(team.getName());
 
         LinearLayout ll=new LinearLayout(c);
         ll.setOrientation(LinearLayout.VERTICAL);
@@ -281,11 +348,44 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
         ll.addView(input);
         builder.setView(ll);
 
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), MultiImageSelectorActivity.class);
+
+                intent.putExtra(MultiImageSelectorActivity.EXTRA_FRAGMENT_ID, addTeamID);
+
+                intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, showCamera);
+
+                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, maxNum);
+
+                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
+
+                getActivity().startActivityForResult(intent, MainActivity.getRequestImage());
+
+
+            }
+        });
+
         //Set up the buttons
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if (!input.getText().toString().isEmpty()) {
+                    team.setName(input.getText().toString());
+                    }
 
+                if( MainActivity.newTeamPath!=null) {
+                    team.setLogotipo(MainActivity.newTeamPath);
+                }
+
+                if(!input.getText().toString().isEmpty() || MainActivity.newTeamPath!=null){
+                    onResume();
+                    ((MainActivity) getActivity()).saveData();
+                    onResume();
+                }
+                MainActivity.newTeamPath = null;
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -346,7 +446,7 @@ int actualID = 0;
 
         final EditText input = new EditText(c);
 
-        input.setInputType(InputType.TYPE_CLASS_TEXT );
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
 
         LinearLayout ll=new LinearLayout(c);
         ll.setOrientation(LinearLayout.VERTICAL);
@@ -355,6 +455,7 @@ int actualID = 0;
         ll.addView(editNome);
         ll.addView(input);
         builder.setView(ll);
+
 
         //Set up the buttons
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -366,14 +467,14 @@ int actualID = 0;
                 newTeam.setId(++actualID);
                 newTeam.setModality(piScoreBoard.getListOfModalities().get(0));
                 piScoreBoard.getListOfTeams().add(newTeam);
-<<<<<<< HEAD
+
                 final ArrayList<String> arrayList = new ArrayList<>();
                 final Async_SFTP async_sftp = new Async_SFTP();
                 arrayList.add(newTeam.getLogotipo());
-                async_sftp.uploadLogos(getActivity(),arrayList);
-=======
+                async_sftp.uploadLogos(getActivity(), arrayList);
+
                 ((MainActivity) getActivity()).saveData();
->>>>>>> origin/master
+
                 MainActivity.newTeamPath = null;
                 onResume();
 
@@ -389,12 +490,17 @@ int actualID = 0;
 
     }
     public void ShowDetailsDialog(Context c , Team team) {
-
+        Bitmap myBitmap, myScaledBitmap;
         final ImageView img = new ImageView(c);
         File imgFile = new File(team.getLogotipo());
-        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+        myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
-        img.setImageBitmap(myBitmap);
+        final float scale = c.getResources().getDisplayMetrics().density;
+        int dpixeis = (int) (100 * scale + 0.5f);
+
+        myScaledBitmap = resize(myBitmap,dpixeis,dpixeis);
+
+        img.setImageBitmap(myScaledBitmap);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setTitle(team.getName());
@@ -407,6 +513,33 @@ int actualID = 0;
             public void onClick(DialogInterface dialog, int which) {
             }
         });
+        builder.show();
+
+    }
+
+    public void ShowDeleteDialog(Context c, final int position) {
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setIcon(R.drawable.ic_delete_black_24dp);
+        builder.setTitle("Remover equipa");
+        builder.setMessage("Tem a certeza que pretende remover " + piScoreBoard.getListOfTeams().get(position).getName() + "da lista de equipas?");
+
+        //Set up the buttons
+        builder.setNegativeButton("Nao", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                piScoreBoard.getListOfTeams().remove(position);
+                onResume();
+                ((MainActivity) getActivity()).saveData();
+            }
+        });
+
         builder.show();
 
     }
