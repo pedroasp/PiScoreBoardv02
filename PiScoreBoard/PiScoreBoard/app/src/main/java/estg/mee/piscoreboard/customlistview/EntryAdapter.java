@@ -248,12 +248,14 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                 final TextView title = (TextView) v.findViewById(R.id.list_item_entry_title);
                 final TextView subtitle = (TextView) v.findViewById(R.id.list_item_entry_summary);
                 final TextView actualValue = (TextView) v.findViewById(R.id.list_item_entry_title2);
+                Bitmap myBitmap, myScaledBitmap;
                 ImageView image = (ImageView) v.findViewById(R.id.list_item_entry_drawable);
 
                 if (ei.imagePath != null) {
                     File imgFile = new File(ei.imagePath);
 
                     if (imgFile.exists()) {
+<<<<<<< HEAD
 
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
@@ -267,6 +269,17 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                         image.getLayoutParams().width = pixels;
                         image.setImageBitmap(myBitmap);
 
+=======
+                        //Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+                        myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+                        final float scale = getContext().getResources().getDisplayMetrics().density;
+                        int dpixeis = (int) (40 * scale + 0.5f);
+
+                        myScaledBitmap = resize(myBitmap,dpixeis,dpixeis);
+                        image.setImageBitmap(myScaledBitmap);
+>>>>>>> origin/master
                     }
                 } else {
                     if (ei.imageRId != 0) {
@@ -306,4 +319,26 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 		}
 		return v;
 	}
+
+    private static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+
+        if (maxHeight > 0 && maxWidth > 0) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > 1) {
+                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+            } else {
+                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+            }
+            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return image;
+        } else {
+            return image;
+        }
+    }
 }

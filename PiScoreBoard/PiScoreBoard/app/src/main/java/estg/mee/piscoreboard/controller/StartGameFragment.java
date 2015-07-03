@@ -148,6 +148,10 @@ public class StartGameFragment extends Fragment{
                                     break;
                                 case 3:
                                     currentGame.setEquipaLocal(piScoreBoard.getListOfTeams().get(checkedItem));
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
                                     items.set(position, new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada), currentGame.getEquipaLocal().getName(), currentGame.getEquipaLocal().getLogotipo(), 0));
                                     stringToSend = getActivity().getResources().getString(R.string.LocalName).concat("@" + currentGame.getEquipaLocal().getName() + "@" + "\r\n");
                                     if(currentGame.getEquipaLocal().getLogoName()!=null){
@@ -157,6 +161,11 @@ public class StartGameFragment extends Fragment{
                                     }
 
                                     ((MainActivity) getActivity()).sendCommand(stringToSend, true);
+<<<<<<< HEAD
+=======
+
+                                    items.set(position,new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada), currentGame.getEquipaLocal().getName(), currentGame.getEquipaLocal().getLogotipo(),0));
+>>>>>>> origin/master
                                     //stringToSend = getActivity().getResources().getString(R.string.TimeMode).concat("@crono@");
                                     //((MainActivity) getActivity()).sendCommand(stringToSend,true);
 
