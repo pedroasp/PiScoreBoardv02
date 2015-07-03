@@ -167,9 +167,9 @@ public class MainActivity extends ActionBarActivity
             currentGame.setnVisit(gObject.getnVisit());
             currentGame.setTotalTime(gObject.getTotalTime());
             currentGame.setPart(gObject.getPart());
+            savedStream.close();
+            savedStream.close();
 
-            savedStream.close();
-            savedStream.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -183,6 +183,7 @@ public class MainActivity extends ActionBarActivity
 
         async_sftp.removeAllLogos(this);
         async_sftp.removeAllPubs(this);
+
         final ArrayList<String> arrayList = new ArrayList<>();
         final Async_SFTP async_sftp = new Async_SFTP();
         for (Team logosequipas:piScoreBoard.getListOfTeams()){
@@ -389,6 +390,8 @@ public class MainActivity extends ActionBarActivity
                 switch (id){
                     case 3:
                         currentGame.setPublictyList(data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT));
+                        async_sftp.removeAllPubs(this);
+                        async_sftp.uploadPubs(this, currentGame.getPublictyList());
                         saveData();
                     break;
                     case 5: {

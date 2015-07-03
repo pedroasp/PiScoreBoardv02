@@ -256,17 +256,14 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 
                     if (imgFile.exists()) {
 
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
                         if(((myBitmap.getWidth()*myBitmap.getHeight())>=518400))
                         myBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.image_big_icon);
 
-                        image.requestLayout();
+
                         final float scale = getContext().getResources().getDisplayMetrics().density;
-                        int pixels = (int) (40 * scale + 0.5f);
-                        image.getLayoutParams().height = pixels;
-                        image.getLayoutParams().width = pixels;
-                        image.setImageBitmap(myBitmap);
+
 
                         //Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
