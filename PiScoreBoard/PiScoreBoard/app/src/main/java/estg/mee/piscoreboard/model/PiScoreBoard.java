@@ -12,12 +12,13 @@ import estg.mee.piscoreboard.R;
 
 public class PiScoreBoard implements Serializable {
 
-    boolean TimeMode = true;
+    boolean TimeMode = false;
 
     private ArrayList<Team> listOfTeams=  new ArrayList<Team>();
     private ArrayList<Modality> listOfModalities = new ArrayList<Modality>();
     private static PiScoreBoard instance = null;
     private boolean pubEnable ;
+    private boolean faultsEnable = true ;
     private int pubPeriod;
 
     private String ipAdress = "10.5.5.1";
@@ -25,7 +26,7 @@ public class PiScoreBoard implements Serializable {
     private String password;
 
     public PiScoreBoard() {
-        listOfModalities.add(new Modality(0, 2, 0, "Futsal", R.drawable.football_ball));
+        listOfModalities.add(new Modality(0, 2, 6, "Futsal", R.drawable.football_ball));
         listOfModalities.add(new Modality(1, 4, 0, "Basquetebol",R.drawable.basketball_ball));
         listOfModalities.add(new Modality(2, 2, 0, "Andebol",R.drawable.handball_ball));
     }
@@ -79,6 +80,14 @@ public class PiScoreBoard implements Serializable {
 
     public void setPubEnable(boolean pubEnable) {
         this.pubEnable = pubEnable;
+    }
+
+    public boolean isFaultsEnable() {
+        return faultsEnable;
+    }
+
+    public void setFaultsEnable(boolean faltsEnable) {
+        this.faultsEnable = faltsEnable;
     }
 
     public  ArrayList<Team> getListOfTeams() {

@@ -1,7 +1,9 @@
 package estg.mee.piscoreboard.customlistview;
 
 /**
- * Created by Pedro on 13/05/2015.
+ * @author Pedro Pires
+ * @version 1.0 13/05/2015
+ * Esta class
  */
 public class EntryItemButton implements Item{
 

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#efefef"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:padding="20dp">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Cronómetro"
+        android:id="@+id/dialogChronometer"
+        android:ems="550"/>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="85dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/chronometerReset"
+            android:layout_weight="1"
+            android:src="@drawable/ic_replay_black_24dp"
+            android:textAlignment="center"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/chronometerPlay"
+            android:layout_weight="1"
+            android:src="@drawable/ic_play_arrow_black_24dp"
+            android:textAlignment="center"
+            android:layout_gravity="center" />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/chronometerPause"
+            android:layout_weight="1"
+            android:src="@drawable/ic_pause_black_24dp"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/buttonOK"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="OK" />
+
+</LinearLayout>

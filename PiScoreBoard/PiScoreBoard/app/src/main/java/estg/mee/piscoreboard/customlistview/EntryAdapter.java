@@ -1,8 +1,10 @@
 package estg.mee.piscoreboard.customlistview;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +23,22 @@ import java.util.ArrayList;
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.controller.MainActivity;
 import estg.mee.piscoreboard.model.Colors;
+import estg.mee.piscoreboard.model.Game;
+import estg.mee.piscoreboard.model.PiScoreBoard;
+import estg.mee.piscoreboard.utils.Async_SFTP;
 
+/**
+ * @version 1.0 13/05/2015
+ *
+ */
 
 public class EntryAdapter extends ArrayAdapter<Item> {
 	private Context context;
 	private ArrayList<Item> items;
 	private LayoutInflater vi;
-		
+    Game currentGame = Game.getInstance();
+    PiScoreBoard piScoreBoard = PiScoreBoard.getInstance();
+    Async_SFTP async_sftp = Async_SFTP.getInstance();
 	/**
 	 * Constructor
 	 * @param context
@@ -88,8 +99,22 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 				switch1.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-						// Log.d("TAGX", "Switch " + eisId + " is " + (isChecked ? "on" : "off"));
+						Log.d("TAGX", "Switch " + eisId + " is " + (isChecked ? "on" : "off"));
 						//SettingsFragment.switchOnClick(eisId, isChecked);
+                        String stringToSend;
+                        switch(eisId){
+                            case 1:
+                                piScoreBoard.setFaultsEnable(isChecked);
+                                stringToSend = context.getResources().getString(R.string.FaultsCommand).concat("@"+ (isChecked ? "on" : "off") +"@");
+                                ((MainActivity) context).sendCommand(stringToSend,true);
+                                break;
+                            case 2:
+                                piScoreBoard.setPubEnable(isChecked);
+                                //stringToSend = context.getResources().getString(R.string.Publicity).concat("@"+ (isChecked ? "on" : "off") +"@");
+                                //((MainActivity) context).sendCommand(stringToSend,true);
+                                break;
+
+                        }
 					}
 				});
             } else if (i.isSettings()== 2) {
@@ -138,6 +163,11 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                     public void onClick(View v) {
                         switch (eib.id){
                             case 1:
+                                currentGame.setnLocalFaults(0);
+                                currentGame.setnVisitFaults(0);
+                                currentGame.setnLocal(0);
+                                currentGame.setnVisit(0);
+                                currentGame.setnPart(1);
                                 ArrayList<Colors> ColorsArrayList = new ArrayList<>();
                                 ColorsArrayList.add(MainActivity.graphics.BackgroundCentralColor);
                                 ColorsArrayList.add(MainActivity.graphics.BackgroundSideColor);
@@ -153,8 +183,14 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                                     rgb = "@" + Color.red(colors.getColor()) + "," + Color.green(colors.getColor()) + "," + Color.blue(colors.getColor()) + "@";
                                     stringToSend = stringToSend.concat(colors.getCommand()).concat(rgb+"\r\n");
                                 }
-                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.LocalName)).concat("@"+"Nome"+"@"+"\r\n");
-                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.VisitName)).concat("@"+"Nome"+"@");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.Parts)).concat("@"+currentGame.getnPart()+"@"+"\r\n");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.VisitGoals)).concat("@"+currentGame.getnVisit()+"@"+"\r\n");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.LocalGoals)).concat("@"+currentGame.getnLocal()+"@"+"\r\n");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.LocalFaults)).concat("@"+currentGame.getnLocalFaults()+"@"+"\r\n");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.VisitFaults)).concat("@"+currentGame.getnVisitFaults()+"@"+"\r\n");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.LocalLogo)).concat("@" + async_sftp.getREMOTE_LOGOS_DIR() + "/" + currentGame.getEquipaLocal().getLogoName() + "@"+"\r\n");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.LocalName)).concat("@"+currentGame.getEquipaLocal().getName()+"@"+"\r\n");
+                                stringToSend = stringToSend.concat(context.getResources().getString(R.string.VisitName)).concat("@"+currentGame.getEquipaVisitante().getName()+"@");
                                 //stringToSend = stringToSend.substring(0, stringToSend.length()-2);
                                 MainActivity activity = (MainActivity) context;
                                 activity.sendCommand(stringToSend,true);
@@ -219,15 +255,42 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                     File imgFile = new File(ei.imagePath);
 
                     if (imgFile.exists()) {
+<<<<<<< HEAD
                         //Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
                         myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
                         final float scale = getContext().getResources().getDisplayMetrics().density;
+=======
+<<<<<<< HEAD
+
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+                        if(((myBitmap.getWidth()*myBitmap.getHeight())>=518400))
+                        myBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.image_big_icon);
+
+                        image.requestLayout();
+                        final float scale = getContext().getResources().getDisplayMetrics().density;
+                        int pixels = (int) (40 * scale + 0.5f);
+                        image.getLayoutParams().height = pixels;
+                        image.getLayoutParams().width = pixels;
+                        image.setImageBitmap(myBitmap);
+
+=======
+                        //Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+                        myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+                        final float scale = getContext().getResources().getDisplayMetrics().density;
+>>>>>>> origin/MyWorkbranch
                         int dpixeis = (int) (40 * scale + 0.5f);
 
                         myScaledBitmap = resize(myBitmap,dpixeis,dpixeis);
                         image.setImageBitmap(myScaledBitmap);
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
+>>>>>>> origin/MyWorkbranch
                     }
                 } else {
                     if (ei.imageRId != 0) {

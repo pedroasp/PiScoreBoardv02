@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PiScoreBoard</string>
+    <string name="app_name">HeRo-Pi</string>
 
     <string name="title_section1">Ecrã Principal</string>
     <string name="title_section2">Iniciar Jogo</string>
@@ -13,7 +13,8 @@
     <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
-
+    <string name="action_multimedia">Multimedia</string>
+    <string name="action_chronometer">Chronometer</string>
     <!-- Custom ListView -->
     <string name="contentListDescription">list image</string>
     <!-- QuickToast -->
@@ -56,6 +57,9 @@
     <string name="sectionTemporizacao">Temporização</string>
     <string name="itemTemporizacao">Temporização</string>
     <string name="summaryItemTemporizacao">Selecione um método de temporização</string>
+    <string name="sectionFaltas">Faltas</string>
+    <string name="itemFaltas">Faltas</string>
+    <string name="summaryItemFaltas">Defina o estado das faltas</string>
 
     <string name="sectionColors">Cores</string>
     <string name="itemBackgroundCentralColor">Cor de fundo central</string>
@@ -83,11 +87,14 @@
 
 
     <string name="Faults">FALTAS</string>
-    <string name="sLocalGoals">0</string>
-    <string name="sVisitGoals">0</string>
-    <string name="sLocalFaults">0</string>
-    <string name="sVisitFaults">0</string>
+    <string name="sLocalGoals"></string>
+    <string name="sVisitGoals"></string>
+    <string name="sLocalFaults"></string>
+    <string name="sVisitFaults"></string>
     <string name="sTime">23:53</string>
+    <string name="sPart">ªParte</string>
+    <string name="sLocalName">Local</string>
+    <string name="sVisitName">Visitante</string>
     <string name="edit_message">HELP</string>
 
     <!--                           Commands                                    -->
@@ -103,9 +110,12 @@
     <string name="Shutdown">s_shutdown@lixo@</string>
     <string name="Restart">s_restart@lixo@</string>
     <string name="Publicity">pub</string>
+    <string name="Video">video</string>
+    <string name="FaultsCommand">faltas</string>
     <string name="TimeMode">time</string>
     <string name="SetCrono">setcrono</string>
     <string name="CronoCommands">crono</string>
+    <string name="Parts">gparte</string>
 
 
 
@@ -124,6 +134,9 @@
     <string name="hello_world">Hello world!</string>
 
     <string name="button_label">OK</string>
+
+    <string name="dialog_publicity">Publicidade</string>
+    <string name="dialog_video">Videos</string>
 
     <!--                           Shared Preferences                                   -->
 

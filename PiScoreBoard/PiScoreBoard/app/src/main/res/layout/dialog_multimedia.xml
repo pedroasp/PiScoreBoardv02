@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#efefef"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:padding="20dp">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Publicidade"
+        android:id="@+id/dialogPublicity"
+        android:ems="550"/>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="85dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/publicityPlay"
+            android:layout_weight="1"
+            android:src="@drawable/ic_play_arrow_black_24dp"
+            android:textAlignment="center"
+            android:layout_gravity="center" />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/publicityStop"
+            android:layout_weight="1"
+            android:src="@drawable/ic_stop_black_24dp"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Video"
+        android:id="@+id/dialogVideo" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_weight="0.04">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/videoPrevious"
+            android:layout_weight="1"
+            android:src="@drawable/ic_skip_previous_black_24dp"
+            android:layout_gravity="center" />
+
+
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/videoPause"
+            android:layout_weight="1"
+            android:src="@drawable/ic_pause_black_24dp"
+            android:textAlignment="center"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/videoPlay"
+            android:layout_weight="1"
+            android:src="@drawable/ic_play_arrow_black_24dp"
+            android:textAlignment="center"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/videoStop"
+            android:layout_weight="1"
+            android:src="@drawable/ic_stop_black_24dp"
+            android:textAlignment="center"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/videoNext"
+            android:layout_weight="1"
+            android:src="@drawable/ic_skip_next_black_24dp"
+            android:textAlignment="center"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="OK" />
+
+</LinearLayout>

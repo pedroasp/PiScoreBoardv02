@@ -5,8 +5,6 @@
  */
 package estg.mee.piscoreboard.utils;
 
-import android.os.Environment;
-
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.ChannelSftp.LsEntry;
@@ -16,7 +14,6 @@ import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -98,126 +95,146 @@ public class PyScoreSFTP {
     }
 
     public boolean removeAllFromFolder(String path) {
-
+        boolean output = true;
         try {
-            channelSftp.cd(path);
-            listFiles = channelSftp.ls(path);
-            for (LsEntry entry : listFiles) {
-                if ((entry.getFilename().toLowerCase() != "." || entry.getFilename().toLowerCase() != "..") && entry.getAttrs().isDir() != true) {
-                    channelSftp.rm(entry.getFilename());
+            if (session.isConnected()) {
+                channelSftp.cd(path);
+                listFiles = channelSftp.ls(path);
+                if (!listFiles.isEmpty()) {
+                    for (LsEntry entry : listFiles) {
+                        if ((entry.getFilename().toLowerCase() != "." || entry.getFilename().toLowerCase() != "..") && entry.getAttrs().isDir() != true) {
+                            channelSftp.rm(entry.getFilename());
+
+                        }
+                    }
+
+                }else{
+                    output = false;
                 }
+
+            }else {
+               output = false;
             }
 
-        } catch (SftpException ex) {
-            Logger.getLogger(PyScoreSFTP.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
-        return true;
+            }catch(SftpException ex){
+                Logger.getLogger(PyScoreSFTP.class.getName()).log(Level.SEVERE, null, ex);
+                output = false;
+            }
+        return output;
     }
 
     public boolean upLoadFiles(String remotePath, ArrayList<String> listOfFiles) {
 
 
-        boolean filesChecker = false;
+        boolean output = true;
         ArrayList<String> remoteFilesList = new ArrayList<String>();
 
         try {
+            if (session.isConnected()) {
+                channelSftp.cd(remotePath);
+                remoteFilesList = listFolder(remotePath);
 
-            channelSftp.cd(remotePath);
-            remoteFilesList = listFolder(remotePath);
+                for (String localFileName : listOfFiles) {
 
-            for (String localFileName : listOfFiles) {
+                    for (String remoteFileName : remoteFilesList) {
+                        if (remoteFileName.equalsIgnoreCase(localFileName)) {
 
-                for (String remoteFileName : remoteFilesList) {
-                    if (remoteFileName.equalsIgnoreCase(localFileName)) {
-                        filesChecker = true;
-                        break;
+                            break;
+                        }
                     }
+                    channelSftp.put(localFileName, remotePath);
                 }
-                channelSftp.put(localFileName, remotePath);
-//                if (filesChecker) {
-//                    filesChecker = false;
-//                } else {
-//                    SystemOutProgressMonitor progress = new SystemOutProgressMonitor();
-//                    channelSftp.put(localFileName, remotePath,progress);
-//                  while (!progress.getChecker()) ;
-//                }
+
+            }else{
+                output = false;
             }
 
         } catch (SftpException ex) {
             Logger.getLogger(PyScoreSFTP.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            output = false;
         }
-        return true;
+        return output;
     }
 
 
     public boolean downLoadAllFromFolder(String remoteFolderPath, String localFolderPath) {
+        boolean output = true;
         try {
-            channelSftp.cd(remoteFolderPath);
-            listFiles = channelSftp.ls(remoteFolderPath);
+            if(session.isConnected()){
+                channelSftp.cd(remoteFolderPath);
+                listFiles = channelSftp.ls(remoteFolderPath);
 
-            for (LsEntry entry : listFiles) {
-                if ((entry.getFilename().toLowerCase() != "." || entry.getFilename().toLowerCase() != "..") && entry.getAttrs().isDir() != true) {
-                    if (!localFolderContains(localFolderPath, entry.getFilename()))
-                        while (!localFolderContains(localFolderPath, entry.getFilename()))
-                            channelSftp.get(entry.getFilename(), localFolderPath);
+                for (LsEntry entry : listFiles) {
+                    if ((entry.getFilename().toLowerCase() != "." || entry.getFilename().toLowerCase() != "..") && entry.getAttrs().isDir() != true) {
+                        if (!localFolderContains(localFolderPath, entry.getFilename()))
+                            while (!localFolderContains(localFolderPath, entry.getFilename()))
+                                channelSftp.get(entry.getFilename(), localFolderPath);
+                    }
                 }
+            }else{
+                output = false;
             }
+
         } catch (SftpException ex) {
             Logger.getLogger(PyScoreSFTP.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            output = false;
         }
-        return true;
+        return output;
     }
 
 
     public boolean downLoadSingleFile(String remoteFolderPath, String localFolderPath, String fileName) {
         ArrayList<String> listOfFiles = new ArrayList<>();
+        boolean output = true;
         try {
+            if (session.isConnected()) {
+                channelSftp.cd(remoteFolderPath);
+                listFiles = channelSftp.ls(remoteFolderPath);
 
-            channelSftp.cd(remoteFolderPath);
-            listFiles = channelSftp.ls(remoteFolderPath);
-
-            for (LsEntry entry : listFiles) {
-                if (entry.getFilename().equalsIgnoreCase(fileName)) {
-                    if (!localFolderContains(localFolderPath, fileName))
-                        while (!localFolderContains(localFolderPath, fileName))
-                            channelSftp.get(entry.getFilename(), localFolderPath);
+                for (LsEntry entry : listFiles) {
+                    if (entry.getFilename().equalsIgnoreCase(fileName)) {
+                        if (!localFolderContains(localFolderPath, fileName))
+                            while (!localFolderContains(localFolderPath, fileName))
+                                channelSftp.get(entry.getFilename(), localFolderPath);
+                    }
                 }
+            }else{
+                output = false;
             }
+
         } catch (SftpException ex) {
             Logger.getLogger(PyScoreSFTP.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+             output = false;
         }
-        return true;
+        return output;
     }
 
     public boolean CheckIfFileExists(String path, String name) {
-
+        boolean output = true;
         ArrayList<String> listOfFiles = new ArrayList<>();
         try {
-            channelSftp.cd(path);
-            listFiles = channelSftp.ls(path);
+            if(session.isConnected()){
+                channelSftp.cd(path);
+                listFiles = channelSftp.ls(path);
 
-            for (LsEntry entry : listFiles) {
-                if ((entry.getFilename().toLowerCase() != "." || entry.getFilename().toLowerCase() != "..") && entry.getAttrs().isDir() != true) {
-                    if (entry.getFilename().equalsIgnoreCase(name)) {
-                        return true;
+                for (LsEntry entry : listFiles) {
+                    if ((entry.getFilename().toLowerCase() != "." || entry.getFilename().toLowerCase() != "..") && entry.getAttrs().isDir() != true) {
+                        if (entry.getFilename().equalsIgnoreCase(name)) {
+
+                        }
                     }
                 }
             }
         } catch (SftpException ex) {
             Logger.getLogger(PyScoreSFTP.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            output = false;
         }
-        return false;
+        return output;
     }
 
 
     private ArrayList<String> getLocalFilesList(String localFolderPath) {
         ArrayList<String> pathsOfSelectedFiles = new ArrayList<String>();
-
 
         File f = new File(localFolderPath);
         File filesList[] = f.listFiles();

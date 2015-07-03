@@ -8,6 +8,17 @@
         android:orderInCategory="9999"
         app:showAsAction="ifRoom" />
 
+    <item android:id="@+id/action_chronometer"
+        android:title="@string/action_chronometer"
+        android:icon="@drawable/ic_access_time_black_24dp"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/action_multimedia"
+        android:title="@string/action_multimedia"
+        android:icon="@drawable/ic_slideshow_black_48dp"
+        app:showAsAction="ifRoom" />
+
+
 
     <!--<item android:id="@+id/action_add"-->
         <!--android:title="Add"-->

@@ -27,12 +27,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.model.Game;
 import estg.mee.piscoreboard.model.Graphics;
 import estg.mee.piscoreboard.model.PiScoreBoard;
+import estg.mee.piscoreboard.model.Team;
+import estg.mee.piscoreboard.utils.Async_SFTP;
 import estg.mee.piscoreboard.utils.ClientSendThread;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
@@ -40,6 +43,10 @@ import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 //import android.app.ListFragment;
 
+/**
+ * @version 1.0
+ *
+ */
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -68,7 +75,7 @@ public class MainActivity extends ActionBarActivity
     public static String newTeamPath;
 
     PiScoreBoard piScoreBoard = PiScoreBoard.getInstance();
-
+    Async_SFTP async_sftp = Async_SFTP.getInstance();
     private PiScoreBoard dObject = new PiScoreBoard();
 
     Game currentGame = Game.getInstance();
@@ -173,6 +180,17 @@ public class MainActivity extends ActionBarActivity
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        async_sftp.removeAllLogos(this);
+        async_sftp.removeAllPubs(this);
+        final ArrayList<String> arrayList = new ArrayList<>();
+        final Async_SFTP async_sftp = new Async_SFTP();
+        for (Team logosequipas:piScoreBoard.getListOfTeams()){
+            arrayList.add(logosequipas.getLogotipo());
+        }
+        async_sftp.uploadLogos(this,arrayList);
+        async_sftp.uploadPubs(this,currentGame.getPublictyList());
+
         Calendar sysTime = Calendar.getInstance();
         String stringToSend;
         stringToSend = getResources().getString(R.string.SetClock).concat("@"+String.valueOf(sysTime.get(Calendar.YEAR))+"-"+String.valueOf(sysTime.get(Calendar.MONTH))+"-"+String.valueOf(sysTime.get(Calendar.DAY_OF_MONTH))+","+String.valueOf(sysTime.get(Calendar.HOUR))+":" + String.valueOf(sysTime.get(Calendar.MINUTE)) + ":" + String.valueOf(sysTime.get(Calendar.SECOND)) + "@" + "\r\n");
@@ -189,8 +207,10 @@ public class MainActivity extends ActionBarActivity
 
         switch (position){
             case 0:
-                objFragment = new HomeScreenFragment();
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                objFragment = new HomeScreenFragment();
+
+
                 break;
             case 1:
                 objFragment = new StartGameFragment();
@@ -263,15 +283,30 @@ public class MainActivity extends ActionBarActivity
             // Respond to the action bar's Up/Home button
             case R.id.action_home:
 
-                Toast.makeText(this, "Go hard or go home!", Toast.LENGTH_SHORT).show();
                 objFragment = new HomeScreenFragment();
                 fragmentManager.beginTransaction().replace(R.id.container, objFragment).commit();
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 return true;
+            case R.id.action_multimedia:
+                MultimediaDialogFragment newFragment = new MultimediaDialogFragment();
+               // newFragment.show(this.getFragmentManager(), "multimediadialog");
+                //newFragment.mListener = MainActivity.this;
+                //newFragment.text = mTextView.getText().toString();
+                newFragment.show(getFragmentManager(), "");
+
+                //ShowDialog(this);
+                return true;
+
+            case R.id.action_chronometer:
+                ChronometerDialogFragment FragmentChronometer = new ChronometerDialogFragment();
+                FragmentChronometer.show(getFragmentManager(),"");
+                return true;
+
 
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     /**
      * A placeholder fragment containing a simple view.
@@ -433,4 +468,67 @@ public class MainActivity extends ActionBarActivity
 
     }
 
+   /* public void ShowDialog(Context c) {
+
+        final ImageView img = new ImageView(c);
+        //File imgFile = new File(team.getLogotipo());
+        //Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+        //img.setImageBitmap(myBitmap);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        //builder.setView(inflater.inflate(R.layout.dialog_multimedia, null));
+
+        //builder.setTitle("Multimedia");
+
+        builder.setView(img);
+
+        final TextView editImage= new TextView(c);
+        editImage.setText("Publicidade");
+        final TextView editNome = new TextView(c);
+        editNome.setText("Videos");
+       // editNome.setTextSize(14);
+
+
+  *//*      final ImageView publicityStop = new ImageView(c);
+        final ImageView publicityPlay = new ImageView(c);
+        final ImageView videosPrevious = new ImageView(c);
+        final ImageView videosPlay = new ImageView(c);
+        final ImageView videosPause = new ImageView(c);
+        final ImageView videosStop = new ImageView(c);
+        final ImageView videosNext = new ImageView(c);
+
+
+        publicityStop.setImageResource(R.drawable.ic_stop_black_24dp);
+        publicityPlay.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
+        videosPrevious.setImageResource(R.drawable.ic_skip_previous_black_24dp);
+        videosPlay.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
+        videosPause.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
+        videosStop.setImageResource(R.drawable.ic_stop_black_24dp);
+        videosNext.setImageResource(R.drawable.ic_skip_next_black_24dp);*//*
+
+        LinearLayout ll=new LinearLayout(c);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        ll.addView(editImage);
+        GridView gridView = new GridView(c);
+        ll.addView(gridView);
+        ll.addView(editNome);
+        builder.setView(ll);
+
+        //Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.show();
+
+    }*/
+
+
 }
+

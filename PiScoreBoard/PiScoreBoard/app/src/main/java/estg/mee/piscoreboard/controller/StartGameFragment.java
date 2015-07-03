@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -149,13 +148,31 @@ public class StartGameFragment extends Fragment{
                                     break;
                                 case 3:
                                     currentGame.setEquipaLocal(piScoreBoard.getListOfTeams().get(checkedItem));
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
+>>>>>>> origin/MyWorkbranch
                                     items.set(position, new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada), currentGame.getEquipaLocal().getName(), currentGame.getEquipaLocal().getLogotipo(), 0));
                                     stringToSend = getActivity().getResources().getString(R.string.LocalName).concat("@" + currentGame.getEquipaLocal().getName() + "@" + "\r\n");
-                                    stringToSend = stringToSend.concat(getActivity().getResources().getString(R.string.LocalLogo)).concat("@" + async_sftp.getREMOTE_LOGOS_DIR() + "/" + currentGame.getEquipaLocal().getLogoName() + "@");
+                                    if(currentGame.getEquipaLocal().getLogoName()!=null){
+                                        stringToSend = stringToSend.concat(getActivity().getResources().getString(R.string.LocalLogo)).concat("@" + async_sftp.getREMOTE_LOGOS_DIR() + "/" + currentGame.getEquipaLocal().getLogoName() + "@");
+                                    }else{
+                                        stringToSend = stringToSend.concat(getActivity().getResources().getString(R.string.LocalLogo)).concat("@" + "null" + "@");
+                                    }
+
                                     ((MainActivity) getActivity()).sendCommand(stringToSend, true);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> origin/MyWorkbranch
 
                                     items.set(position,new EntryItem(getResources().getString(R.string.itemEquipaVisitada), getResources().getString(R.string.summaryitemEquipaVisitada), currentGame.getEquipaLocal().getName(), currentGame.getEquipaLocal().getLogotipo(),0));
+>>>>>>> origin/master
                                     //stringToSend = getActivity().getResources().getString(R.string.TimeMode).concat("@crono@");
                                     //((MainActivity) getActivity()).sendCommand(stringToSend,true);
 

@@ -62,10 +62,15 @@ public class Team implements Serializable{
 
     public String getLogoName(){
 
-        int index = logotipo.lastIndexOf('/');
+        if(logotipo != null){
+            int index = logotipo.lastIndexOf('/');
 
-        String name = logotipo.substring(index+1,logotipo.length());
+            String name = logotipo.substring(index+1,logotipo.length());
 
-        return name;
+            return name;
+        }else{
+            return null;
+        }
+
     }
 }

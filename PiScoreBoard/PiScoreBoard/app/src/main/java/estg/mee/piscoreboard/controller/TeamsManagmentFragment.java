@@ -6,8 +6,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+<<<<<<< HEAD
 import android.graphics.RectF;
 import android.opengl.Matrix;
+=======
+<<<<<<< HEAD
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+=======
+import android.graphics.RectF;
+import android.opengl.Matrix;
+>>>>>>> origin/master
+>>>>>>> origin/MyWorkbranch
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -46,7 +56,9 @@ import estg.mee.piscoreboard.utils.ListViewSwipeGesture;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 /**
- * Created by Pedro on 22/05/2015.
+ * @author Pedro Pires
+ * @version 1.0 22/05/2015
+ * Esta class
  */
 public class TeamsManagmentFragment extends Fragment implements Filterable{
 
@@ -315,8 +327,13 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
         final float scale = c.getResources().getDisplayMetrics().density;
         int dpixeis = (int) (70 * scale + 0.5f);
         myScaledBitmap = resize(myBitmap,dpixeis,dpixeis);
+<<<<<<< HEAD
 
 
+=======
+
+
+>>>>>>> origin/MyWorkbranch
         //img.setImageBitmap(Bitmap.createScaledBitmap(myBitmap, 100, 100, false));
         img.setImageBitmap(myScaledBitmap);
 
@@ -404,7 +421,6 @@ int actualID = 0;
         else
             actualID = 0;
 
-
         Team novaEquipa = new Team();
         final ImageView img = new ImageView(c);
         if(MainActivity.newTeamPath == null) {
@@ -412,7 +428,9 @@ int actualID = 0;
         }else{
             File imgFile = new File(MainActivity.newTeamPath);
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            img.setImageBitmap(myBitmap);
+            Drawable drawable = new BitmapDrawable(getResources(), myBitmap);
+            //img.setImageBitmap(myBitmap);
+            img.setImageDrawable(drawable);
         }
 
 
@@ -452,6 +470,11 @@ int actualID = 0;
         ll.setOrientation(LinearLayout.VERTICAL);
         ll.addView(editImage);
         ll.addView(img);
+        img.requestLayout();
+        final float scale = c.getResources().getDisplayMetrics().density;
+        int pixels = (int) (40 * scale + 0.5f);
+        img.getLayoutParams().height = pixels;
+        img.getLayoutParams().width = pixels;
         ll.addView(editNome);
         ll.addView(input);
         builder.setView(ll);
@@ -471,11 +494,23 @@ int actualID = 0;
                 final ArrayList<String> arrayList = new ArrayList<>();
                 final Async_SFTP async_sftp = new Async_SFTP();
                 arrayList.add(newTeam.getLogotipo());
+<<<<<<< HEAD
+=======
+                async_sftp.uploadLogos(getActivity(),arrayList);
+                ((MainActivity) getActivity()).saveData();
+                //MainActivity.newTeamPath = null;
+=======
+
+                final ArrayList<String> arrayList = new ArrayList<>();
+                final Async_SFTP async_sftp = new Async_SFTP();
+                arrayList.add(newTeam.getLogotipo());
+>>>>>>> origin/MyWorkbranch
                 async_sftp.uploadLogos(getActivity(), arrayList);
 
                 ((MainActivity) getActivity()).saveData();
 
                 MainActivity.newTeamPath = null;
+>>>>>>> origin/master
                 onResume();
 
 
@@ -517,6 +552,11 @@ int actualID = 0;
 
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> origin/MyWorkbranch
     public void ShowDeleteDialog(Context c, final int position) {
 
 
@@ -543,4 +583,8 @@ int actualID = 0;
         builder.show();
 
     }
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
+>>>>>>> origin/MyWorkbranch
 }
