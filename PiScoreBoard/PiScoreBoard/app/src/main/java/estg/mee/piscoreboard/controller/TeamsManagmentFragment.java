@@ -6,13 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-<<<<<<< HEAD
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-=======
 import android.graphics.RectF;
 import android.opengl.Matrix;
->>>>>>> origin/master
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -480,24 +477,13 @@ int actualID = 0;
                 newTeam.setId(++actualID);
                 newTeam.setModality(piScoreBoard.getListOfModalities().get(0));
                 piScoreBoard.getListOfTeams().add(newTeam);
-<<<<<<< HEAD
                 final ArrayList<String> arrayList = new ArrayList<>();
                 final Async_SFTP async_sftp = new Async_SFTP();
                 arrayList.add(newTeam.getLogotipo());
                 async_sftp.uploadLogos(getActivity(),arrayList);
                 ((MainActivity) getActivity()).saveData();
                 //MainActivity.newTeamPath = null;
-=======
-
-                final ArrayList<String> arrayList = new ArrayList<>();
-                final Async_SFTP async_sftp = new Async_SFTP();
-                arrayList.add(newTeam.getLogotipo());
-                async_sftp.uploadLogos(getActivity(), arrayList);
-
-                ((MainActivity) getActivity()).saveData();
-
                 MainActivity.newTeamPath = null;
->>>>>>> origin/master
                 onResume();
 
 
@@ -539,8 +525,6 @@ int actualID = 0;
 
     }
 
-<<<<<<< HEAD
-=======
     public void ShowDeleteDialog(Context c, final int position) {
 
 
@@ -567,5 +551,4 @@ int actualID = 0;
         builder.show();
 
     }
->>>>>>> origin/master
 }

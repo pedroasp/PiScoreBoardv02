@@ -255,7 +255,6 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                     File imgFile = new File(ei.imagePath);
 
                     if (imgFile.exists()) {
-<<<<<<< HEAD
 
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
@@ -269,17 +268,15 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                         image.getLayoutParams().width = pixels;
                         image.setImageBitmap(myBitmap);
 
-=======
                         //Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
                         myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
-                        final float scale = getContext().getResources().getDisplayMetrics().density;
+
                         int dpixeis = (int) (40 * scale + 0.5f);
 
                         myScaledBitmap = resize(myBitmap,dpixeis,dpixeis);
                         image.setImageBitmap(myScaledBitmap);
->>>>>>> origin/master
                     }
                 } else {
                     if (ei.imageRId != 0) {
