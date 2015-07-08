@@ -1,6 +1,7 @@
 package estg.mee.piscoreboard.controller;
 
 //import android.app.Fragment;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -13,10 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,7 @@ public class SettingsFragment extends Fragment {
     ArrayList<Item> items;
     ListView settingsList;
     EntryAdapter adapter;
+    String message;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -220,7 +222,7 @@ public class SettingsFragment extends Fragment {
                 })
 
 // Set the action buttons
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
 // User clicked OK, so save the result somewhere
@@ -247,7 +249,7 @@ public class SettingsFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
 
@@ -322,32 +324,42 @@ public class SettingsFragment extends Fragment {
     public void OnCreateNumberPicker(Context c, String title)
     {
 
-        final Dialog d = new Dialog(c);
-        d.setTitle(title);
-        d.setContentView(R.layout.layout_numberpicker);
-        Button b1 = (Button) d.findViewById(R.id.button1);
-        Button b2 = (Button) d.findViewById(R.id.button2);
-        final NumberPicker np = (NumberPicker) d.findViewById(R.id.numberPicker1);
-        np.setMaxValue(100);
-        np.setMinValue(0);
-        np.setWrapSelectorWheel(false);
-        b1.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                //tv.setText(String.valueOf(np.getValue()));
-                d.dismiss();
-            }
-        });
-        b2.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                d.dismiss();
-            }
-        });
+        RelativeLayout linearLayout = new RelativeLayout(c);
+        final NumberPicker aNumberPicker = new NumberPicker(c);
+        aNumberPicker.setMaxValue(100);
+        aNumberPicker.setMinValue(1);
 
-        d.show();
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
+        RelativeLayout.LayoutParams numPickerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        numPickerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+        linearLayout.setLayoutParams(params);
+        linearLayout.addView(aNumberPicker,numPickerParams);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(c);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder.setView(linearLayout);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                message = getString(R.string.PublicityTime).concat("@" + aNumberPicker.getValue() + "@");
+                                ((MainActivity) getActivity()).sendCommand(message, true);
+                                //Log.e("", "New Quantity Value : " + aNumberPicker.getValue());
+
+                            }
+                        })
+                .setNegativeButton("Cancelar",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
 
     }
 

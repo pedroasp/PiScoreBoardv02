@@ -81,6 +81,7 @@ public class MainActivity extends ActionBarActivity
     Game currentGame = Game.getInstance();
 
     private Game gObject = new Game();
+    private Graphics hObject = new Graphics(this);
 
 
     public static int getRequestImage() {
@@ -181,10 +182,38 @@ public class MainActivity extends ActionBarActivity
             e.printStackTrace();
         }
 
+
+//        try {
+//            FileInputStream fIn = openFileInput("Graphics.txt");
+//            ObjectInputStream savedStream = new ObjectInputStream(fIn);
+//
+//            hObject = (Graphics)savedStream.readObject();
+//            graphics.setTimeColor(hObject.getTimeColor());
+//            graphics.setBackgroundCentralColor(hObject.getBackgroundCentralColor());
+//            graphics.setPartColor(hObject.getPartColor());
+//            graphics.setFaultColor(hObject.getFaultColor());
+//            graphics.setNamesColor(hObject.getNamesColor());
+//            graphics.setBackgroundSideColor(hObject.getBackgroundSideColor());
+//            graphics.setResultColor(hObject.getResultColor());
+//
+//            savedStream.close();
+//            savedStream.close();
+//
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (StreamCorruptedException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+
         async_sftp.removeAllLogos(this);
         async_sftp.removeAllPubs(this);
 
-        final ArrayList<String> arrayList = new ArrayList<>();
+        final ArrayList<String> arrayList = new ArrayList<String>();
         final Async_SFTP async_sftp = new Async_SFTP();
         for (Team logosequipas:piScoreBoard.getListOfTeams()){
             arrayList.add(logosequipas.getLogotipo());
@@ -194,10 +223,10 @@ public class MainActivity extends ActionBarActivity
 
         Calendar sysTime = Calendar.getInstance();
         String stringToSend;
-        stringToSend = getResources().getString(R.string.SetClock).concat("@"+String.valueOf(sysTime.get(Calendar.YEAR))+"-"+String.valueOf(sysTime.get(Calendar.MONTH))+"-"+String.valueOf(sysTime.get(Calendar.DAY_OF_MONTH))+","+String.valueOf(sysTime.get(Calendar.HOUR))+":" + String.valueOf(sysTime.get(Calendar.MINUTE)) + ":" + String.valueOf(sysTime.get(Calendar.SECOND)) + "@" + "\r\n");
-        stringToSend = stringToSend.concat(stringToSend).concat(stringToSend).concat(stringToSend).concat(stringToSend);
-        stringToSend = stringToSend.substring(0, stringToSend.length()-2);
-       // sendCommand(stringToSend,true);
+        stringToSend = getResources().getString(R.string.SetClock).concat("@"+String.valueOf(sysTime.get(Calendar.HOUR_OF_DAY))+":" + String.valueOf(sysTime.get(Calendar.MINUTE)) + ":" + String.valueOf(sysTime.get(Calendar.SECOND))+"@" + "\r\n");
+        //stringToSend = stringToSend.concat(stringToSend).concat(stringToSend).concat(stringToSend).concat(stringToSend);
+        //stringToSend = stringToSend.substring(0, stringToSend.length()-2);
+        sendCommand(stringToSend,true);
 
 //@2011-12-07,12:12:12@
     }
@@ -439,6 +468,22 @@ public class MainActivity extends ActionBarActivity
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+//        try{
+//            FileOutputStream savefile = openFileOutput("Graphics.txt", MODE_WORLD_READABLE);
+//            ObjectOutputStream saveStream = new ObjectOutputStream(savefile);
+//            saveStream.writeObject(graphics);
+//
+//            saveStream.flush();
+//            savefile.flush();
+//            saveStream.close();
+//            savefile.close();
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override

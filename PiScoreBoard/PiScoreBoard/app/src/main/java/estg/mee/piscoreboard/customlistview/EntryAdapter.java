@@ -21,10 +21,12 @@ import java.io.File;
 import java.util.ArrayList;
 
 import estg.mee.piscoreboard.R;
+import estg.mee.piscoreboard.controller.HomeScreenFragment;
 import estg.mee.piscoreboard.controller.MainActivity;
 import estg.mee.piscoreboard.model.Colors;
 import estg.mee.piscoreboard.model.Game;
 import estg.mee.piscoreboard.model.PiScoreBoard;
+import estg.mee.piscoreboard.model.Team;
 import estg.mee.piscoreboard.utils.Async_SFTP;
 
 /**
@@ -168,7 +170,7 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                                 currentGame.setnLocal(0);
                                 currentGame.setnVisit(0);
                                 currentGame.setnPart(1);
-                                ArrayList<Colors> ColorsArrayList = new ArrayList<>();
+                                ArrayList<Colors> ColorsArrayList = new ArrayList<Colors>();
                                 ColorsArrayList.add(MainActivity.graphics.BackgroundCentralColor);
                                 ColorsArrayList.add(MainActivity.graphics.BackgroundSideColor);
                                 ColorsArrayList.add(MainActivity.graphics.FaultColor);
@@ -192,10 +194,9 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                                 stringToSend = stringToSend.concat(context.getResources().getString(R.string.LocalName)).concat("@"+currentGame.getEquipaLocal().getName()+"@"+"\r\n");
                                 stringToSend = stringToSend.concat(context.getResources().getString(R.string.VisitName)).concat("@"+currentGame.getEquipaVisitante().getName()+"@");
                                 //stringToSend = stringToSend.substring(0, stringToSend.length()-2);
-                                MainActivity activity = (MainActivity) context;
-                                activity.sendCommand(stringToSend,true);
+                                ((MainActivity) context).sendCommand(stringToSend,true);
                                 ColorsArrayList.clear();
-
+                                ((MainActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeScreenFragment()).commit();
                                 break;
 
                         }
@@ -221,8 +222,19 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                        switch(eitb.id1){
                            case 2:
                                stringToSend = context.getResources().getString(R.string.Shutdown);
-                               MainActivity activity = (MainActivity) context;
-                               activity.sendCommand(stringToSend,true);
+                               ((MainActivity) context).sendCommand(stringToSend,true);
+                               Team equipaLocal = new Team();
+                               Team equipaVisitante = new Team();
+                               equipaLocal.setName("Local");
+                               equipaVisitante.setName("Visitante");
+                               currentGame.setEquipaLocal(equipaLocal);
+                               currentGame.setEquipaVisitante(equipaVisitante);
+                               currentGame.setnPart(1);
+                               currentGame.setnLocal(0);
+                               currentGame.setnVisit(0);
+                               currentGame.setnVisitFaults(0);
+                               currentGame.setnLocalFaults(0);
+                               ((MainActivity) context).saveData();
                                break;
                        }
                    }
@@ -235,8 +247,7 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                         switch (eitb.id2){
                             case 3:
                                 stringToSend = context.getResources().getString(R.string.Restart);
-                                MainActivity activity = (MainActivity) context;
-                                activity.sendCommand(stringToSend,true);
+                                ((MainActivity) context).sendCommand(stringToSend,true);
                                 break;
                         }
                     }

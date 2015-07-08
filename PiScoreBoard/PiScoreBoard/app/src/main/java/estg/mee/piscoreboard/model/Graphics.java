@@ -3,6 +3,7 @@ package estg.mee.piscoreboard.model;
 import android.content.Context;
 import android.graphics.Color;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -13,9 +14,9 @@ import estg.mee.piscoreboard.controller.MainActivity;
  * @version 1.0 27/05/2015
  * Contém todos os dados relativos ao ambiente gráfico da aplicação do raspberry-pi
  */
-public class Graphics {
+public class Graphics implements Serializable {
 
-    public Colors BackgroundCentralColor = new Colors(Color.MAGENTA,"gcentralbgcolor");
+    public Colors BackgroundCentralColor = new Colors(Color.RED,"gcentralbgcolor");
     public Colors BackgroundSideColor = new Colors(Color.WHITE,"gsidesbgcolor");
     public Colors ResultColor  = new Colors(Color.BLACK,"grColor");
     public Colors FaultColor  = new Colors(Color.BLACK,"gfColor");

@@ -5,14 +5,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v4.app.Fragment;
-        import android.os.Bundle;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
-        import android.text.Editable;
-import android.text.InputType;
+import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,24 +23,20 @@ import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.customlistview.EntryAdapter;
 import estg.mee.piscoreboard.customlistview.EntryItem;
-        import estg.mee.piscoreboard.customlistview.Item;
-        import estg.mee.piscoreboard.model.Game;
-import estg.mee.piscoreboard.model.Team;
+import estg.mee.piscoreboard.customlistview.Item;
+import estg.mee.piscoreboard.model.Game;
+import estg.mee.piscoreboard.utils.Async_SFTP;
 import estg.mee.piscoreboard.utils.ListViewSwipeGesture;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
@@ -64,7 +58,7 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
     ArrayList<Item> items = new ArrayList<Item>();
 
     Game currentGame = Game.getInstance();
-
+    Async_SFTP async_sftp = Async_SFTP.getInstance();
 
     @Nullable
     @Override
@@ -170,6 +164,16 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
 
         return name;
     }
+
+    private String getImage(String imagePath){
+
+        int index = imagePath.lastIndexOf('/');
+
+        String name = imagePath.substring(index+1,imagePath.length());
+
+        return name;
+    }
+
 
     ListViewSwipeGesture.TouchCallbacks swipeListener = new ListViewSwipeGesture.TouchCallbacks() {
 
@@ -344,7 +348,7 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
         }
     }
 
-    public void ShowDeleteDialog(Context c, final int position) {
+    public void ShowDeleteDialog(final Context c, final int position) {
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
@@ -361,6 +365,7 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
         builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                async_sftp.removePub(c,getImage(currentGame.getPublictyList().get(position).toString()));
                 currentGame.getPublictyList().remove(position);
                 onResume();
                 ((MainActivity) getActivity()).saveData();

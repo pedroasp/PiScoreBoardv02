@@ -84,7 +84,8 @@ public class MultimediaDialogFragment extends DialogFragment {
         videoNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                message = getString(R.string.Video).concat("@"+ "next" +"@");
+                ((MainActivity) getActivity()).sendCommand(message, true);
             }
         });
         videoPause.setOnClickListener(new View.OnClickListener() {
@@ -97,8 +98,16 @@ public class MultimediaDialogFragment extends DialogFragment {
         videoPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                message = getString(R.string.Video).concat("@"+ "start" +"@");
-                ((MainActivity) getActivity()).sendCommand(message, true);
+                if(!piScoreBoard.isVideoState()) {
+                    message = getString(R.string.Video).concat("@" + "start" + "@");
+                    ((MainActivity) getActivity()).sendCommand(message, true);
+                    piScoreBoard.setVideoState(true);
+                }else{
+                    message = getString(R.string.Video).concat("@" + "pause" + "@");
+                    ((MainActivity) getActivity()).sendCommand(message, true);
+                }
+
+
             }
         });
         videoStop.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +115,7 @@ public class MultimediaDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 message = getString(R.string.Video).concat("@"+ "stop" +"@");
                 ((MainActivity) getActivity()).sendCommand(message, true);
+                piScoreBoard.setVideoState(false);
             }
         });
         publicityPlay.setOnClickListener(new View.OnClickListener() {

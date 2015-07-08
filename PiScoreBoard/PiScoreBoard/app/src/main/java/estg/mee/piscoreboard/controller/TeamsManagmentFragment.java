@@ -41,6 +41,7 @@ import estg.mee.piscoreboard.R;
 import estg.mee.piscoreboard.customlistview.EntryAdapter;
 import estg.mee.piscoreboard.customlistview.EntryItem;
 import estg.mee.piscoreboard.customlistview.Item;
+import estg.mee.piscoreboard.model.Game;
 import estg.mee.piscoreboard.model.PiScoreBoard;
 import estg.mee.piscoreboard.model.Team;
 import estg.mee.piscoreboard.utils.Async_SFTP;
@@ -55,8 +56,8 @@ import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 public class TeamsManagmentFragment extends Fragment implements Filterable{
 
     private View rootView = null;
-
-
+    String stringToSend;
+    Game currentGame = Game.getInstance();
     EntryAdapter adapter;
     // List view
     private ListView lv;
@@ -309,7 +310,7 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
         }
     }
 
-    public void EditTeamDialog(Context c, final Team team) {
+    public void EditTeamDialog(final Context c, final Team team) {
         Bitmap myScaledBitmap,myBitmap;
         final ImageView img = new ImageView(c);
         //File imgFile = new File("/storage/sdcard0/DCIM/Camera/football_ball.png");
@@ -378,7 +379,8 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
             public void onClick(DialogInterface dialog, int which) {
                 if (!input.getText().toString().isEmpty()) {
                     team.setName(input.getText().toString());
-                    }
+
+                 }
 
                 if( MainActivity.newTeamPath!=null) {
                     team.setLogotipo(MainActivity.newTeamPath);
