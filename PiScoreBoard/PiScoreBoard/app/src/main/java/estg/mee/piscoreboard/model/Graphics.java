@@ -14,9 +14,15 @@ import estg.mee.piscoreboard.controller.MainActivity;
  * @version 1.0 27/05/2015
  * Contém todos os dados relativos ao ambiente gráfico da aplicação do raspberry-pi
  */
+<<<<<<< HEAD
 public class Graphics implements Serializable {
 
     public Colors BackgroundCentralColor = new Colors(Color.RED,"gcentralbgcolor");
+=======
+public class Graphics {
+
+    public Colors BackgroundCentralColor = new Colors(Color.MAGENTA,"gcentralbgcolor");
+>>>>>>> origin/master
     public Colors BackgroundSideColor = new Colors(Color.WHITE,"gsidesbgcolor");
     public Colors ResultColor  = new Colors(Color.BLACK,"grColor");
     public Colors FaultColor  = new Colors(Color.BLACK,"gfColor");

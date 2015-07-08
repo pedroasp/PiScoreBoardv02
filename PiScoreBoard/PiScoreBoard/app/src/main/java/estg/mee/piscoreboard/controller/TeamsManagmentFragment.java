@@ -6,10 +6,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+<<<<<<< HEAD
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.RectF;
 import android.opengl.Matrix;
+=======
+import android.graphics.RectF;
+import android.opengl.Matrix;
+
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+
+import android.graphics.RectF;
+import android.opengl.Matrix;
+
+>>>>>>> origin/master
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -229,6 +241,7 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
         inflater.inflate(R.menu.edit, menu);
         menu.findItem(R.id.action_addTeams).setVisible(true);
         menu.findItem(R.id.action_addPub).setVisible(false);
+        menu.findItem(R.id.action_addVideo).setVisible(false);
     }
 
     public Filter getFilter(){
@@ -295,6 +308,7 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
             int height = image.getHeight();
             float ratioBitmap = (float) width / (float) height;
             float ratioMax = (float) maxWidth / (float) maxHeight;
+<<<<<<< HEAD
 
             int finalWidth = maxWidth;
             int finalHeight = maxHeight;
@@ -311,16 +325,41 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
     }
 
     public void EditTeamDialog(final Context c, final Team team) {
+=======
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > 1) {
+                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+            } else {
+                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+            }
+            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return image;
+        } else {
+            return image;
+        }
+    }
+
+    public void EditTeamDialog(Context c, final Team team) {
+>>>>>>> origin/master
         Bitmap myScaledBitmap,myBitmap;
         final ImageView img = new ImageView(c);
         //File imgFile = new File("/storage/sdcard0/DCIM/Camera/football_ball.png");
         File imgFile = new File(team.getLogotipo());
         myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+<<<<<<< HEAD
 
         final float scale = c.getResources().getDisplayMetrics().density;
         int dpixeis = (int) (70 * scale + 0.5f);
         myScaledBitmap = resize(myBitmap,dpixeis,dpixeis);
 
+=======
+
+        final float scale = c.getResources().getDisplayMetrics().density;
+        int dpixeis = (int) (50 * scale + 0.5f);
+        myScaledBitmap = resize(myBitmap,dpixeis,dpixeis);
+>>>>>>> origin/master
 
         //img.setImageBitmap(Bitmap.createScaledBitmap(myBitmap, 100, 100, false));
         img.setImageBitmap(myScaledBitmap);
@@ -379,6 +418,7 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
             public void onClick(DialogInterface dialog, int which) {
                 if (!input.getText().toString().isEmpty()) {
                     team.setName(input.getText().toString());
+<<<<<<< HEAD
 
                  }
 
@@ -386,6 +426,14 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
                     team.setLogotipo(MainActivity.newTeamPath);
                 }
 
+=======
+                    }
+
+                if( MainActivity.newTeamPath!=null) {
+                    team.setLogotipo(MainActivity.newTeamPath);
+                }
+
+>>>>>>> origin/master
                 if(!input.getText().toString().isEmpty() || MainActivity.newTeamPath!=null){
                     onResume();
                     ((MainActivity) getActivity()).saveData();
@@ -479,12 +527,25 @@ int actualID = 0;
                 newTeam.setId(++actualID);
                 newTeam.setModality(piScoreBoard.getListOfModalities().get(0));
                 piScoreBoard.getListOfTeams().add(newTeam);
+<<<<<<< HEAD
                 final ArrayList<String> arrayList = new ArrayList<>();
                 final Async_SFTP async_sftp = new Async_SFTP();
                 arrayList.add(newTeam.getLogotipo());
                 async_sftp.uploadLogos(getActivity(),arrayList);
                 ((MainActivity) getActivity()).saveData();
                 //MainActivity.newTeamPath = null;
+=======
+
+
+                final ArrayList<String> arrayList = new ArrayList<>();
+                final Async_SFTP async_sftp = new Async_SFTP();
+                arrayList.add(newTeam.getLogotipo());
+
+                async_sftp.uploadLogos(getActivity(), arrayList);
+
+                ((MainActivity) getActivity()).saveData();
+
+>>>>>>> origin/master
                 MainActivity.newTeamPath = null;
                 onResume();
 
@@ -533,7 +594,11 @@ int actualID = 0;
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setIcon(R.drawable.ic_delete_black_24dp);
         builder.setTitle("Remover equipa");
+<<<<<<< HEAD
         builder.setMessage("Tem a certeza que pretende remover " + piScoreBoard.getListOfTeams().get(position).getName() + "da lista de equipas?");
+=======
+        builder.setMessage("Tem a certeza que pretende remover " + piScoreBoard.getListOfTeams().get(position).getName() + " da lista de equipas?");
+>>>>>>> origin/master
 
         //Set up the buttons
         builder.setNegativeButton("Nao", new DialogInterface.OnClickListener() {
@@ -553,4 +618,8 @@ int actualID = 0;
         builder.show();
 
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 }

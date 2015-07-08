@@ -27,7 +27,7 @@ public class Game implements Serializable {
     private static Game instance = null;
 
     ArrayList <String> PublictyList = new ArrayList();
-
+    ArrayList <String> VideosList = new ArrayList();
 
     public Game() {
 
@@ -38,6 +38,14 @@ public class Game implements Serializable {
             instance = new Game();
         }
         return instance;
+    }
+
+    public ArrayList<String> getVideosList() {
+        return VideosList;
+    }
+
+    public void setVideosList(ArrayList<String> videosList) {
+        VideosList = videosList;
     }
 
     public ArrayList getPublictyList() {

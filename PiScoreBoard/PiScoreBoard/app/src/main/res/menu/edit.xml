@@ -13,6 +13,16 @@
         android:orderInCategory="10"
         app:showAsAction="ifRoom" />
 
+<<<<<<< HEAD
+=======
+    <item android:id="@+id/action_addVideo"
+        android:title="Add"
+        android:icon="@drawable/android_add"
+        android:orderInCategory="10"
+        app:showAsAction="ifRoom" />
+
+
+>>>>>>> origin/master
 
 
     <!--<item android:id="@+id/action_search"-->

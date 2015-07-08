@@ -5,7 +5,8 @@
     <string name="title_section2">Iniciar Jogo</string>
     <string name="title_section3">Equipas</string>
     <string name="title_section4">Publicidade</string>
-    <string name="title_section5">Definições</string>
+    <string name="title_section5">Videos</string>
+    <string name="title_section6">Definições</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -110,14 +111,21 @@
     <string name="Shutdown">s_shutdown@lixo@</string>
     <string name="Restart">s_restart@lixo@</string>
     <string name="Publicity">pub</string>
+<<<<<<< HEAD
     <string name="PublicityTime">pubtime</string>
     <string name="Video">videos</string>
+=======
+    <string name="Video">video</string>
+>>>>>>> origin/master
     <string name="FaultsCommand">faltas</string>
     <string name="TimeMode">time</string>
     <string name="SetCrono">setcrono</string>
     <string name="CronoCommands">crono</string>
     <string name="Parts">gparte</string>
+<<<<<<< HEAD
     <string name="Password">password</string>
+=======
+>>>>>>> origin/master
 
 
 

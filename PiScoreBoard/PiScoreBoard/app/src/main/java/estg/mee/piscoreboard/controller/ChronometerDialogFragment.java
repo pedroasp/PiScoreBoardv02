@@ -90,7 +90,11 @@ public class ChronometerDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (piScoreBoard.isTimeMode()){
+<<<<<<< HEAD
                     message = getString(R.string.CronoCommands).concat("@"+ "start" +"@");
+=======
+                    message = getString(R.string.CronoCommands).concat("@"+ "play" +"@");
+>>>>>>> origin/master
                     ((MainActivity) getActivity()).sendCommand(message, true);
                 }else{
                     Toast.makeText(getActivity(), "Está em modo Relógio!", Toast.LENGTH_SHORT).show();

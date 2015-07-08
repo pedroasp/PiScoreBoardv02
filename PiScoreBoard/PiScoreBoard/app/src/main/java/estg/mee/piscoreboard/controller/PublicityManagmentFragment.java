@@ -9,8 +9,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+<<<<<<< HEAD
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+=======
+        import android.text.Editable;
+import android.text.InputType;
+>>>>>>> origin/master
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,8 +28,13 @@ import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+<<<<<<< HEAD
+=======
+import android.widget.TextView;
+>>>>>>> origin/master
 import android.widget.Toast;
 
 import java.io.File;
@@ -221,6 +231,7 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
         inflater.inflate(R.menu.edit, menu);
         menu.findItem(R.id.action_addPub).setVisible(true);
         menu.findItem(R.id.action_addTeams).setVisible(false);
+        menu.findItem(R.id.action_addVideo).setVisible(false);
     }
 
     public Filter getFilter(){
@@ -304,10 +315,17 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
         final ImageView img = new ImageView(c);
         File imgFile = new File(pubPath);
         myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+<<<<<<< HEAD
 
         final float scale = c.getResources().getDisplayMetrics().density;
         int dpixeis = (int) (100 * scale + 0.5f);
 
+=======
+
+        final float scale = c.getResources().getDisplayMetrics().density;
+        int dpixeis = (int) (100 * scale + 0.5f);
+
+>>>>>>> origin/master
         myScaledBitmap = resize(myBitmap,dpixeis,dpixeis);
         img.setImageBitmap(myScaledBitmap);
 
@@ -348,7 +366,11 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
         }
     }
 
+<<<<<<< HEAD
     public void ShowDeleteDialog(final Context c, final int position) {
+=======
+    public void ShowDeleteDialog(Context c, final int position) {
+>>>>>>> origin/master
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
@@ -365,7 +387,10 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
         builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+<<<<<<< HEAD
                 async_sftp.removePub(c,getImage(currentGame.getPublictyList().get(position).toString()));
+=======
+>>>>>>> origin/master
                 currentGame.getPublictyList().remove(position);
                 onResume();
                 ((MainActivity) getActivity()).saveData();

@@ -1,6 +1,11 @@
 package estg.mee.piscoreboard.customlistview;
 
+<<<<<<< HEAD
+=======
+import android.app.Activity;
+>>>>>>> origin/master
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -26,7 +31,10 @@ import estg.mee.piscoreboard.controller.MainActivity;
 import estg.mee.piscoreboard.model.Colors;
 import estg.mee.piscoreboard.model.Game;
 import estg.mee.piscoreboard.model.PiScoreBoard;
+<<<<<<< HEAD
 import estg.mee.piscoreboard.model.Team;
+=======
+>>>>>>> origin/master
 import estg.mee.piscoreboard.utils.Async_SFTP;
 
 /**
@@ -170,7 +178,11 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                                 currentGame.setnLocal(0);
                                 currentGame.setnVisit(0);
                                 currentGame.setnPart(1);
+<<<<<<< HEAD
                                 ArrayList<Colors> ColorsArrayList = new ArrayList<Colors>();
+=======
+                                ArrayList<Colors> ColorsArrayList = new ArrayList<>();
+>>>>>>> origin/master
                                 ColorsArrayList.add(MainActivity.graphics.BackgroundCentralColor);
                                 ColorsArrayList.add(MainActivity.graphics.BackgroundSideColor);
                                 ColorsArrayList.add(MainActivity.graphics.FaultColor);
@@ -270,6 +282,7 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                         myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
                         if(((myBitmap.getWidth()*myBitmap.getHeight())>=518400))
+<<<<<<< HEAD
                         myBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.image_big_icon);
 
 
@@ -281,10 +294,20 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                         myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
 
+=======
+                            myBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.image_big_icon);
+
+                        final float scale = getContext().getResources().getDisplayMetrics().density;
+
+>>>>>>> origin/master
                         int dpixeis = (int) (40 * scale + 0.5f);
 
                         myScaledBitmap = resize(myBitmap,dpixeis,dpixeis);
                         image.setImageBitmap(myScaledBitmap);
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
                     }
                 } else {
                     if (ei.imageRId != 0) {

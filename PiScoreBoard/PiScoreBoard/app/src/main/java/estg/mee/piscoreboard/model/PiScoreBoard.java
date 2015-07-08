@@ -27,7 +27,11 @@ public class PiScoreBoard implements Serializable {
 
     public PiScoreBoard() {
         listOfModalities.add(new Modality(0, 2, 6, "Futsal", R.drawable.football_ball));
+<<<<<<< HEAD
         listOfModalities.add(new Modality(1, 2, 0, "Basquetebol",R.drawable.basketball_ball));
+=======
+        listOfModalities.add(new Modality(1, 4, 0, "Basquetebol",R.drawable.basketball_ball));
+>>>>>>> origin/master
         listOfModalities.add(new Modality(2, 2, 0, "Andebol",R.drawable.handball_ball));
     }
 

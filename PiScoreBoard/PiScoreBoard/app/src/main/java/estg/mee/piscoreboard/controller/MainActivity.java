@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -65,6 +68,7 @@ public class MainActivity extends ActionBarActivity
     public static Graphics graphics;
 
     private static final int REQUEST_IMAGE = 2;
+    private static final int REQUEST_VIDEO = 1;
 
 
 //    private static ArrayList<String> mSelectPath = null;
@@ -155,6 +159,7 @@ public class MainActivity extends ActionBarActivity
 
             gObject = (Game)savedStream.readObject();
             currentGame.setPublictyList(gObject.getPublictyList());
+            currentGame.setVideosList(gObject.getVideosList());
             currentGame.setId(gObject.getId());
             currentGame.setDate(gObject.getDate());
             currentGame.setModality(gObject.getModality());
@@ -182,6 +187,7 @@ public class MainActivity extends ActionBarActivity
             e.printStackTrace();
         }
 
+<<<<<<< HEAD
 
 //        try {
 //            FileInputStream fIn = openFileInput("Graphics.txt");
@@ -214,12 +220,24 @@ public class MainActivity extends ActionBarActivity
         async_sftp.removeAllPubs(this);
 
         final ArrayList<String> arrayList = new ArrayList<String>();
+=======
+        async_sftp.removeAllLogos(this);
+        async_sftp.removeAllPubs(this);
+        async_sftp.removeAllVideos(this);
+
+        final ArrayList<String> arrayList = new ArrayList<>();
+>>>>>>> origin/master
         final Async_SFTP async_sftp = new Async_SFTP();
         for (Team logosequipas:piScoreBoard.getListOfTeams()){
             arrayList.add(logosequipas.getLogotipo());
         }
         async_sftp.uploadLogos(this,arrayList);
+<<<<<<< HEAD
         async_sftp.uploadPubs(this,currentGame.getPublictyList());
+=======
+        async_sftp.uploadPubs(this, currentGame.getPublictyList());
+        async_sftp.uploadVideos(this,currentGame.getVideosList());
+>>>>>>> origin/master
 
         Calendar sysTime = Calendar.getInstance();
         String stringToSend;
@@ -239,8 +257,11 @@ public class MainActivity extends ActionBarActivity
             case 0:
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 objFragment = new HomeScreenFragment();
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/master
                 break;
             case 1:
                 objFragment = new StartGameFragment();
@@ -252,6 +273,9 @@ public class MainActivity extends ActionBarActivity
                 objFragment = new PublicityManagmentFragment();
                 break;
             case 4:
+                objFragment = new VideosManagmentFragment();
+                break;
+            case 5:
                 objFragment = new SettingsFragment();
                 break;
             default:
@@ -279,6 +303,9 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 5:
                 mTitle = getString(R.string.title_section5);
+                break;
+            case 6:
+                mTitle = getString(R.string.title_section6);
                 break;
         }
     }
@@ -316,6 +343,10 @@ public class MainActivity extends ActionBarActivity
                 objFragment = new HomeScreenFragment();
                 fragmentManager.beginTransaction().replace(R.id.container, objFragment).commit();
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+                i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, 1);
+                startActivity(i);
                 return true;
             case R.id.action_multimedia:
                 MultimediaDialogFragment newFragment = new MultimediaDialogFragment();
@@ -331,6 +362,21 @@ public class MainActivity extends ActionBarActivity
                 ChronometerDialogFragment FragmentChronometer = new ChronometerDialogFragment();
                 FragmentChronometer.show(getFragmentManager(),"");
                 return true;
+            case R.id.action_multimedia:
+                MultimediaDialogFragment newFragment = new MultimediaDialogFragment();
+               // newFragment.show(this.getFragmentManager(), "multimediadialog");
+                //newFragment.mListener = MainActivity.this;
+                //newFragment.text = mTextView.getText().toString();
+                newFragment.show(getFragmentManager(), "");
+
+                //ShowDialog(this);
+                return true;
+
+            case R.id.action_chronometer:
+                ChronometerDialogFragment FragmentChronometer = new ChronometerDialogFragment();
+                FragmentChronometer.show(getFragmentManager(),"");
+                return true;
+
 
 
         }
@@ -411,7 +457,8 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        int i = 0;
+        ArrayList<String> auxArrayString = new ArrayList<>();
         if(requestCode == REQUEST_IMAGE){
             if(resultCode == RESULT_OK){
                 int id = data.getIntExtra(MultiImageSelectorActivity.EXTRA_FRAGMENT_ID, 0);
@@ -432,9 +479,40 @@ public class MainActivity extends ActionBarActivity
                 }
 
             }
+        }else{
+            if(requestCode == REQUEST_VIDEO){
+                if(data.getClipData() != null) {
+                    for (i = 0; i < data.getClipData().getItemCount(); i++) {
+                        currentGame.getVideosList().add(i, getPathFromURI(data.getClipData().getItemAt(i).getUri()).toLowerCase());
+                        auxArrayString.clear();
+                        auxArrayString.add(currentGame.getVideosList().get(i));
+                    }
+                }else{
+
+                    currentGame.getVideosList().add(getPathFromURI(data.getData()).toLowerCase());
+                    auxArrayString.clear();
+                    auxArrayString.add(currentGame.getVideosList().get(currentGame.getVideosList().size()-1));
+                }
+                saveData();
+                async_sftp.uploadVideos(this, auxArrayString);
+                }
+
         }
     }
 
+    private String getPathFromURI(Uri contentURI){
+        String result;
+        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) { // Source is Dropbox or other similar local file path
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
+    }
     public void saveData(){
 
         Toast.makeText(this, "Aguarde que os dados sejam salvos!", Toast.LENGTH_SHORT).show();
@@ -489,33 +567,11 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onStop() {
         super.onStop();
-//        try {
-//            FileOutputStream savefile = openFileOutput("Teams.txt", MODE_WORLD_READABLE);
-//            ObjectOutputStream saveStream = new ObjectOutputStream(savefile);
-//
-           // saveData();
-//
-//            for (Iterator<Team> i = piScoreBoard.getListOfTeams().iterator(); i.hasNext(); ) {
-//                Team teams = i.next();
-//                saveStream.writeObject(teams);
-//            }
-//
-//            saveStream.flush();
-//            savefile.flush();
-//            saveStream.close();
-//            savefile.close();
-//
-//        } catch (FileNotFoundException a) {
-//            System.out.println("File not found!");
-//        } catch (IOException b) {
-//            b.printStackTrace();
-//            System.out.println("IO Exception!");
-//
-//
-//        }
+
 
     }
 
+<<<<<<< HEAD
    /* public void ShowDialog(Context c) {
 
         final ImageView img = new ImageView(c);
@@ -576,6 +632,9 @@ public class MainActivity extends ActionBarActivity
         builder.show();
 
     }*/
+=======
+
+>>>>>>> origin/master
 
 
 }
