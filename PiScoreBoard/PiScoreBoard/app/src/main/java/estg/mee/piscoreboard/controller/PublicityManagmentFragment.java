@@ -217,6 +217,7 @@ public class PublicityManagmentFragment extends Fragment implements Filterable{
         inflater.inflate(R.menu.edit, menu);
         menu.findItem(R.id.action_addPub).setVisible(true);
         menu.findItem(R.id.action_addTeams).setVisible(false);
+        menu.findItem(R.id.action_addVideo).setVisible(false);
     }
 
     public Filter getFilter(){

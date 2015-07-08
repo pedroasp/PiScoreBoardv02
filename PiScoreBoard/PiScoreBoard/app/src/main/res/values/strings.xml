@@ -5,7 +5,8 @@
     <string name="title_section2">Iniciar Jogo</string>
     <string name="title_section3">Equipas</string>
     <string name="title_section4">Publicidade</string>
-    <string name="title_section5">Definições</string>
+    <string name="title_section5">Videos</string>
+    <string name="title_section6">Definições</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

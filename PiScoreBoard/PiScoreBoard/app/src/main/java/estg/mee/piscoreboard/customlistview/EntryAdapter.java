@@ -1,6 +1,8 @@
 package estg.mee.piscoreboard.customlistview;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -255,42 +257,19 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                     File imgFile = new File(ei.imagePath);
 
                     if (imgFile.exists()) {
-<<<<<<< HEAD
-                        //Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
                         myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-
-                        final float scale = getContext().getResources().getDisplayMetrics().density;
-=======
-<<<<<<< HEAD
-
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
                         if(((myBitmap.getWidth()*myBitmap.getHeight())>=518400))
-                        myBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.image_big_icon);
-
-                        image.requestLayout();
-                        final float scale = getContext().getResources().getDisplayMetrics().density;
-                        int pixels = (int) (40 * scale + 0.5f);
-                        image.getLayoutParams().height = pixels;
-                        image.getLayoutParams().width = pixels;
-                        image.setImageBitmap(myBitmap);
-
-=======
-                        //Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-
-                        myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            myBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.image_big_icon);
 
                         final float scale = getContext().getResources().getDisplayMetrics().density;
->>>>>>> origin/MyWorkbranch
+
                         int dpixeis = (int) (40 * scale + 0.5f);
 
                         myScaledBitmap = resize(myBitmap,dpixeis,dpixeis);
                         image.setImageBitmap(myScaledBitmap);
-<<<<<<< HEAD
-=======
->>>>>>> origin/master
->>>>>>> origin/MyWorkbranch
+
                     }
                 } else {
                     if (ei.imageRId != 0) {

@@ -6,18 +6,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-<<<<<<< HEAD
 import android.graphics.RectF;
 import android.opengl.Matrix;
-=======
-<<<<<<< HEAD
+
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-=======
+
 import android.graphics.RectF;
 import android.opengl.Matrix;
->>>>>>> origin/master
->>>>>>> origin/MyWorkbranch
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -236,6 +233,7 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
         inflater.inflate(R.menu.edit, menu);
         menu.findItem(R.id.action_addTeams).setVisible(true);
         menu.findItem(R.id.action_addPub).setVisible(false);
+        menu.findItem(R.id.action_addVideo).setVisible(false);
     }
 
     public Filter getFilter(){
@@ -325,15 +323,9 @@ public class TeamsManagmentFragment extends Fragment implements Filterable{
         myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
         final float scale = c.getResources().getDisplayMetrics().density;
-        int dpixeis = (int) (70 * scale + 0.5f);
+        int dpixeis = (int) (50 * scale + 0.5f);
         myScaledBitmap = resize(myBitmap,dpixeis,dpixeis);
-<<<<<<< HEAD
 
-
-=======
-
-
->>>>>>> origin/MyWorkbranch
         //img.setImageBitmap(Bitmap.createScaledBitmap(myBitmap, 100, 100, false));
         img.setImageBitmap(myScaledBitmap);
 
@@ -491,26 +483,16 @@ int actualID = 0;
                 newTeam.setModality(piScoreBoard.getListOfModalities().get(0));
                 piScoreBoard.getListOfTeams().add(newTeam);
 
-                final ArrayList<String> arrayList = new ArrayList<>();
-                final Async_SFTP async_sftp = new Async_SFTP();
-                arrayList.add(newTeam.getLogotipo());
-<<<<<<< HEAD
-=======
-                async_sftp.uploadLogos(getActivity(),arrayList);
-                ((MainActivity) getActivity()).saveData();
-                //MainActivity.newTeamPath = null;
-=======
 
                 final ArrayList<String> arrayList = new ArrayList<>();
                 final Async_SFTP async_sftp = new Async_SFTP();
                 arrayList.add(newTeam.getLogotipo());
->>>>>>> origin/MyWorkbranch
+
                 async_sftp.uploadLogos(getActivity(), arrayList);
 
                 ((MainActivity) getActivity()).saveData();
 
                 MainActivity.newTeamPath = null;
->>>>>>> origin/master
                 onResume();
 
 
@@ -552,18 +534,13 @@ int actualID = 0;
 
     }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> origin/MyWorkbranch
     public void ShowDeleteDialog(Context c, final int position) {
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setIcon(R.drawable.ic_delete_black_24dp);
         builder.setTitle("Remover equipa");
-        builder.setMessage("Tem a certeza que pretende remover " + piScoreBoard.getListOfTeams().get(position).getName() + "da lista de equipas?");
+        builder.setMessage("Tem a certeza que pretende remover " + piScoreBoard.getListOfTeams().get(position).getName() + " da lista de equipas?");
 
         //Set up the buttons
         builder.setNegativeButton("Nao", new DialogInterface.OnClickListener() {
@@ -583,8 +560,5 @@ int actualID = 0;
         builder.show();
 
     }
-<<<<<<< HEAD
-=======
->>>>>>> origin/master
->>>>>>> origin/MyWorkbranch
+
 }
